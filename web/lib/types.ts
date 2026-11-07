@@ -28,6 +28,8 @@ export type Profile = {
   owned: Record<string, number[]>;
   opened: number;
   xp: number;
+  avatar: string;
+  recent: number[];
 };
 
 export type Screen = "packs" | "open" | "reveal" | "collection" | "dex" | "trade" | "profile";

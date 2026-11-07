@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Avatar } from "@/components/avatar";
 import { CardFace } from "@/components/card-face";
 import { Icon } from "@/components/icons";
 import { PackCard } from "@/components/pack-card";
+import { imageFileToAvatar } from "@/lib/avatar";
 import {
+  artUrl,
   copiesOf,
   effectiveTier,
   hydrateCatalog,
@@ -14,10 +17,29 @@ import {
   rollOne,
   valueOf,
 } from "@/lib/game";
+import { condColor, tierColor, xpColor } from "@/lib/look";
+import { matchSprite, readSpriteBook, type SpriteBook } from "@/lib/sprites";
 import { blankProfile, readProfile, writeProfile } from "@/lib/storage";
 import type { Card, Catalog, Profile, Pull, Screen } from "@/lib/types";
 
 const DRAWER_ID = "pokerng-drawer";
+const SCREENS: Screen[] = ["packs", "open", "reveal", "collection", "dex", "trade", "profile"];
+
+function readScreen(): Screen {
+  if (typeof window === "undefined") return "packs";
+  const value = sessionStorage.getItem("pokerng-screen");
+  if (value === "reveal") return "open";
+  if (SCREENS.includes(value as Screen)) return value as Screen;
+  return "packs";
+}
+
+function readSet(): number | null {
+  if (typeof window === "undefined") return null;
+  const value = sessionStorage.getItem("pokerng-set");
+  if (value == null || value === "" || value === "all") return null;
+  const index = Number(value);
+  return Number.isFinite(index) ? index : null;
+}
 
 const NAV: { id: Screen; label: string; icon: "packs" | "collection" | "dex" | "trade" | "profile" }[] = [
   { id: "packs", label: "Packs", icon: "packs" },
@@ -31,10 +53,11 @@ export function AppShell() {
   const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [error, setError] = useState("");
   const [profile, setProfile] = useState<Profile>(blankProfile);
-  const [screen, setScreen] = useState<Screen>("packs");
-  const [setIndex, setSetIndex] = useState<number | null>(null);
+  const [screen, setScreen] = useState<Screen>(readScreen);
+  const [setIndex, setSetIndex] = useState<number | null>(readSet);
   const [pulls, setPulls] = useState<Pull[]>([]);
   const [picked, setPicked] = useState<{ card: Card; cond: number } | null>(null);
+  const [sprites, setSprites] = useState<SpriteBook | null>(null);
   const [collectionSet, setCollectionSet] = useState("");
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -49,6 +72,14 @@ export function AppShell() {
     applySidebar();
     desktop.addEventListener("change", applySidebar);
     let cancel = false;
+    fetch("/data/sprites.json")
+      .then((response) => (response.ok ? response.json() : null))
+      .then((raw) => {
+        if (!cancel) setSprites(readSpriteBook(raw));
+      })
+      .catch(() => {
+        if (!cancel) setSprites(null);
+      });
     fetch("/data/catalog.json")
       .then((response) => {
         if (!response.ok) throw new Error(String(response.status));
@@ -65,6 +96,11 @@ export function AppShell() {
       desktop.removeEventListener("change", applySidebar);
     };
   }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem("pokerng-screen", screen);
+    sessionStorage.setItem("pokerng-set", setIndex == null ? "all" : String(setIndex));
+  }, [screen, setIndex]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -115,7 +151,8 @@ export function AppShell() {
       opened += 1;
       nextPulls.push(pull);
     }
-    save({ ...profile, owned, xp, opened });
+    const recent = [...nextPulls.map((pull) => pull.card.id), ...(profile.recent ?? [])].slice(0, 8);
+    save({ ...profile, owned, xp, opened, recent });
     setPulls(nextPulls);
     setScreen("reveal");
   }
@@ -144,24 +181,38 @@ export function AppShell() {
             <label htmlFor={DRAWER_ID} aria-label="Open menu" className="btn btn-ghost btn-square drawer-button lg:hidden">
               <Icon name="menu" />
             </label>
-            <div
-              className="radial-progress text-xs"
-              style={{ "--value": xpPct, "--size": "2.75rem", "--thickness": "3px" } as React.CSSProperties}
-              role="progressbar"
-              aria-valuenow={xpPct}
-              aria-label={`Level ${level.level}`}
-            >
-              {xpPct}
-            </div>
+            <button type="button" className="btn btn-ghost btn-circle size-auto p-0" aria-label="Profile" onClick={() => go("profile")}>
+              <div
+                className="radial-progress"
+                style={{ "--value": xpPct, "--size": "3.25rem", "--thickness": "4px", color: xpColor(xpPct) } as React.CSSProperties}
+                role="progressbar"
+                aria-valuenow={xpPct}
+                aria-label={`Level ${level.level}`}
+              >
+                <Avatar
+                  avatar={profile.avatar}
+                  letter={profile.name}
+                  className="size-10"
+                  cardName={avatarCardName(profile.avatar, indexes.byId)}
+                  book={sprites}
+                />
+                <span className="sr-only">{xpPct}</span>
+              </div>
+            </button>
             <div className="min-w-0">
               <div className="font-semibold">{profile.name}</div>
-              <div className="text-sm text-base-content/70">
+              <div className="text-sm whitespace-nowrap text-base-content/70">
                 Level {level.level}
                 <span className="ms-2">{level.into} / 80 xp</span>
               </div>
             </div>
           </div>
-          <div className="navbar-end">
+          <div className="pointer-events-none absolute left-1/2 -translate-x-1/2">
+            <button type="button" className="pointer-events-auto text-lg font-semibold" onClick={() => go("packs")}>
+              PokeRNG
+            </button>
+          </div>
+          <div className="navbar-end pe-6">
             <div className="stats hidden border border-base-300 bg-base-100 md:inline-grid">
               <div className="stat px-4 py-2">
                 <div className="stat-title">Unique</div>
@@ -236,17 +287,34 @@ export function AppShell() {
           />
         ) : null}
         {screen === "trade" ? <Trade /> : null}
-        {screen === "profile" ? <ProfilePage profile={profile} onSave={save} /> : null}
+        {screen === "profile" ? (
+          <ProfilePage
+            profile={profile}
+            byId={indexes.byId}
+            book={sprites}
+            recent={(profile.recent ?? []).map((id) => indexes.byId.get(id)).filter((card): card is Card => Boolean(card))}
+            level={level}
+            xpPct={xpPct}
+            onSave={save}
+            onPacks={() => go("packs")}
+            onCard={(card) => setPicked({ card, cond: bestCondOf(profile, card) })}
+          />
+        ) : null}
         </main>
       </div>
       <div className="drawer-side is-drawer-close:overflow-visible">
         <label htmlFor={DRAWER_ID} aria-label="Close menu" className="drawer-overlay" />
         <div className="flex min-h-full flex-col bg-base-200 is-drawer-close:w-16 is-drawer-open:w-64">
-          <div className="flex items-center gap-2 px-4 py-4">
-            <span className="size-8 shrink-0 rounded-box bg-neutral" aria-hidden="true" />
-            <div className="is-drawer-close:hidden">
+          <div className="flex items-center gap-2 px-2 py-4 is-drawer-open:px-4">
+            <span className="size-8 shrink-0 rounded-box bg-neutral is-drawer-close:hidden" aria-hidden="true" />
+            <div className="min-w-0 grow is-drawer-close:hidden">
               <div className="font-semibold">PokeRNG</div>
               <div className="text-xs text-base-content/70">Pack rolls</div>
+            </div>
+            <div className="ms-auto is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Sidebar">
+              <label htmlFor={DRAWER_ID} aria-label="Shrink sidebar" className="btn btn-ghost btn-square drawer-button is-drawer-open:rotate-y-180">
+                <Icon name="panel" />
+              </label>
             </div>
           </div>
           <ul className="menu w-full grow">
@@ -271,48 +339,49 @@ export function AppShell() {
           <p className="px-4 pb-4 text-xs text-base-content/70 is-drawer-close:hidden">
             Fan project. Not affiliated with Nintendo, The Pokémon Company, Creatures, or TCGplayer. Nothing here is for sale.
           </p>
-          <div className="m-2 is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Sidebar">
-            <label htmlFor={DRAWER_ID} aria-label="Shrink sidebar" className="btn btn-ghost btn-square drawer-button is-drawer-open:rotate-y-180">
-              <Icon name="panel" />
-            </label>
-          </div>
         </div>
       </div>
 
       <dialog ref={dialogRef} className="modal" onClose={() => setPicked(null)}>
         {picked && catalog ? (
-          <div className="modal-box grid w-11/12 max-w-3xl grid-cols-1 gap-4 sm:grid-cols-[16rem_minmax(0,1fr)]">
-            <CardFace card={picked.card} cond={picked.cond} conditions={catalog.conditions} large />
-            <div>
-              <h2 id="card-title" className="text-2xl font-semibold">{picked.card.name}</h2>
-              <p className="mt-2 text-base-content/70">
+          <div className="modal-box flex h-dvh! max-h-dvh! w-full! max-w-none! flex-col gap-0 overflow-hidden! rounded-none bg-base-200 p-0! md:flex-row">
+            <div className="flex min-h-0 flex-1 items-center justify-center p-4">
+              <CardFace card={picked.card} cond={picked.cond} conditions={catalog.conditions} large hideTag />
+            </div>
+            <aside className="flex max-h-[48dvh] w-full shrink-0 flex-col gap-2 overflow-y-auto bg-base-100 p-6 md:max-h-none md:w-80">
+              <form method="dialog" className="self-end">
+                <button className="btn btn-sm btn-error">Close</button>
+              </form>
+              <h2 id="card-title" className="text-3xl font-semibold">{picked.card.name}</h2>
+              <p className="text-base-content/70">
                 {catalog.sets[picked.card.set][1]} · {picked.card.number || "—"}
               </p>
-              <p className="text-base-content/70">
-                {catalog.rarities[picked.card.rarity]} · 1 in {oneIn(picked.card.tier).toLocaleString()}
+              <p className="rarity-name text-lg" style={{ color: tierColor(picked.card.tier) }}>
+                {catalog.tiers[picked.card.tier]}
+                {catalog.rarities[picked.card.rarity] && catalog.rarities[picked.card.rarity] !== catalog.tiers[picked.card.tier]
+                  ? ` · ${catalog.rarities[picked.card.rarity]}`
+                  : ""}
+                {" · "}1 in {oneIn(picked.card.tier).toLocaleString()}
               </p>
-              <p className="text-base-content/70">
+              <p className="condition-name text-lg" style={{ color: condColor(picked.cond) }}>
                 {catalog.conditions[picked.cond]} · {money(valueOf(picked.card, picked.cond))}
               </p>
               {COND_DROPPED(picked.card.tier, picked.cond) ? (
-                <p className="mt-2 font-medium">
+                <p className="rarity-name" style={{ color: tierColor(effectiveTier(picked.card.tier, picked.cond)) }}>
                   This copy counts as {catalog.tiers[effectiveTier(picked.card.tier, picked.cond)]}.
                 </p>
               ) : null}
-              <p className="mt-2">
+              <p>
                 You have {copiesOf(profile.owned, picked.card.id)} {copiesOf(profile.owned, picked.card.id) === 1 ? "copy" : "copies"}.
               </p>
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="mt-2 flex flex-col gap-1">
                 {catalog.conditions.map((name, index) => (
-                  <span key={name} className="badge badge-ghost">
+                  <span key={name} className="condition-name text-sm" style={{ color: condColor(index) }}>
                     {name} {(profile.owned[String(picked.card.id)] || [0, 0, 0, 0, 0])[index] || 0}
                   </span>
                 ))}
               </div>
-              <form method="dialog" className="modal-action">
-                <button className="btn">Close</button>
-              </form>
-            </div>
+            </aside>
           </div>
         ) : (
           <div className="modal-box" />
@@ -331,6 +400,26 @@ function COND_DROPPED(tier: number, cond: number) {
 
 function levelOf(xp: number) {
   return { level: 1 + Math.floor(xp / 80), into: xp % 80 };
+}
+
+function avatarCardName(avatar: string, byId: Map<number, Card>) {
+  if (!avatar.startsWith("card:")) return undefined;
+  return byId.get(Number(avatar.slice(5)))?.name;
+}
+
+function bestCondOf(profile: Profile, card: Card) {
+  const row = profile.owned[String(card.id)] || [];
+  let best = 0;
+  let worth = -1;
+  row.forEach((count, cond) => {
+    if (!count) return;
+    const value = valueOf(card, cond);
+    if (value > worth) {
+      worth = value;
+      best = cond;
+    }
+  });
+  return best;
 }
 
 function uniqueCount(profile: Profile, byId: Map<number, Card>) {
@@ -376,22 +465,9 @@ function Packs({
   return (
     <>
       <h1 className="text-3xl font-semibold">Packs</h1>
-      <p className="mt-1 mb-4 max-w-prose text-base-content/70">Rarer cards show up less often. A damaged copy is worth less than the same card in Near Mint.</p>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-        <PackCard code="All" name="Every card" setIndex={null} art={coverArt(catalog.cards)} onClick={() => onOpen(null)} />
-        {featured.map((index) => (
-          <PackCard
-            key={catalog.sets[index][0]}
-            code={catalog.sets[index][0]}
-            name={catalog.sets[index][1]}
-            setIndex={index}
-            art={coverArt(bySet.get(index) ?? [])}
-            onClick={() => onOpen(index)}
-          />
-        ))}
-      </div>
+      <p className="mt-1 mb-4 text-sm whitespace-nowrap text-base-content/70">Rarer cards show up less often, and damage lowers the price.</p>
       <form
-        className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center"
+        className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center"
         onSubmit={(event) => {
           event.preventDefault();
           const data = new FormData(event.currentTarget);
@@ -409,6 +485,19 @@ function Packs({
           Open that set
         </button>
       </form>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <PackCard code="All" name="Every card" setIndex={null} art={coverArt(catalog.cards)} onClick={() => onOpen(null)} />
+        {featured.map((index) => (
+          <PackCard
+            key={catalog.sets[index][0]}
+            code={catalog.sets[index][0]}
+            name={catalog.sets[index][1]}
+            setIndex={index}
+            art={coverArt(bySet.get(index) ?? [])}
+            onClick={() => onOpen(index)}
+          />
+        ))}
+      </div>
     </>
   );
 }
@@ -442,7 +531,7 @@ function Opener({
           <div className="flex flex-wrap gap-2">
             {catalog.tiers.map((tier, index) =>
               present.has(index) ? (
-                <span key={tier} className="badge badge-ghost">
+                <span key={tier} className="rarity-name text-sm" style={{ color: tierColor(index) }}>
                   {tier} 1 in {oneIn(index).toLocaleString()}
                 </span>
               ) : null,
@@ -450,10 +539,10 @@ function Opener({
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
             <button type="button" className="btn btn-primary" onClick={() => onRoll(1)}>
-              Open a pack
+              Open 1 pack
             </button>
-            <button type="button" className="btn" onClick={() => onRoll(10)}>
-              Open 10
+            <button type="button" className="btn btn-neutral" onClick={() => onRoll(10)}>
+              Open 10 packs
             </button>
           </div>
         </div>
@@ -572,6 +661,9 @@ function Collection({
             </option>
           ))}
         </select>
+        <button type="button" className="btn bg-base-content text-base-100" onClick={() => setSetFilter("")}>
+          Every set
+        </button>
         <select className="select w-full sm:w-auto" aria-label="Sort" value={sort} onChange={(event) => setSort(event.target.value)}>
           <option value="value">Highest value</option>
           <option value="rarity">Rarest</option>
@@ -579,7 +671,7 @@ function Collection({
         </select>
       </div>
       {entries.length === 0 ? <p className="text-base-content/70">Nothing saved yet. Open a pack and the cards land here.</p> : null}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 overflow-anchor-none sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {entries.map((entry) => (
           <CardFace
             key={entry.card.id}
@@ -655,60 +747,228 @@ function Trade() {
   );
 }
 
-function ProfilePage({ profile, onSave }: { profile: Profile; onSave: (next: Profile) => void }) {
+function ProfilePage({
+  profile,
+  byId,
+  book,
+  recent,
+  level,
+  xpPct,
+  onSave,
+  onPacks,
+  onCard,
+}: {
+  profile: Profile;
+  byId: Map<number, Card>;
+  book: SpriteBook | null;
+  recent: Card[];
+  level: { level: number; into: number };
+  xpPct: number;
+  onSave: (next: Profile) => void;
+  onPacks: () => void;
+  onCard: (card: Card) => void;
+}) {
   const [name, setName] = useState(profile.name);
   const [dark, setDark] = useState(false);
+  const [picking, setPicking] = useState(false);
+  const [note, setNote] = useState("");
+  const [notice, setNotice] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     setDark(document.documentElement.dataset.theme === "dark");
   }, []);
+  const owned = useMemo(() => {
+    const list: Card[] = [];
+    for (const key of Object.keys(profile.owned)) {
+      if (copiesOf(profile.owned, Number(key)) <= 0) continue;
+      const card = byId.get(Number(key));
+      if (card) list.push(card);
+    }
+    list.sort((a, b) => a.name.localeCompare(b.name));
+    return list;
+  }, [profile.owned, byId]);
+
+  async function onFile(file: File | undefined) {
+    if (!file) return;
+    try {
+      const avatar = await imageFileToAvatar(file);
+      onSave({ ...profile, avatar });
+      setNote("");
+      setPicking(false);
+    } catch (err) {
+      setNote(err instanceof Error ? err.message : "Could not read that image.");
+    }
+  }
+
+  function chooseCard(card: Card) {
+    if (!book) {
+      onSave({ ...profile, avatar: `card:${card.id}` });
+      setPicking(false);
+      return;
+    }
+    const match = matchSprite(card.name, book);
+    onSave({ ...profile, avatar: `pixel:${match.url}` });
+    setPicking(false);
+    if (match.fallback) setNotice(true);
+  }
+
   return (
     <>
       <h1 className="text-3xl font-semibold">Profile</h1>
-      <div className="card card-border mt-4 max-w-xl bg-base-100">
-        <div className="card-body">
-          <label className="floating-label">
-            <input
-              className="input"
-              placeholder="Trainer name"
-              value={name}
-              maxLength={24}
-              onChange={(event) => setName(event.target.value)}
-            />
-            <span>Trainer name</span>
-          </label>
-          <label className="label cursor-pointer justify-start gap-4">
-            <input
-              type="checkbox"
-              className="toggle"
-              checked={dark}
-              onChange={(event) => {
-                const next = event.target.checked ? "dark" : "light";
-                document.documentElement.setAttribute("data-theme", next);
-                localStorage.setItem("pokerng-theme", next);
-                setDark(event.target.checked);
-              }}
-            />
-            Dark theme
-          </label>
-          <div className="card-actions flex-wrap">
-            <button type="button" className="btn" onClick={() => onSave({ ...profile, name: name.trim() || "Trainer" })}>
-              Save name
-            </button>
-            <button
-              type="button"
-              className="btn btn-ghost"
-              onClick={() => {
-                if (!window.confirm("Erase every card saved in this browser?")) return;
-                const fresh = blankProfile();
-                fresh.name = profile.name;
-                onSave(fresh);
-              }}
+      <div className="mt-4 grid items-start gap-6 lg:grid-cols-[20rem_minmax(0,1fr)]">
+        <div className="card card-border bg-base-100">
+          <div className="card-body items-center text-center">
+            <div
+              className="radial-progress"
+              style={{ "--value": xpPct, "--size": "7rem", "--thickness": "6px", color: xpColor(xpPct) } as React.CSSProperties}
+              role="progressbar"
+              aria-valuenow={xpPct}
+              aria-label={`Level ${level.level}`}
             >
-              Reset collection
-            </button>
+              <Avatar
+                avatar={profile.avatar}
+                letter={name || profile.name}
+                className="size-20"
+                cardName={avatarCardName(profile.avatar, byId)}
+                book={book}
+              />
+              <span className="sr-only">{xpPct}</span>
+            </div>
+            <h2 className="text-xl font-semibold">{name || profile.name}</h2>
+            <p className="text-sm text-base-content/70">
+              Level {level.level}
+              <span className="ms-2">{level.into} / 80 xp</span>
+            </p>
+            <div className="mt-2 flex flex-wrap justify-center gap-2">
+              <button type="button" className="btn btn-sm" onClick={() => fileRef.current?.click()}>
+                Upload image
+              </button>
+              <button type="button" className="btn btn-sm" onClick={() => setPicking((open) => !open)}>
+                Use a card
+              </button>
+              {profile.avatar ? (
+                <button type="button" className="btn btn-ghost btn-sm" onClick={() => onSave({ ...profile, avatar: "" })}>
+                  Remove
+                </button>
+              ) : null}
+            </div>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                event.target.value = "";
+                void onFile(file);
+              }}
+            />
+            <div className="mt-6 flex w-full flex-col gap-6 text-start">
+              <p className="text-sm text-base-content/70">Images up to 2 MB. A card picture uses one you already pulled.</p>
+              {note ? <p className="text-sm text-error">{note}</p> : null}
+              {picking ? (
+                owned.length === 0 ? (
+                  <p className="text-sm text-base-content/70">Open a pack first, then pick one of those cards.</p>
+                ) : (
+                  <div className="grid max-h-64 grid-cols-4 gap-2 overflow-y-auto">
+                    {owned.map((card) => (
+                      <button
+                        key={card.id}
+                        type="button"
+                        className="overflow-hidden rounded-box border border-base-300"
+                        aria-label={card.name}
+                        onClick={() => chooseCard(card)}
+                      >
+                        <img alt="" src={artUrl(card.id, false)} className="h-16 w-full object-cover object-top" />
+                      </button>
+                    ))}
+                  </div>
+                )
+              ) : null}
+              <label className="floating-label">
+                <input
+                  className="input"
+                  placeholder="Trainer name"
+                  value={name}
+                  maxLength={24}
+                  onChange={(event) => setName(event.target.value)}
+                />
+                <span>Trainer name</span>
+              </label>
+            </div>
+            <label className="label mt-2 justify-start gap-4 self-start">
+              <input
+                type="checkbox"
+                className="toggle"
+                checked={dark}
+                onChange={(event) => {
+                  const next = event.target.checked ? "dark" : "light";
+                  document.documentElement.setAttribute("data-theme", next);
+                  localStorage.setItem("pokerng-theme", next);
+                  setDark(event.target.checked);
+                }}
+              />
+              {dark ? "Light theme" : "Dark theme"}
+            </label>
+            <div className="card-actions mt-2 w-full">
+              <button type="button" className="btn" onClick={() => onSave({ ...profile, name: name.trim() || "Trainer" })}>
+                Save name
+              </button>
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => {
+                  if (!window.confirm("Erase every card saved in this browser?")) return;
+                  const fresh = blankProfile();
+                  fresh.name = profile.name;
+                  fresh.avatar = profile.avatar.startsWith("data:image/") ? profile.avatar : "";
+                  onSave(fresh);
+                }}
+              >
+                Reset collection
+              </button>
+            </div>
           </div>
         </div>
+        <section className="card card-border bg-base-100">
+          <div className="border-b border-base-300 px-4 py-4">
+            <h2 className="inline-block border-b-2 border-primary pb-2 font-semibold">Latest cards</h2>
+          </div>
+          <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-3">
+            {recent.map((card, index) => (
+              <button key={`${card.id}-${index}`} type="button" className="card card-border overflow-hidden text-start" onClick={() => onCard(card)}>
+                <img alt={card.name} src={artUrl(card.id, false)} className="aspect-[5/7] w-full object-cover" />
+                <div className="card-body p-4">
+                  <h3 className="text-sm font-semibold">{card.name}</h3>
+                </div>
+              </button>
+            ))}
+            <button type="button" className="card card-border min-h-40" onClick={onPacks}>
+              <div className="card-body items-center justify-center text-center">
+                <span className="grid size-12 place-items-center rounded-full bg-neutral text-2xl text-neutral-content">+</span>
+                <span className="font-semibold">Open a pack</span>
+              </div>
+            </button>
+          </div>
+        </section>
       </div>
+      {notice ? (
+        <dialog className="modal modal-open">
+          <div className="modal-box">
+            <p>We're working on adding more images soon.</p>
+            <div className="modal-action">
+              <button type="button" className="btn" onClick={() => setNotice(false)}>
+                Close
+              </button>
+            </div>
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button type="button" onClick={() => setNotice(false)}>
+              close
+            </button>
+          </form>
+        </dialog>
+      ) : null}
     </>
   );
 }

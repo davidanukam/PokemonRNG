@@ -15,22 +15,20 @@ export function PackCard({
 }) {
   const body = (
     <>
-      <div className="flex h-8 items-center bg-neutral px-4 text-xs font-semibold text-neutral-content">
-        {code}
-      </div>
-      <figure className="h-48 bg-base-200">
+      <figure className="h-64 bg-base-200">
         {art ? (
-          <img alt="" src={artUrl(art.id, false)} width={148} height={168} className="h-full w-full object-contain p-2" />
+          <img alt="" src={artUrl(art.id, false)} width={200} height={280} className="h-full w-full object-contain p-4" />
         ) : (
           <span className="block h-full w-full" />
         )}
       </figure>
-      <div className="card-body p-4">
-        <h2 className="card-title text-base">{name}</h2>
+      <div className="absolute inset-x-0 bottom-0 translate-y-full bg-neutral px-4 py-2 text-neutral-content transition duration-200 group-hover:translate-y-0">
+        <div className="text-xs font-semibold">{code}</div>
+        <div className="text-sm">{name}</div>
       </div>
     </>
   );
-  const className = "card card-border bg-base-100 text-start";
+  const className = "group card card-border relative overflow-hidden! bg-base-100 text-start";
   if (!onClick) return <div className={className}>{body}</div>;
   return (
     <button type="button" className={className} onClick={onClick}>

@@ -27,6 +27,7 @@
 
 html {
   font-family: var(--font-sans);
+  scrollbar-gutter: stable;
 }
 
 @utility cv-auto {
@@ -95,8 +96,65 @@ label:has(input[type="checkbox"], input[type="radio"]) {
   .modal-backdrop:hover,
   .modal-backdrop button,
   .modal-backdrop button:hover,
-  .modal-backdrop button:active {
+  .modal-backdrop button:active,
+  .hover-3d,
+  .hover-3d:hover,
+  .hover-3d:focus-visible,
+  .hover-3d:active,
+  a.hover-3d,
+  a.hover-3d:hover,
+  a.hover-3d:focus-visible,
+  a.hover-3d:active,
+  label:has(input.toggle),
+  label:has(input.toggle):hover,
+  label:has(input.toggle):active,
+  input.toggle,
+  input.toggle:hover,
+  input.toggle:active {
     scale: 1;
     translate: 0 0;
+  }
+}
+
+.drawer-content {
+  overflow-x: clip;
+}
+
+.overflow-anchor-none {
+  overflow-anchor: none;
+}
+
+.hover-3d > :nth-child(n + 2) {
+  scale: 1;
+}
+
+.hover-3d:hover > :first-child {
+  scale: 1;
+}
+
+.input:focus,
+.input:focus-within,
+.select:focus,
+.select:focus-within,
+.select:open {
+  outline: none;
+  outline-offset: 0;
+  box-shadow: none;
+}
+
+.rarity-name {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+}
+
+.condition-name {
+  font-family: var(--font-sans);
+  font-style: italic;
+  font-weight: 650;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .price-strip {
+    transition: none;
   }
 }
