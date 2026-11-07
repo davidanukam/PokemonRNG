@@ -76,6 +76,8 @@ export function AppShell() {
   const [setIndex, setSetIndex] = useState<number | null>(readSet);
   const [pulls, setPulls] = useState<Pull[]>([]);
   const [picked, setPicked] = useState<{ card: Card; cond: number } | null>(null);
+  const [sheet, setSheet] = useState<"" | "info" | "data" | "evo">("");
+  const narrow = useNarrow();
   const [glide, setGlide] = useState("");
   const [evolutions, setEvolutions] = useState<EvolutionBook | null>(null);
   const glideTimer = useRef<number | null>(null);
@@ -259,10 +261,7 @@ export function AppShell() {
       />
       <div className="drawer-content min-h-dvh bg-base-200">
         <div className="navbar sticky top-0 z-20 border-b border-base-300 bg-base-100">
-          <div className="navbar-start gap-4">
-            <label htmlFor={DRAWER_ID} aria-label="Open menu" className="btn btn-ghost btn-square drawer-button lg:hidden">
-              <Icon name="menu" />
-            </label>
+          <div className="navbar-start min-w-0 gap-4">
             <button type="button" className="btn btn-ghost btn-circle size-auto p-0" aria-label="Profile" onClick={() => go("profile")}>
               <div
                 className="radial-progress"
@@ -282,14 +281,14 @@ export function AppShell() {
               </div>
             </button>
             <div className="min-w-0 text-start">
-              <div className="font-semibold">{profile.name}</div>
+              <div className="truncate font-semibold">{profile.name}</div>
               <div className="text-sm whitespace-nowrap text-base-content/70">
                 Level {level.level}
                 <span className="ms-2">{level.into} / 80 xp</span>
               </div>
             </div>
           </div>
-          <div className="navbar-end pe-6">
+          <div className="navbar-end gap-2 pe-2 lg:pe-6">
             <div className="stats hidden border border-base-300 bg-base-100 md:inline-grid">
               <div className="stat px-4 py-2">
                 <div className="stat-title">Unique</div>
@@ -304,6 +303,9 @@ export function AppShell() {
                 <div className="stat-value text-lg">{money(collectionWorth(profile, indexes.byId))}</div>
               </div>
             </div>
+            <label htmlFor={DRAWER_ID} aria-label="Open menu" className="btn btn-ghost btn-square drawer-button lg:hidden">
+              <Icon name="menu" />
+            </label>
           </div>
         </div>
         <main className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6">
@@ -351,6 +353,7 @@ export function AppShell() {
             onCard={(card, cond) => setPicked({ card, cond })}
           />
         ) : null}
+        {catalog && (screen === "collection" || screen === "dex") ? <BackToTop /> : null}
         {catalog && screen === "collection" ? (
           <Collection
             catalog={catalog}
@@ -428,69 +431,98 @@ export function AppShell() {
 
       <dialog
         ref={dialogRef}
-        className="modal card-sheet"
+        className={`modal card-sheet${narrow && sheet ? " card-sheet-split" : ""}`}
         onClose={() => {
           if (glideTimer.current != null) window.clearTimeout(glideTimer.current);
           glideTimer.current = null;
           setGlide("");
+          setSheet("");
           setPicked(null);
         }}
       >
         {picked && catalog ? (
           <div className={`modal-box w-auto! max-w-none! overflow-visible! bg-transparent! p-4! shadow-none! ${glide}`}>
-            <CardFace key={picked.card.id} card={picked.card} cond={picked.cond} conditions={catalog.conditions} large hideTag />
+            <CardFace
+              key={picked.card.id}
+              card={picked.card}
+              cond={picked.cond}
+              conditions={catalog.conditions}
+              large
+              hideTag
+              fit={narrow ? (sheet ? "sheet" : "phone") : undefined}
+            />
           </div>
         ) : (
           <div className="modal-box" />
         )}
-        {picked ? <CardFactsPanel id={picked.card.id} /> : null}
-        {picked && catalog ? (
+        {picked && !narrow ? <CardFactsPanel id={picked.card.id} /> : null}
+        {picked && catalog && !narrow ? (
           <aside className="card-panel fixed top-0 right-0 z-20 col-start-1 row-start-1 flex h-dvh w-[min(100%,20rem)] flex-col gap-3 overflow-y-auto bg-base-100 p-6 shadow-xl">
             <form method="dialog" className="self-end">
               <button className="btn btn-sm btn-error">Close</button>
             </form>
-              <h2 id="card-title" className="text-3xl font-semibold">{picked.card.name}</h2>
-              <p className="text-base-content/70">
-                {catalog.sets[picked.card.set][1]} · {picked.card.number || "—"}
-              </p>
-              <div className="panel-section flex flex-col gap-1 p-3">
-                <p className="rarity-name text-lg" style={{ color: tierColor(picked.card.tier) }}>
-                  {catalog.tiers[picked.card.tier]}
-                  {catalog.rarities[picked.card.rarity] && catalog.rarities[picked.card.rarity] !== catalog.tiers[picked.card.tier]
-                    ? ` · ${catalog.rarities[picked.card.rarity]}`
-                    : ""}
-                  {" · "}1 in {oneIn(picked.card.tier).toLocaleString()}
-                </p>
-                <p className="condition-name text-lg" style={{ color: condColor(picked.cond) }}>
-                  {catalog.conditions[picked.cond]} · {money(valueOf(picked.card, picked.cond))}
-                </p>
-                {COND_DROPPED(picked.card.tier, picked.cond) ? (
-                  <p className="rarity-name" style={{ color: tierColor(effectiveTier(picked.card.tier, picked.cond)) }}>
-                    This copy counts as {catalog.tiers[effectiveTier(picked.card.tier, picked.cond)]}.
-                  </p>
-                ) : null}
-                <p>
-                  You have {copiesOf(profile.owned, picked.card.id)} {copiesOf(profile.owned, picked.card.id) === 1 ? "copy" : "copies"}.
-                </p>
-              </div>
-              <div className="panel-section flex flex-col gap-1 p-3">
-                {catalog.conditions.map((name, index) => (
-                  <span key={name} className="condition-name text-sm" style={{ color: condColor(index) }}>
-                    {name} {(profile.owned[String(picked.card.id)] || [0, 0, 0, 0, 0])[index] || 0}
-                  </span>
-                ))}
-              </div>
-              {evolutions ? (
-                <EvolutionPanel
-                  card={picked.card}
-                  byKey={evolutionIndex}
-                  catalog={catalog}
-                  profile={profile}
-                  book={evolutions}
-                  onOpen={showRelative}
-                />
-              ) : null}
+            <CardDetails card={picked.card} cond={picked.cond} catalog={catalog} profile={profile} />
+            {evolutions ? (
+              <EvolutionPanel
+                card={picked.card}
+                byKey={evolutionIndex}
+                catalog={catalog}
+                profile={profile}
+                book={evolutions}
+                onOpen={showRelative}
+              />
+            ) : null}
           </aside>
+        ) : null}
+        {picked && narrow ? (
+          <form method="dialog" className="fixed top-3 right-3 z-40">
+            <button className="btn btn-sm btn-error">Close</button>
+          </form>
+        ) : null}
+        {picked && catalog && narrow ? (
+          <div className="fixed inset-x-0 bottom-0 z-30 flex flex-col">
+            {sheet ? (
+              <div className="h-[50dvh] overflow-y-auto border-t border-base-300 bg-base-100 p-4 shadow-xl">
+                <div className="flex min-h-full flex-col gap-3">
+                  {sheet === "info" ? <CardDetails card={picked.card} cond={picked.cond} catalog={catalog} profile={profile} /> : null}
+                  {sheet === "data" ? <CardFactsPanel id={picked.card.id} className="flex flex-col gap-4" /> : null}
+                  {sheet === "evo" && evolutions ? (
+                    <EvolutionPanel
+                      card={picked.card}
+                      byKey={evolutionIndex}
+                      catalog={catalog}
+                      profile={profile}
+                      book={evolutions}
+                      onOpen={showRelative}
+                      pin={false}
+                      placeholder="This card does not evolve."
+                    />
+                  ) : null}
+                  {sheet === "evo" && !evolutions ? <p className="text-sm text-base-content/70">Loading evolutions.</p> : null}
+                </div>
+              </div>
+            ) : null}
+            <div role="tablist" aria-label="Card sections" className="tabs tabs-box w-full rounded-none bg-base-100">
+              {(
+                [
+                  ["info", "Info"],
+                  ["data", "Data"],
+                  ["evo", "Evo"],
+                ] as const
+              ).map(([id, label]) => (
+                <button
+                  key={id}
+                  type="button"
+                  role="tab"
+                  aria-selected={sheet === id}
+                  className={`tab flex-1 ${sheet === id ? "tab-active" : ""}`}
+                  onClick={() => setSheet((current) => (current === id ? "" : id))}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
         ) : null}
         <form method="dialog" className="modal-backdrop">
           <button>close</button>
@@ -498,6 +530,68 @@ export function AppShell() {
       </dialog>
     </div>
   );
+}
+
+function CardDetails({
+  card,
+  cond,
+  catalog,
+  profile,
+}: {
+  card: Card;
+  cond: number;
+  catalog: Catalog;
+  profile: Profile;
+}) {
+  const owned = profile.owned[String(card.id)] || [0, 0, 0, 0, 0];
+  const copies = copiesOf(profile.owned, card.id);
+  return (
+    <>
+      <h2 id="card-title" className="text-3xl font-semibold">
+        {card.name}
+      </h2>
+      <p className="text-base-content/70">
+        {catalog.sets[card.set][1]} · {card.number || "—"}
+      </p>
+      <div className="panel-section flex flex-col gap-1 p-3">
+        <p className="rarity-name text-lg" style={{ color: tierColor(card.tier) }}>
+          {catalog.tiers[card.tier]}
+          {catalog.rarities[card.rarity] && catalog.rarities[card.rarity] !== catalog.tiers[card.tier] ? ` · ${catalog.rarities[card.rarity]}` : ""}
+          {" · "}1 in {oneIn(card.tier).toLocaleString()}
+        </p>
+        <p className="condition-name text-lg" style={{ color: condColor(cond) }}>
+          {catalog.conditions[cond]} · {money(valueOf(card, cond))}
+        </p>
+        {COND_DROPPED(card.tier, cond) ? (
+          <p className="rarity-name" style={{ color: tierColor(effectiveTier(card.tier, cond)) }}>
+            This copy counts as {catalog.tiers[effectiveTier(card.tier, cond)]}.
+          </p>
+        ) : null}
+        <p>
+          You have {copies} {copies === 1 ? "copy" : "copies"}.
+        </p>
+      </div>
+      <div className="panel-section flex flex-col gap-1 p-3">
+        {catalog.conditions.map((name, index) => (
+          <span key={name} className="condition-name text-sm" style={{ color: condColor(index) }}>
+            {name} {owned[index] || 0}
+          </span>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function useNarrow() {
+  const query = "(max-width: 1023px)";
+  const [narrow, setNarrow] = useState(() => typeof window !== "undefined" && window.matchMedia(query).matches);
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const onChange = () => setNarrow(media.matches);
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, []);
+  return narrow;
 }
 
 function COND_DROPPED(tier: number, cond: number) {
@@ -632,7 +726,7 @@ function Opener({
   const code = setIndex == null ? "All" : catalog.sets[setIndex][0];
   const present = new Set(pool.map((card) => card.tier));
   return (
-    <div className="flex min-h-[calc(100dvh-9rem)] flex-col">
+    <div className="flex flex-col lg:min-h-[calc(100dvh-9rem)]">
       <div className="flex flex-wrap items-center gap-2">
         <button type="button" className="btn btn-neutral" onClick={onBack}>
           All packs
@@ -644,7 +738,7 @@ function Opener({
           Next
         </button>
       </div>
-      <div className="mt-4 grid min-h-0 flex-1 grid-cols-1 gap-6 sm:grid-cols-[18rem_minmax(0,1fr)]">
+      <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-[18rem_minmax(0,1fr)] lg:min-h-0 lg:flex-1">
         <div className="mx-auto flex w-full max-w-72 flex-col items-center gap-4 self-start sm:mx-0 sm:max-w-none">
           <PackCard code={code} name={name} setIndex={setIndex} art={coverArt(pool)} />
           <div className="flex flex-wrap justify-center gap-2">
@@ -656,7 +750,7 @@ function Opener({
             </button>
           </div>
         </div>
-        <div className="flex min-h-0 flex-col">
+        <div className="flex flex-col lg:min-h-0">
           <h1 className="text-3xl font-semibold">{name}</h1>
           <p className="mt-1 mb-4 max-w-prose text-base-content/70">{pool.length.toLocaleString()} cards. A roll picks a rarity, then a card, then a condition.</p>
           <div className="flex flex-wrap gap-2">
@@ -805,6 +899,39 @@ function Reveal({
         </>
       ) : null}
     </>
+  );
+}
+
+function BackToTop() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const drawer = document.querySelector(".drawer-content");
+    const onScroll = () => {
+      const nested = drawer instanceof HTMLElement ? drawer.scrollTop : 0;
+      setShow(Math.max(window.scrollY, nested) > 320);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    drawer?.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      drawer?.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+  if (!show) return null;
+  return (
+    <button
+      type="button"
+      className="btn fixed right-4 bottom-4 z-30 lg:right-6 lg:bottom-6"
+      onClick={() => {
+        const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+        window.scrollTo({ top: 0, behavior });
+        const drawer = document.querySelector(".drawer-content");
+        if (drawer instanceof HTMLElement) drawer.scrollTo({ top: 0, behavior });
+      }}
+    >
+      Go to top
+    </button>
   );
 }
 

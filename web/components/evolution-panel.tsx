@@ -11,6 +11,8 @@ export function EvolutionPanel({
   profile,
   book,
   onOpen,
+  pin = true,
+  placeholder,
 }: {
   card: Card;
   byKey: Map<string, Card[]>;
@@ -18,45 +20,68 @@ export function EvolutionPanel({
   profile: Profile;
   book: EvolutionBook;
   onOpen: (card: Card, step: EvolutionStep) => void;
+  pin?: boolean;
+  placeholder?: string;
 }) {
   const move = evolutionMove(card, byKey, profile, book);
-  if (!move) return null;
+  if (!move) return placeholder ? <p className="text-sm text-base-content/70">{placeholder}</p> : null;
+  const both = Boolean(move.previous && move.next);
   return (
-    <div className="mt-auto flex flex-col gap-3">
-      <div className="evo-cards mx-auto w-40">
-        {move.shown && move.shownStep ? (
-          <CardFace
-            card={move.shown}
-            cond={displayCond(profile, move.shown)}
-            conditions={catalog.conditions}
-            onClick={() => {
-              if (move.shown && move.shownStep) onOpen(move.shown, move.shownStep);
-            }}
-          />
+    <div className={`${pin ? "mt-auto " : ""}flex flex-col gap-3`}>
+      <div className={`evo-cards mx-auto w-full max-w-64 ${both ? "evo-stack" : ""}`}>
+        {both ? (
+          <>
+            <EvoCard card={move.previous} step="prev" catalog={catalog} profile={profile} onOpen={onOpen} />
+            <EvoCard card={move.next} step="next" catalog={catalog} profile={profile} onOpen={onOpen} />
+          </>
         ) : (
-          <div className="grid aspect-[5/7] place-items-center rounded-box border-2 border-dashed border-base-content/40 p-3 text-center text-sm">
-            Evolution not collected
-          </div>
+          <EvoCard card={move.shown} step={move.shownStep} catalog={catalog} profile={profile} onOpen={onOpen} />
         )}
       </div>
       {move.previous || move.next ? (
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-center gap-2">
           {move.previous ? (
             <button type="button" className="btn btn-success" onClick={() => onOpen(move.previous as Card, "prev")}>
               Prev
             </button>
-          ) : (
-            <span />
-          )}
+          ) : null}
           {move.next ? (
             <button type="button" className="btn btn-success" onClick={() => onOpen(move.next as Card, "next")}>
               Next
             </button>
-          ) : (
-            <span />
-          )}
+          ) : null}
         </div>
       ) : null}
     </div>
+  );
+}
+
+function EvoCard({
+  card,
+  step,
+  catalog,
+  profile,
+  onOpen,
+}: {
+  card: Card | null;
+  step: EvolutionStep | null;
+  catalog: Catalog;
+  profile: Profile;
+  onOpen: (card: Card, step: EvolutionStep) => void;
+}) {
+  if (!card || !step) {
+    return (
+      <div className="grid aspect-[5/7] place-items-center rounded-box border-2 border-dashed border-base-content/40 p-3 text-center text-sm">
+        Evolution not collected
+      </div>
+    );
+  }
+  return (
+    <CardFace
+      card={card}
+      cond={displayCond(profile, card)}
+      conditions={catalog.conditions}
+      onClick={() => onOpen(card, step)}
+    />
   );
 }

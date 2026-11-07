@@ -29,8 +29,8 @@ export function PackOrbit({ pool }: { pool: Card[] }) {
   const cards = useMemo(() => orbitCards(pool), [pool]);
   if (cards.length === 0) return null;
   return (
-    <div className="mt-4 flex min-h-0 flex-1 flex-col">
-      <button type="button" className="btn btn-sm fixed right-6 bottom-6 z-30" onClick={() => setFlat((value) => !value)}>
+    <div className="mt-4 flex flex-col lg:min-h-0 lg:flex-1">
+      <button type="button" className="btn btn-sm z-30 mb-2 self-end lg:fixed lg:right-6 lg:bottom-6 lg:mb-0" onClick={() => setFlat((value) => !value)}>
         {flat ? "3D" : "2D"}
       </button>
       {flat ? <FlatReel cards={cards} /> : <Orbit cards={cards} />}
@@ -71,9 +71,9 @@ function Orbit({ cards }: { cards: Card[] }) {
   const radius = Math.round(CARD_W / 2 / Math.tan(Math.PI / cards.length));
   const height = Math.round(CARD_W * 1.4);
   return (
-    <div className="pack-scene relative min-h-56 flex-1">
+    <div className="pack-scene relative h-96 lg:h-auto lg:min-h-56 lg:flex-1">
       <div
-        className="pack-spin absolute top-[calc(50%-4rem)] left-1/2"
+        className="pack-spin absolute top-1/2 left-1/2 lg:top-[calc(50%-4rem)]"
         style={{ width: CARD_W, height, marginLeft: -CARD_W / 2, marginTop: -height / 2 }}
       >
         {cards.map((card, index) => (
@@ -92,8 +92,8 @@ function Orbit({ cards }: { cards: Card[] }) {
 function FlatReel({ cards }: { cards: Card[] }) {
   const loop = cards.length > 1 ? [...cards, ...cards] : cards;
   return (
-    <div className="relative min-h-56 flex-1 overflow-hidden">
-        <div className="absolute inset-x-0 top-[calc(50%-4rem)] -translate-y-1/2">
+    <div className="relative h-96 overflow-hidden lg:h-auto lg:min-h-56 lg:flex-1">
+        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 lg:top-[calc(50%-4rem)]">
         <div className={`flex w-max gap-4 ${cards.length > 1 ? "pack-marquee" : ""}`}>
           {loop.map((card, index) => (
             <OrbitArt

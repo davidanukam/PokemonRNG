@@ -73,7 +73,7 @@ function PriceChart({ points }: { points: PricePoint[] }) {
   );
 }
 
-export function CardFactsPanel({ id }: { id: number }) {
+export function CardFactsPanel({ id, className }: { id: number; className?: string }) {
   const [range, setRange] = useState<PriceRange>("quarter");
   const [lines, setLines] = useState<CardLine[] | null>(null);
   const [history, setHistory] = useState<CardFacts["history"]>(null);
@@ -114,7 +114,10 @@ export function CardFactsPanel({ id }: { id: number }) {
   const latest = history?.points[history.points.length - 1];
 
   return (
-    <aside aria-label="Card details" className="card-facts fixed top-0 left-0 z-20 flex h-dvh w-[min(100%,22rem)] flex-col gap-4 overflow-y-auto bg-base-100 p-6 shadow-xl">
+    <aside
+      aria-label="Card details"
+      className={className ?? "card-facts fixed top-0 left-0 z-20 flex h-dvh w-[min(100%,22rem)] flex-col gap-4 overflow-y-auto bg-base-100 p-6 shadow-xl"}
+    >
       {error ? <p className="text-sm text-error">{error}</p> : null}
       {lines === null && pending ? <p className="text-sm text-base-content/70">Loading card details.</p> : null}
       {lines && lines.length === 0 && !pending ? <p className="text-sm text-base-content/70">No printed details for this card.</p> : null}
