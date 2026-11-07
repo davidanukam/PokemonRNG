@@ -6,6 +6,7 @@ import { CardFace } from "@/components/card-face";
 import { Icon } from "@/components/icons";
 import { PackCard } from "@/components/pack-card";
 import { PackOrbit } from "@/components/pack-orbit";
+import { ProfileAuth } from "@/components/profile-auth";
 import { imageFileToAvatar } from "@/lib/avatar";
 import {
   artUrl,
@@ -1011,12 +1012,10 @@ function ProfilePage({
 
   return (
     <>
-      <h1 className="text-3xl font-semibold">Profile</h1>
-      <p className="mt-2 text-sm">
-        <a className="link" href="/auth/sign-up">Create an account</a>
-        <span className="mx-2">·</span>
-        <a className="link" href="/auth/sign-in">Sign in</a>
-      </p>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-3xl font-semibold">Profile</h1>
+        <ProfileAuth />
+      </div>
       <div className="mt-4 grid items-start gap-6 lg:grid-cols-[20rem_minmax(0,1fr)]">
         <div className="card card-border bg-base-100">
           <div className="card-body items-center text-center">
