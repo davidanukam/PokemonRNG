@@ -194,9 +194,22 @@ label:has(input[type="checkbox"], input[type="radio"]) {
   animation: pokerng-slide-in 240ms ease-out;
 }
 
+.card-facts {
+  animation: pokerng-slide-in-left 240ms ease-out;
+}
+
 @keyframes pokerng-slide-in {
   from {
     translate: 100% 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes pokerng-slide-in-left {
+  from {
+    translate: -100% 0;
   }
   to {
     translate: 0 0;
@@ -257,7 +270,8 @@ label:has(input[type="checkbox"], input[type="radio"]) {
     transition: none;
   }
 
-  .card-panel {
+  .card-panel,
+  .card-facts {
     animation: none;
   }
 }

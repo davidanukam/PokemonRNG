@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Avatar } from "@/components/avatar";
 import { CardFace } from "@/components/card-face";
+import { CardFactsPanel } from "@/components/card-facts";
 import { Icon } from "@/components/icons";
 import { PackCard } from "@/components/pack-card";
 import { PackOrbit } from "@/components/pack-orbit";
@@ -380,6 +381,7 @@ export function AppShell() {
         ) : (
           <div className="modal-box" />
         )}
+        {picked ? <CardFactsPanel key={picked.card.id} id={picked.card.id} /> : null}
         {picked && catalog ? (
           <aside className="card-panel fixed top-0 right-0 z-20 col-start-1 row-start-1 flex h-dvh w-[min(100%,20rem)] flex-col gap-2 overflow-y-auto bg-base-100 p-6 shadow-xl">
             <form method="dialog" className="self-end">
