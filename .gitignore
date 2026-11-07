@@ -6,3 +6,6 @@ pokedex/sets/
 *.json
 !package-lock.json
 !package.json
+!web/tsconfig.json
+!web/public/data/catalog.json
+!web/public/data/sprites.json
