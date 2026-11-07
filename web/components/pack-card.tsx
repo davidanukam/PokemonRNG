@@ -1,10 +1,9 @@
-import { artUrl, packColor } from "@/lib/game";
+import { artUrl } from "@/lib/game";
 import type { Card } from "@/lib/types";
 
 export function PackCard({
   code,
   name,
-  setIndex,
   art,
   onClick,
 }: {
@@ -16,17 +15,17 @@ export function PackCard({
 }) {
   const body = (
     <>
-      <div className="flex h-9 items-center px-3 text-xs font-bold text-white" style={{ background: packColor(setIndex) }}>
+      <div className="flex h-8 items-center bg-neutral px-4 text-xs font-semibold text-neutral-content">
         {code}
       </div>
-      <figure className="h-44 bg-base-200">
+      <figure className="h-48 bg-base-200">
         {art ? (
           <img alt="" src={artUrl(art.id, false)} width={148} height={168} className="h-full w-full object-contain p-2" />
         ) : (
           <span className="block h-full w-full" />
         )}
       </figure>
-      <div className="card-body p-3">
+      <div className="card-body p-4">
         <h2 className="card-title text-base">{name}</h2>
       </div>
     </>

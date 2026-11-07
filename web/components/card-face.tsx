@@ -35,7 +35,7 @@ export function CardFace({ card, cond, conditions, large, fresh, count, onClick 
         className="aspect-[5/7] w-full object-cover"
       />
       {fresh ? <span className="badge badge-sm absolute top-2 left-2">New</span> : null}
-      <span className="absolute inset-x-0 bottom-0 flex justify-between gap-2 bg-gradient-to-t from-black/80 to-transparent px-2 pt-6 pb-2 text-xs text-white">
+      <span className="absolute inset-x-0 bottom-0 flex justify-between gap-2 bg-black/80 px-2 py-2 text-xs text-white">
         <span>{conditions[cond]}</span>
         <span>{money(valueOf(card, cond))}</span>
       </span>

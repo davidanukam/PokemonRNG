@@ -2,8 +2,101 @@
 @plugin "daisyui" {
   themes: light --default, dark --prefersdark;
 }
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --depth: 0;
+  --noise: 0;
+}
+@plugin "daisyui/theme" {
+  name: "dark";
+  prefersdark: true;
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --depth: 0;
+  --noise: 0;
+}
+
+@theme {
+  --font-sans: var(--font-public-sans), "Segoe UI", sans-serif;
+}
+
+html {
+  font-family: var(--font-sans);
+}
 
 @utility cv-auto {
   content-visibility: auto;
   contain-intrinsic-size: auto 280px;
+}
+
+button,
+a[href],
+select,
+summary,
+[role="button"],
+input[type="checkbox"],
+input[type="radio"],
+label[for],
+label:has(input[type="checkbox"], input[type="radio"]) {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  button,
+  a[href],
+  select,
+  summary,
+  [role="button"],
+  input[type="checkbox"],
+  input[type="radio"],
+  label[for],
+  label:has(input[type="checkbox"], input[type="radio"]) {
+    scale: 1;
+    translate: 0 0;
+    transition: scale 160ms ease, translate 160ms ease;
+  }
+
+  button:hover,
+  button:focus-visible,
+  a[href]:hover,
+  a[href]:focus-visible,
+  select:hover,
+  select:focus-visible,
+  summary:hover,
+  [role="button"]:hover,
+  [role="button"]:focus-visible,
+  input[type="checkbox"]:hover,
+  input[type="radio"]:hover,
+  label[for]:hover,
+  label:has(input[type="checkbox"], input[type="radio"]):hover {
+    scale: 1.03;
+    translate: 0 -4px;
+  }
+
+  button:active,
+  a[href]:active,
+  select:active,
+  [role="button"]:active,
+  label[for]:active,
+  label:has(input[type="checkbox"], input[type="radio"]):active {
+    scale: 0.98;
+    translate: 0 0;
+  }
+
+  .drawer-overlay,
+  .drawer-overlay:hover,
+  .drawer-overlay:active,
+  .modal-backdrop,
+  .modal-backdrop:hover,
+  .modal-backdrop button,
+  .modal-backdrop button:hover,
+  .modal-backdrop button:active {
+    scale: 1;
+    translate: 0 0;
+  }
 }

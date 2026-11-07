@@ -140,7 +140,7 @@ export function AppShell() {
       />
       <div className="drawer-content min-h-dvh bg-base-200">
         <div className="navbar sticky top-0 z-20 border-b border-base-300 bg-base-100">
-          <div className="navbar-start gap-3">
+          <div className="navbar-start gap-4">
             <label htmlFor={DRAWER_ID} aria-label="Open menu" className="btn btn-ghost btn-square drawer-button lg:hidden">
               <Icon name="menu" />
             </label>
@@ -155,7 +155,7 @@ export function AppShell() {
             </div>
             <div className="min-w-0">
               <div className="font-semibold">{profile.name}</div>
-              <div className="text-sm text-base-content/60">
+              <div className="text-sm text-base-content/70">
                 Level {level.level}
                 <span className="ms-2">{level.into} / 80 xp</span>
               </div>
@@ -242,11 +242,11 @@ export function AppShell() {
       <div className="drawer-side is-drawer-close:overflow-visible">
         <label htmlFor={DRAWER_ID} aria-label="Close menu" className="drawer-overlay" />
         <div className="flex min-h-full flex-col bg-base-200 is-drawer-close:w-16 is-drawer-open:w-64">
-          <div className="flex items-center gap-2 px-3 py-4">
-            <span className="size-7 shrink-0 rounded-box bg-neutral" aria-hidden="true" />
+          <div className="flex items-center gap-2 px-4 py-4">
+            <span className="size-8 shrink-0 rounded-box bg-neutral" aria-hidden="true" />
             <div className="is-drawer-close:hidden">
               <div className="font-semibold">PokeRNG</div>
-              <div className="text-xs text-base-content/60">Pack rolls</div>
+              <div className="text-xs text-base-content/70">Pack rolls</div>
             </div>
           </div>
           <ul className="menu w-full grow">
@@ -268,7 +268,7 @@ export function AppShell() {
               );
             })}
           </ul>
-          <p className="px-4 pb-3 text-xs text-base-content/60 is-drawer-close:hidden">
+          <p className="px-4 pb-4 text-xs text-base-content/70 is-drawer-close:hidden">
             Fan project. Not affiliated with Nintendo, The Pokémon Company, Creatures, or TCGplayer. Nothing here is for sale.
           </p>
           <div className="m-2 is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Sidebar">
@@ -302,7 +302,7 @@ export function AppShell() {
               <p className="mt-2">
                 You have {copiesOf(profile.owned, picked.card.id)} {copiesOf(profile.owned, picked.card.id) === 1 ? "copy" : "copies"}.
               </p>
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="mt-4 flex flex-wrap gap-2">
                 {catalog.conditions.map((name, index) => (
                   <span key={name} className="badge badge-ghost">
                     {name} {(profile.owned[String(picked.card.id)] || [0, 0, 0, 0, 0])[index] || 0}
@@ -375,9 +375,9 @@ function Packs({
     .filter((index) => index >= 0);
   return (
     <>
-      <h1 className="text-3xl font-semibold tracking-tight">Packs</h1>
+      <h1 className="text-3xl font-semibold">Packs</h1>
       <p className="mt-1 mb-4 max-w-prose text-base-content/70">Rarer cards show up less often. A damaged copy is worth less than the same card in Near Mint.</p>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         <PackCard code="All" name="Every card" setIndex={null} art={coverArt(catalog.cards)} onClick={() => onOpen(null)} />
         {featured.map((index) => (
           <PackCard
@@ -437,7 +437,7 @@ function Opener({
       <div className="mt-4 grid grid-cols-1 items-start gap-6 sm:grid-cols-[11rem_minmax(0,1fr)]">
         <PackCard code={code} name={name} setIndex={setIndex} art={coverArt(pool)} />
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight">{name}</h1>
+          <h1 className="text-3xl font-semibold">{name}</h1>
           <p className="mt-1 mb-4 max-w-prose text-base-content/70">{pool.length.toLocaleString()} cards. A roll picks a rarity, then a card, then a condition.</p>
           <div className="flex flex-wrap gap-2">
             {catalog.tiers.map((tier, index) =>
@@ -492,7 +492,7 @@ function Reveal({
           Collection
         </button>
       </div>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {pulls.map((pull, index) => (
           <div key={`${pull.card.id}-${index}`} style={{ animationDelay: `${Math.min(index, 9) * 0.05}s` }}>
             <CardFace
@@ -560,7 +560,7 @@ function Collection({
 
   return (
     <>
-      <h1 className="text-3xl font-semibold tracking-tight">Collection</h1>
+      <h1 className="text-3xl font-semibold">Collection</h1>
       <p className="mt-1 mb-4 max-w-prose text-base-content/70">Saved in this browser. Move the cursor over a card and it tilts.</p>
       <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
         <input className="input w-full sm:flex-1" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search a name" aria-label="Search" />
@@ -579,7 +579,7 @@ function Collection({
         </select>
       </div>
       {entries.length === 0 ? <p className="text-base-content/70">Nothing saved yet. Open a pack and the cards land here.</p> : null}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {entries.map((entry) => (
           <CardFace
             key={entry.card.id}
@@ -618,7 +618,7 @@ function Dex({
   const unique = rows.reduce((sum, row) => sum + row.have, 0);
   return (
     <>
-      <h1 className="text-3xl font-semibold tracking-tight">Dex</h1>
+      <h1 className="text-3xl font-semibold">Dex</h1>
       <p className="mt-1 mb-4 max-w-prose text-base-content/70">
         {unique.toLocaleString()} of {catalog.cards.length.toLocaleString()} cards registered.
       </p>
@@ -627,11 +627,11 @@ function Dex({
           <button
             key={row.index}
             type="button"
-            className="cv-auto relative flex w-full items-center justify-between gap-3 overflow-hidden rounded-box border border-base-300 bg-base-100 px-4 py-3 text-start"
+            className="cv-auto relative flex w-full items-center justify-between gap-4 overflow-hidden rounded-box border border-base-300 bg-base-100 px-4 py-4 text-start"
             onClick={() => onSet(row.index)}
           >
             <strong className="font-medium">{row.name}</strong>
-            <span className="text-sm text-base-content/60">
+            <span className="text-sm text-base-content/70">
               {row.have} / {row.total}
             </span>
             <span className="absolute bottom-0 left-0 h-0.5 bg-base-content" style={{ width: `${row.pct}%` }} />
@@ -645,12 +645,9 @@ function Dex({
 function Trade() {
   return (
     <>
-      <h1 className="text-3xl font-semibold tracking-tight">Trade</h1>
+      <h1 className="text-3xl font-semibold">Trade</h1>
       <div className="card card-border mt-4 max-w-lg bg-base-100">
         <div className="card-body">
-          <div className="flex size-11 items-center justify-center rounded-box bg-base-200" aria-hidden="true">
-            <Icon name="trade" />
-          </div>
           <p>Trading is not hooked up yet. Cards stay on this computer.</p>
         </div>
       </div>
@@ -666,7 +663,7 @@ function ProfilePage({ profile, onSave }: { profile: Profile; onSave: (next: Pro
   }, []);
   return (
     <>
-      <h1 className="text-3xl font-semibold tracking-tight">Profile</h1>
+      <h1 className="text-3xl font-semibold">Profile</h1>
       <div className="card card-border mt-4 max-w-xl bg-base-100">
         <div className="card-body">
           <label className="floating-label">
@@ -679,7 +676,7 @@ function ProfilePage({ profile, onSave }: { profile: Profile; onSave: (next: Pro
             />
             <span>Trainer name</span>
           </label>
-          <label className="label cursor-pointer justify-start gap-3">
+          <label className="label cursor-pointer justify-start gap-4">
             <input
               type="checkbox"
               className="toggle"
