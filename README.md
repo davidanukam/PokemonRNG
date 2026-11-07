@@ -2,7 +2,7 @@
 
 ![PokeRNG](./web/public/demoImage1.png)
 
-<h3>PokemonRNG</h3>
+<h1>PokemonRNG</h1>
 
 </div>
 
