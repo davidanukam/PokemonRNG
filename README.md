@@ -1,4 +1,10 @@
-# PokemonRNG
+<div id="top" align="center">
+
+![PokeRNG](./web/public/demoImage1.png)
+
+<h3>PokemonRNG</h3>
+
+</div>
 
 Local archive of the international Pokémon TCG. Card text and the EUR series come from [Limitless](https://limitlesstcg.com/cards). Pictures, the USD price, and the price of each condition come from the [TCGplayer Pokémon price guides](https://www.tcgplayer.com/categories/trading-and-collectible-card-games/pokemon). `pokedex/dex.json` stores each species, each set, and each printing. Daily condition prices also live in `pokedex/tcgplayer.sqlite`.
 
