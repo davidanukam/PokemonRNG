@@ -20,17 +20,20 @@ from scraper.tcgplayer import rematch_saved, scrape_tcgplayer
 
 
 def _serve_site(port: int) -> None:
-    import functools
-    from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+    import os
+    import subprocess
+    from pathlib import Path
 
     from web.build_catalog import OUT_PATH, build
 
     if not OUT_PATH.exists():
         build()
-    handler = functools.partial(SimpleHTTPRequestHandler, directory=str(OUT_PATH.parent.parent))
-    server = ThreadingHTTPServer(("127.0.0.1", port), handler)
-    print(f"Rolldex is at http://127.0.0.1:{port}/", flush=True)
-    server.serve_forever()
+    web = Path(__file__).resolve().parent / "web"
+    npm = "npm.cmd" if os.name == "nt" else "npm"
+    if not (web / "node_modules").exists():
+        subprocess.check_call([npm, "install"], cwd=web)
+    print(f"PokeRNG is at http://127.0.0.1:{port}/", flush=True)
+    subprocess.check_call([npm, "run", "dev", "--", "--port", str(port)], cwd=web)
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -85,7 +88,7 @@ def main(argv: list[str] | None = None) -> None:
     catalog = sub.add_parser("catalog", help="Rebuild the pack-site card pool from the SQLite prices")
     del catalog
 
-    play = sub.add_parser("play", help="Open the Rolldex pack site in a local browser tab")
+    play = sub.add_parser("play", help="Run the PokeRNG Next.js site")
     play.add_argument("--port", type=int, default=8765)
 
     args = parser.parse_args(argv)

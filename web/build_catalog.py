@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DB_PATH = ROOT / "pokedex" / "tcgplayer.sqlite"
-OUT_PATH = Path(__file__).resolve().parent / "data" / "catalog.json"
+OUT_PATH = Path(__file__).resolve().parent / "public" / "data" / "catalog.json"
 
 SKIP_RARITY = {"", "Code Card", "None", "Unconfirmed"}
 TIER_NAMES = ["Common", "Uncommon", "Rare", "Holo", "Ultra", "Secret", "Mythic"]
