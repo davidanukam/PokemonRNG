@@ -153,8 +153,31 @@ label:has(input[type="checkbox"], input[type="radio"]) {
   font-weight: 650;
 }
 
+.card-sheet[open],
+.card-sheet.modal-open {
+  background-color: oklch(0% 0 0 / 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.card-panel {
+  animation: pokerng-slide-in 240ms ease-out;
+}
+
+@keyframes pokerng-slide-in {
+  from {
+    translate: 100% 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .price-strip {
     transition: none;
+  }
+
+  .card-panel {
+    animation: none;
   }
 }

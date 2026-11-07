@@ -33,6 +33,7 @@ export function Avatar({
       alt=""
       src={src}
       className={`rounded-full ${contain ? "bg-base-200 object-contain p-0.5" : "object-cover"} ${size}`}
+      style={contain ? { imageRendering: "pixelated" } : undefined}
     />
   );
 }

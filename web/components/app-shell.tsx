@@ -41,6 +41,18 @@ function readSet(): number | null {
   return Number.isFinite(index) ? index : null;
 }
 
+function readPackPick(): string {
+  if (typeof window === "undefined") return "all";
+  const value = sessionStorage.getItem("pokerng-pack-pick");
+  return value == null || value === "" ? "all" : value;
+}
+
+function readCollectionSet(): string {
+  if (typeof window === "undefined") return "";
+  const value = sessionStorage.getItem("pokerng-collection-set");
+  return value == null ? "" : value;
+}
+
 const NAV: { id: Screen; label: string; icon: "packs" | "collection" | "dex" | "trade" | "profile" }[] = [
   { id: "packs", label: "Packs", icon: "packs" },
   { id: "collection", label: "Collection", icon: "collection" },
@@ -58,7 +70,8 @@ export function AppShell() {
   const [pulls, setPulls] = useState<Pull[]>([]);
   const [picked, setPicked] = useState<{ card: Card; cond: number } | null>(null);
   const [sprites, setSprites] = useState<SpriteBook | null>(null);
-  const [collectionSet, setCollectionSet] = useState("");
+  const [collectionSet, setCollectionSet] = useState(readCollectionSet);
+  const [packPick, setPackPick] = useState(readPackPick);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -100,7 +113,9 @@ export function AppShell() {
   useEffect(() => {
     sessionStorage.setItem("pokerng-screen", screen);
     sessionStorage.setItem("pokerng-set", setIndex == null ? "all" : String(setIndex));
-  }, [screen, setIndex]);
+    sessionStorage.setItem("pokerng-pack-pick", packPick);
+    sessionStorage.setItem("pokerng-collection-set", collectionSet);
+  }, [screen, setIndex, packPick, collectionSet]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -241,6 +256,8 @@ export function AppShell() {
           <Packs
             catalog={catalog}
             bySet={indexes.bySet}
+            packPick={packPick}
+            onPackPick={setPackPick}
             onOpen={(index) => {
               setSetIndex(index);
               setScreen("open");
@@ -271,7 +288,8 @@ export function AppShell() {
             catalog={catalog}
             profile={profile}
             byId={indexes.byId}
-            initialSet={collectionSet}
+            setFilter={collectionSet}
+            onSetFilter={setCollectionSet}
             onCard={(card, cond) => setPicked({ card, cond })}
           />
         ) : null}
@@ -280,10 +298,7 @@ export function AppShell() {
             catalog={catalog}
             profile={profile}
             bySet={indexes.bySet}
-            onSet={(index) => {
-              setCollectionSet(String(index));
-              go("collection");
-            }}
+            onCard={(card) => setPicked({ card, cond: bestCondOf(profile, card) })}
           />
         ) : null}
         {screen === "trade" ? <Trade /> : null}
@@ -306,7 +321,7 @@ export function AppShell() {
         <label htmlFor={DRAWER_ID} aria-label="Close menu" className="drawer-overlay" />
         <div className="flex min-h-full flex-col bg-base-200 is-drawer-close:w-16 is-drawer-open:w-64">
           <div className="flex items-center gap-2 px-2 py-4 is-drawer-open:px-4">
-            <span className="size-8 shrink-0 rounded-box bg-neutral is-drawer-close:hidden" aria-hidden="true" />
+            <img src="/pokeball.png" alt="" className="size-8 shrink-0 object-contain is-drawer-close:hidden" style={{ imageRendering: "pixelated" }} />
             <div className="min-w-0 grow is-drawer-close:hidden">
               <div className="font-semibold">PokeRNG</div>
               <div className="text-xs text-base-content/70">Pack rolls</div>
@@ -342,16 +357,19 @@ export function AppShell() {
         </div>
       </div>
 
-      <dialog ref={dialogRef} className="modal" onClose={() => setPicked(null)}>
+      <dialog ref={dialogRef} className="modal card-sheet" onClose={() => setPicked(null)}>
         {picked && catalog ? (
-          <div className="modal-box flex h-dvh! max-h-dvh! w-full! max-w-none! flex-col gap-0 overflow-hidden! rounded-none bg-base-200 p-0! md:flex-row">
-            <div className="flex min-h-0 flex-1 items-center justify-center p-4">
-              <CardFace card={picked.card} cond={picked.cond} conditions={catalog.conditions} large hideTag />
-            </div>
-            <aside className="flex max-h-[48dvh] w-full shrink-0 flex-col gap-2 overflow-y-auto bg-base-100 p-6 md:max-h-none md:w-80">
-              <form method="dialog" className="self-end">
-                <button className="btn btn-sm btn-error">Close</button>
-              </form>
+          <div className="modal-box w-auto! max-w-none! overflow-visible! bg-transparent! p-4! shadow-none!">
+            <CardFace card={picked.card} cond={picked.cond} conditions={catalog.conditions} large hideTag />
+          </div>
+        ) : (
+          <div className="modal-box" />
+        )}
+        {picked && catalog ? (
+          <aside className="card-panel fixed top-0 right-0 z-20 col-start-1 row-start-1 flex h-dvh w-[min(100%,20rem)] flex-col gap-2 overflow-y-auto bg-base-100 p-6 shadow-xl">
+            <form method="dialog" className="self-end">
+              <button className="btn btn-sm btn-error">Close</button>
+            </form>
               <h2 id="card-title" className="text-3xl font-semibold">{picked.card.name}</h2>
               <p className="text-base-content/70">
                 {catalog.sets[picked.card.set][1]} · {picked.card.number || "—"}
@@ -381,11 +399,8 @@ export function AppShell() {
                   </span>
                 ))}
               </div>
-            </aside>
-          </div>
-        ) : (
-          <div className="modal-box" />
-        )}
+          </aside>
+        ) : null}
         <form method="dialog" className="modal-backdrop">
           <button>close</button>
         </form>
@@ -453,38 +468,43 @@ function coverArt(pool: Card[]): Card | undefined {
 function Packs({
   catalog,
   bySet,
+  packPick,
+  onPackPick,
   onOpen,
 }: {
   catalog: Catalog;
   bySet: Map<number, Card[]>;
+  packPick: string;
+  onPackPick: (value: string) => void;
   onOpen: (index: number | null) => void;
 }) {
   const featured = catalog.featured
     .map((code) => catalog.sets.findIndex((set) => set[0] === code))
     .filter((index) => index >= 0);
+  const pickIndex = Number(packPick);
+  const pickValue = packPick !== "all" && Number.isInteger(pickIndex) && catalog.sets[pickIndex] ? packPick : "all";
   return (
     <>
       <h1 className="text-3xl font-semibold">Packs</h1>
       <p className="mt-1 mb-4 text-sm whitespace-nowrap text-base-content/70">Rarer cards show up less often, and damage lowers the price.</p>
-      <form
-        className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center"
-        onSubmit={(event) => {
-          event.preventDefault();
-          const data = new FormData(event.currentTarget);
-          onOpen(Number(data.get("set")));
-        }}
-      >
-        <select name="set" className="select w-full sm:max-w-xs" aria-label="Another set" defaultValue={featured[0] ?? 0}>
+      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center">
+        <select
+          className="select w-full sm:max-w-xs"
+          aria-label="Set"
+          value={pickValue}
+          onChange={(event) => onPackPick(event.target.value)}
+        >
+          <option value="all">All · Every card</option>
           {catalog.sets.map((set, index) => (
             <option key={set[0]} value={index}>
               {set[1]}
             </option>
           ))}
         </select>
-        <button type="submit" className="btn">
+        <button type="button" className="btn bg-base-300" onClick={() => onOpen(pickValue === "all" ? null : Number(pickValue))}>
           Open that set
         </button>
-      </form>
+      </div>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         <PackCard code="All" name="Every card" setIndex={null} art={coverArt(catalog.cards)} onClick={() => onOpen(null)} />
         {featured.map((index) => (
@@ -602,18 +622,20 @@ function Collection({
   catalog,
   profile,
   byId,
-  initialSet,
+  setFilter,
+  onSetFilter,
   onCard,
 }: {
   catalog: Catalog;
   profile: Profile;
   byId: Map<number, Card>;
-  initialSet: string;
+  setFilter: string;
+  onSetFilter: (value: string) => void;
   onCard: (card: Card, cond: number) => void;
 }) {
   const [query, setQuery] = useState("");
-  const [setFilter, setSetFilter] = useState(initialSet);
   const [sort, setSort] = useState("value");
+  const filterValue = setFilter !== "" && catalog.sets[Number(setFilter)] ? setFilter : "";
   const entries = useMemo(() => {
     const found = [];
     for (const [key, counts] of Object.entries(profile.owned)) {
@@ -635,7 +657,7 @@ function Collection({
     }
     const needle = query.trim().toLowerCase();
     const filtered = found.filter((entry) => {
-      if (setFilter !== "" && entry.card.set !== Number(setFilter)) return false;
+      if (filterValue !== "" && entry.card.set !== Number(filterValue)) return false;
       if (needle && !entry.card.name.toLowerCase().includes(needle)) return false;
       return true;
     });
@@ -645,7 +667,7 @@ function Collection({
       return b.bestValue - a.bestValue;
     });
     return filtered;
-  }, [profile.owned, byId, query, setFilter, sort]);
+  }, [profile.owned, byId, query, filterValue, sort]);
 
   return (
     <>
@@ -653,7 +675,7 @@ function Collection({
       <p className="mt-1 mb-4 max-w-prose text-base-content/70">Saved in this browser. Move the cursor over a card and it tilts.</p>
       <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
         <input className="input w-full sm:flex-1" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search a name" aria-label="Search" />
-        <select className="select w-full sm:w-auto" aria-label="Set" value={setFilter} onChange={(event) => setSetFilter(event.target.value)}>
+        <select className="select w-full sm:w-auto" aria-label="Set" value={filterValue} onChange={(event) => onSetFilter(event.target.value)}>
           <option value="">Every set</option>
           {catalog.sets.map((set, index) => (
             <option key={set[0]} value={index}>
@@ -661,7 +683,7 @@ function Collection({
             </option>
           ))}
         </select>
-        <button type="button" className="btn bg-base-content text-base-100" onClick={() => setSetFilter("")}>
+        <button type="button" className="btn bg-base-content text-base-100" onClick={() => onSetFilter("")}>
           Every set
         </button>
         <select className="select w-full sm:w-auto" aria-label="Sort" value={sort} onChange={(event) => setSort(event.target.value)}>
@@ -691,20 +713,21 @@ function Dex({
   catalog,
   profile,
   bySet,
-  onSet,
+  onCard,
 }: {
   catalog: Catalog;
   profile: Profile;
   bySet: Map<number, Card[]>;
-  onSet: (index: number) => void;
+  onCard: (card: Card) => void;
 }) {
+  const [open, setOpen] = useState<number | null>(null);
   const rows = catalog.sets.map((set, index) => {
     const cards = bySet.get(index) ?? [];
     let have = 0;
     for (const card of cards) {
       if (copiesOf(profile.owned, card.id) > 0) have += 1;
     }
-    return { index, name: set[1], have, total: cards.length, pct: cards.length ? (have / cards.length) * 100 : 0 };
+    return { index, name: set[1], have, total: cards.length, pct: cards.length ? (have / cards.length) * 100 : 0, cards };
   });
   rows.sort((a, b) => b.pct - a.pct || b.have - a.have);
   const unique = rows.reduce((sum, row) => sum + row.have, 0);
@@ -715,20 +738,46 @@ function Dex({
         {unique.toLocaleString()} of {catalog.cards.length.toLocaleString()} cards registered.
       </p>
       <div className="flex flex-col gap-2">
-        {rows.map((row) => (
-          <button
-            key={row.index}
-            type="button"
-            className="cv-auto relative flex w-full items-center justify-between gap-4 overflow-hidden rounded-box border border-base-300 bg-base-100 px-4 py-4 text-start"
-            onClick={() => onSet(row.index)}
-          >
-            <strong className="font-medium">{row.name}</strong>
-            <span className="text-sm text-base-content/70">
-              {row.have} / {row.total}
-            </span>
-            <span className="absolute bottom-0 left-0 h-0.5 bg-base-content" style={{ width: `${row.pct}%` }} />
-          </button>
-        ))}
+        {rows.map((row) => {
+          const owned = row.cards.filter((card) => copiesOf(profile.owned, card.id) > 0);
+          const expanded = open === row.index;
+          return (
+            <div key={row.index} className="cv-auto overflow-hidden rounded-box border border-base-300 bg-base-100">
+              <button
+                type="button"
+                className="relative flex w-full items-center justify-between gap-4 px-4 py-4 text-start"
+                aria-expanded={expanded}
+                onClick={() => setOpen(expanded ? null : row.index)}
+              >
+                <strong className="font-medium">{row.name}</strong>
+                <span className="text-sm text-base-content/70">
+                  {row.have} / {row.total}
+                </span>
+                <span className="absolute bottom-0 left-0 h-0.5 bg-base-content" style={{ width: `${row.pct}%` }} />
+              </button>
+              {expanded ? (
+                <div className="border-t border-base-300 p-4">
+                  {owned.length === 0 ? (
+                    <p className="text-sm text-base-content/70">None from this set yet.</p>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                      {owned.map((card) => (
+                        <CardFace
+                          key={card.id}
+                          card={card}
+                          cond={bestCondOf(profile, card)}
+                          conditions={catalog.conditions}
+                          count={copiesOf(profile.owned, card.id)}
+                          onClick={() => onCard(card)}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : null}
+            </div>
+          );
+        })}
       </div>
     </>
   );
@@ -771,6 +820,7 @@ function ProfilePage({
   const [name, setName] = useState(profile.name);
   const [dark, setDark] = useState(false);
   const [picking, setPicking] = useState(false);
+  const [choice, setChoice] = useState("");
   const [note, setNote] = useState("");
   const [notice, setNotice] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -800,16 +850,33 @@ function ProfilePage({
     }
   }
 
-  function chooseCard(card: Card) {
-    if (!book) {
-      onSave({ ...profile, avatar: `card:${card.id}` });
-      setPicking(false);
-      return;
+  const pictures = useMemo(() => {
+    const list: { name: string; url: string; fallback: boolean }[] = [];
+    const seen = new Set<string>();
+    if (!book) return list;
+    let missed = false;
+    for (const card of owned) {
+      const match = matchSprite(card.name, book);
+      if (match.fallback) {
+        missed = true;
+        continue;
+      }
+      if (seen.has(match.url)) continue;
+      seen.add(match.url);
+      list.push({ name: card.name, url: match.url, fallback: false });
     }
-    const match = matchSprite(card.name, book);
-    onSave({ ...profile, avatar: `pixel:${match.url}` });
+    list.sort((a, b) => a.name.localeCompare(b.name));
+    if (missed && !seen.has(book.ditto)) list.push({ name: "Ditto", url: book.ditto, fallback: true });
+    return list;
+  }, [owned, book]);
+
+  function confirmPicture() {
+    const pickedPicture = pictures.find((picture) => picture.url === choice);
+    if (!pickedPicture) return;
+    onSave({ ...profile, avatar: `pixel:${pickedPicture.url}` });
     setPicking(false);
-    if (match.fallback) setNotice(true);
+    setChoice("");
+    if (pickedPicture.fallback) setNotice(true);
   }
 
   return (
@@ -843,7 +910,14 @@ function ProfilePage({
               <button type="button" className="btn btn-sm" onClick={() => fileRef.current?.click()}>
                 Upload image
               </button>
-              <button type="button" className="btn btn-sm" onClick={() => setPicking((open) => !open)}>
+              <button
+                type="button"
+                className="btn btn-sm"
+                onClick={() => {
+                  setChoice("");
+                  setPicking(true);
+                }}
+              >
                 Use a card
               </button>
               {profile.avatar ? (
@@ -866,25 +940,6 @@ function ProfilePage({
             <div className="mt-6 flex w-full flex-col gap-6 text-start">
               <p className="text-sm text-base-content/70">Images up to 2 MB. A card picture uses one you already pulled.</p>
               {note ? <p className="text-sm text-error">{note}</p> : null}
-              {picking ? (
-                owned.length === 0 ? (
-                  <p className="text-sm text-base-content/70">Open a pack first, then pick one of those cards.</p>
-                ) : (
-                  <div className="grid max-h-64 grid-cols-4 gap-2 overflow-y-auto">
-                    {owned.map((card) => (
-                      <button
-                        key={card.id}
-                        type="button"
-                        className="overflow-hidden rounded-box border border-base-300"
-                        aria-label={card.name}
-                        onClick={() => chooseCard(card)}
-                      >
-                        <img alt="" src={artUrl(card.id, false)} className="h-16 w-full object-cover object-top" />
-                      </button>
-                    ))}
-                  </div>
-                )
-              ) : null}
               <label className="floating-label">
                 <input
                   className="input"
@@ -952,6 +1007,46 @@ function ProfilePage({
           </div>
         </section>
       </div>
+      {picking ? (
+        <dialog className="modal modal-open card-sheet">
+          <div className="modal-box max-w-3xl">
+            <h2 className="text-xl font-semibold">Choose a picture</h2>
+            {!book ? (
+              <p className="mt-4 text-sm text-base-content/70">Getting the pictures.</p>
+            ) : pictures.length === 0 ? (
+              <p className="mt-4 text-sm text-base-content/70">Open a pack first, then pick one of those cards.</p>
+            ) : (
+              <div className="mt-4 grid max-h-[60dvh] grid-cols-3 gap-3 overflow-y-auto sm:grid-cols-4 md:grid-cols-5">
+                {pictures.map((picture) => (
+                  <button
+                    key={picture.url}
+                    type="button"
+                    aria-pressed={choice === picture.url}
+                    className={`rounded-box border border-base-300 bg-base-200 p-2 ${choice === picture.url ? "outline outline-2 outline-offset-2 outline-[#3aaa6a]" : ""}`}
+                    onClick={() => setChoice(picture.url)}
+                  >
+                    <img alt="" src={picture.url} className="mx-auto h-20 w-20 object-contain" style={{ imageRendering: "pixelated" }} />
+                    <span className="mt-2 block text-center text-xs">{picture.name}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+            <div className="modal-action">
+              <button type="button" className="btn btn-ghost" onClick={() => setPicking(false)}>
+                Cancel
+              </button>
+              <button type="button" className="btn bg-base-300" disabled={!choice} onClick={confirmPicture}>
+                Confirm
+              </button>
+            </div>
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button type="button" onClick={() => setPicking(false)}>
+              close
+            </button>
+          </form>
+        </dialog>
+      ) : null}
       {notice ? (
         <dialog className="modal modal-open">
           <div className="modal-box">
