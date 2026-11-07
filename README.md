@@ -27,6 +27,7 @@ python main.py tcgplayer --set 30C
 python main.py tcgplayer
 python main.py predict
 python main.py all
+python main.py play
 ```
 
 | Command | What it does |
@@ -43,6 +44,12 @@ python main.py all
 | `tcgplayer --rematch` | Applies the prices already in SQLite onto the dex again. It does not download the guides. |
 | `predict` | Fits every forecast again from the history already in the dex. |
 | `all` | Runs `species`, then `cards`. |
+| `play` | Starts PokeRNG at `http://127.0.0.1:8765/`. The first run installs the site and builds the card pool. |
+| `catalog` | Rebuilds `web/public/data/catalog.json` from the SQLite prices. |
+
+## PokeRNG
+
+`python main.py play` starts the Next.js pack site. A roll picks a rarity, then a card of that rarity, then a condition. Commons are 1 in 2. Mythic cards are 1 in 10,000. Damaged drops the shown tier by two and uses the Damaged market price. The collection is saved in the browser. There are no accounts and no payments.
 
 A second run of `cards` skips cards saved in the last 7 days. Set files in `pokedex/sets/` are the checkpoint, so an interrupted run can continue. Progress is written to `pokedex/progress.json`. A second run of `tcgplayer` skips sets saved in the last 7 days. That progress is `pokedex/tcgplayer_progress.json`, and the daily prices are in `pokedex/tcgplayer.sqlite`. Failures are appended to `pokedex/errors.log`.
 
@@ -91,6 +98,7 @@ scraper/http_client.py  rate-limited Limitless requests
 scraper/tcgplayer.py    TCGplayer price guides
 scraper/tcg_db.py       SQLite price rows
 scraper/constants.py    paths and the 30-day horizon
+web/                    PokeRNG, the Next.js pack site
 pokedex/dex.json        species, sets, and cards
 pokedex/tcgplayer.sqlite  daily price by printing and condition
 pokedex/sets/           one JSON file per set

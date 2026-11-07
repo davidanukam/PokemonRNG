@@ -19,6 +19,23 @@ from scraper.pokedex import make_pokedex, repredict, scrape_cards
 from scraper.tcgplayer import rematch_saved, scrape_tcgplayer
 
 
+def _serve_site(port: int) -> None:
+    import os
+    import subprocess
+    from pathlib import Path
+
+    from web.build_catalog import OUT_PATH, build
+
+    if not OUT_PATH.exists():
+        build()
+    web = Path(__file__).resolve().parent / "web"
+    npm = "npm.cmd" if os.name == "nt" else "npm"
+    if not (web / "node_modules").exists():
+        subprocess.check_call([npm, "install"], cwd=web)
+    print(f"PokeRNG is at http://127.0.0.1:{port}/", flush=True)
+    subprocess.check_call([npm, "run", "dev", "--", "--port", str(port)], cwd=web)
+
+
 def main(argv: list[str] | None = None) -> None:
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -68,6 +85,12 @@ def main(argv: list[str] | None = None) -> None:
     everything.add_argument("--refresh", action="store_true", help="Refetch cards saved in the last 7 days")
     everything.add_argument("--delay", type=float, default=0.3)
 
+    catalog = sub.add_parser("catalog", help="Rebuild the pack-site card pool from the SQLite prices")
+    del catalog
+
+    play = sub.add_parser("play", help="Run the PokeRNG Next.js site")
+    play.add_argument("--port", type=int, default=8765)
+
     args = parser.parse_args(argv)
     if args.command == "species":
         make_pokedex(delay=args.delay)
@@ -84,6 +107,12 @@ def main(argv: list[str] | None = None) -> None:
     elif args.command == "all":
         make_pokedex(delay=args.delay)
         scrape_cards(args.sets, limit=args.limit, refresh=args.refresh, delay=args.delay)
+    elif args.command == "catalog":
+        from web.build_catalog import build
+
+        build()
+    elif args.command == "play":
+        _serve_site(args.port)
 
 
 if __name__ == "__main__":

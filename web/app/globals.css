@@ -1,0 +1,263 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --depth: 0;
+  --noise: 0;
+}
+@plugin "daisyui/theme" {
+  name: "dark";
+  prefersdark: true;
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --depth: 0;
+  --noise: 0;
+}
+
+@theme {
+  --font-sans: var(--font-public-sans), "Segoe UI", sans-serif;
+}
+
+html {
+  font-family: var(--font-sans);
+  scrollbar-gutter: stable;
+}
+
+@utility cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 280px;
+}
+
+button,
+a[href],
+select,
+summary,
+[role="button"],
+input[type="checkbox"],
+input[type="radio"],
+label[for],
+label:has(input[type="checkbox"], input[type="radio"]) {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  button,
+  a[href],
+  select,
+  summary,
+  [role="button"],
+  input[type="checkbox"],
+  input[type="radio"],
+  label[for],
+  label:has(input[type="checkbox"], input[type="radio"]) {
+    scale: 1;
+    translate: 0 0;
+    transition: scale 160ms ease, translate 160ms ease;
+  }
+
+  button:hover,
+  button:focus-visible,
+  a[href]:hover,
+  a[href]:focus-visible,
+  select:hover,
+  select:focus-visible,
+  summary:hover,
+  [role="button"]:hover,
+  [role="button"]:focus-visible,
+  input[type="checkbox"]:hover,
+  input[type="radio"]:hover,
+  label[for]:hover,
+  label:has(input[type="checkbox"], input[type="radio"]):hover {
+    scale: 1.03;
+    translate: 0 -4px;
+  }
+
+  button:active,
+  a[href]:active,
+  select:active,
+  [role="button"]:active,
+  label[for]:active,
+  label:has(input[type="checkbox"], input[type="radio"]):active {
+    scale: 0.98;
+    translate: 0 0;
+  }
+
+  .drawer-overlay,
+  .drawer-overlay:hover,
+  .drawer-overlay:active,
+  .modal-backdrop,
+  .modal-backdrop:hover,
+  .modal-backdrop button,
+  .modal-backdrop button:hover,
+  .modal-backdrop button:active,
+  .hover-3d,
+  .hover-3d:hover,
+  .hover-3d:focus-visible,
+  .hover-3d:active,
+  a.hover-3d,
+  a.hover-3d:hover,
+  a.hover-3d:focus-visible,
+  a.hover-3d:active,
+  label:has(input.toggle),
+  label:has(input.toggle):hover,
+  label:has(input.toggle):active,
+  input.toggle,
+  input.toggle:hover,
+  input.toggle:active {
+    scale: 1;
+    translate: 0 0;
+  }
+
+  .collection-cards a.hover-3d:hover,
+  .collection-cards a.hover-3d:focus-visible,
+  .dex-cards a.hover-3d:hover,
+  .dex-cards a.hover-3d:focus-visible,
+  .reveal-cards a.hover-3d:hover,
+  .reveal-cards a.hover-3d:focus-visible {
+    scale: 1.03;
+  }
+
+  .collection-cards a.hover-3d:active,
+  .dex-cards a.hover-3d:active,
+  .reveal-cards a.hover-3d:active {
+    scale: 0.98;
+  }
+
+  .dex-set:hover,
+  .dex-set:focus-visible,
+  .dex-set:active {
+    scale: 1;
+    translate: 0 0;
+  }
+}
+
+.dex-set strong {
+  transition: color 160ms ease;
+}
+
+.dex-set:hover strong,
+.dex-set:focus-visible strong {
+  color: var(--dex-title);
+}
+
+.drawer-content {
+  overflow-x: clip;
+}
+
+.overflow-anchor-none {
+  overflow-anchor: none;
+}
+
+.hover-3d > :nth-child(n + 2) {
+  scale: 1;
+}
+
+.hover-3d:hover > :first-child {
+  scale: 1;
+}
+
+.input:focus,
+.input:focus-within,
+.select:focus,
+.select:focus-within,
+.select:open {
+  outline: none;
+  outline-offset: 0;
+  box-shadow: none;
+}
+
+.rarity-name {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+}
+
+.condition-name {
+  font-family: var(--font-sans);
+  font-style: italic;
+  font-weight: 650;
+}
+
+.card-sheet[open],
+.card-sheet.modal-open {
+  background-color: oklch(0% 0 0 / 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.card-panel {
+  animation: pokerng-slide-in 240ms ease-out;
+}
+
+@keyframes pokerng-slide-in {
+  from {
+    translate: 100% 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+.pack-scene {
+  perspective: 1200px;
+}
+
+.pack-spin {
+  transform-style: preserve-3d;
+}
+
+.pack-orbit-card {
+  backface-visibility: hidden;
+  user-select: none;
+}
+
+@keyframes pack-spin {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(-360deg);
+  }
+}
+
+@keyframes pack-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pack-spin {
+    animation: pack-spin 32s linear infinite;
+  }
+
+  .pack-marquee {
+    animation: pack-marquee 40s linear infinite;
+  }
+
+  .pack-orbit-card {
+    transition: translate 160ms ease;
+  }
+
+  .pack-orbit-card:hover {
+    translate: 0 -10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .price-strip {
+    transition: none;
+  }
+
+  .card-panel {
+    animation: none;
+  }
+}
