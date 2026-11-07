@@ -22,7 +22,7 @@ export function writeProfile(profile: Profile): void {
   localStorage.setItem(KEY, JSON.stringify(profile));
 }
 
-function keepAvatar(avatar: string): string {
+export function keepAvatar(avatar: string): string {
   if (avatar.startsWith("data:image/") && avatar.length < 120_000) return avatar;
   if (avatar.startsWith("pixel:https://") && avatar.length < 400) return avatar;
   if (/^card:\d+$/.test(avatar)) return avatar;

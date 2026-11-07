@@ -20,6 +20,7 @@ import {
 } from "@/lib/game";
 import { condColor, tierColor, xpColor } from "@/lib/look";
 import { matchSprite, readSpriteBook, type SpriteBook } from "@/lib/sprites";
+import { pushProfile, syncProfile } from "@/lib/cloud";
 import { blankProfile, readProfile, writeProfile } from "@/lib/storage";
 import type { Card, Catalog, Profile, Pull, Screen } from "@/lib/types";
 
@@ -74,9 +75,18 @@ export function AppShell() {
   const [collectionSet, setCollectionSet] = useState(readCollectionSet);
   const [packPick, setPackPick] = useState(readPackPick);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const saveGen = useRef(0);
 
   useEffect(() => {
-    setProfile(readProfile());
+    const local = readProfile();
+    setProfile(local);
+    const generation = saveGen.current;
+    let cancel = false;
+    void syncProfile(local, () => !cancel && saveGen.current === generation).then((next) => {
+      if (cancel || !next || saveGen.current !== generation) return;
+      setProfile(next);
+      writeProfile(next);
+    });
     const box = document.getElementById(DRAWER_ID) as HTMLInputElement | null;
     const desktop = window.matchMedia("(min-width: 1024px)");
     function applySidebar() {
@@ -85,7 +95,6 @@ export function AppShell() {
     }
     applySidebar();
     desktop.addEventListener("change", applySidebar);
-    let cancel = false;
     fetch("/data/sprites.json")
       .then((response) => (response.ok ? response.json() : null))
       .then((raw) => {
@@ -131,8 +140,10 @@ export function AppShell() {
   );
 
   function save(next: Profile) {
+    saveGen.current += 1;
     setProfile(next);
     writeProfile(next);
+    pushProfile(next);
   }
 
   function go(next: Screen) {
@@ -1001,6 +1012,11 @@ function ProfilePage({
   return (
     <>
       <h1 className="text-3xl font-semibold">Profile</h1>
+      <p className="mt-2 text-sm">
+        <a className="link" href="/auth/sign-up">Create an account</a>
+        <span className="mx-2">·</span>
+        <a className="link" href="/auth/sign-in">Sign in</a>
+      </p>
       <div className="mt-4 grid items-start gap-6 lg:grid-cols-[20rem_minmax(0,1fr)]">
         <div className="card card-border bg-base-100">
           <div className="card-body items-center text-center">
