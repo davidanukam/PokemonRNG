@@ -113,12 +113,12 @@ export function CardFactsPanel({ id }: { id: number }) {
       {lines === null && pending ? <p className="text-sm text-base-content/70">Loading card details.</p> : null}
       {lines && lines.length === 0 && !pending ? <p className="text-sm text-base-content/70">No printed details for this card.</p> : null}
       {lines?.map((line) => (
-        <div key={line.label} className="flex flex-col gap-1">
+        <div key={line.label} className="panel-section flex flex-col gap-1 p-3">
           <h3 className="text-sm font-semibold">{line.label}</h3>
           <p className="text-sm whitespace-pre-line">{line.text}</p>
         </div>
       ))}
-      <div className="flex flex-col gap-2">
+      <div className="panel-section flex flex-col gap-2 p-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h3 className="text-sm font-semibold">Market Price History</h3>
           <div className="join" role="group" aria-label="Price history range">

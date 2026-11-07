@@ -198,6 +198,11 @@ label:has(input[type="checkbox"], input[type="radio"]) {
   animation: pokerng-slide-in-left 240ms ease-out;
 }
 
+.panel-section {
+  border-radius: var(--radius-box);
+  background-color: color-mix(in oklch, var(--color-base-100) 72%, black);
+}
+
 @keyframes pokerng-slide-in {
   from {
     translate: 100% 0;

@@ -399,7 +399,7 @@ export function AppShell() {
         )}
         {picked ? <CardFactsPanel key={picked.card.id} id={picked.card.id} /> : null}
         {picked && catalog ? (
-          <aside className="card-panel fixed top-0 right-0 z-20 col-start-1 row-start-1 flex h-dvh w-[min(100%,20rem)] flex-col gap-2 overflow-y-auto bg-base-100 p-6 shadow-xl">
+          <aside className="card-panel fixed top-0 right-0 z-20 col-start-1 row-start-1 flex h-dvh w-[min(100%,20rem)] flex-col gap-3 overflow-y-auto bg-base-100 p-6 shadow-xl">
             <form method="dialog" className="self-end">
               <button className="btn btn-sm btn-error">Close</button>
             </form>
@@ -407,25 +407,27 @@ export function AppShell() {
               <p className="text-base-content/70">
                 {catalog.sets[picked.card.set][1]} · {picked.card.number || "—"}
               </p>
-              <p className="rarity-name text-lg" style={{ color: tierColor(picked.card.tier) }}>
-                {catalog.tiers[picked.card.tier]}
-                {catalog.rarities[picked.card.rarity] && catalog.rarities[picked.card.rarity] !== catalog.tiers[picked.card.tier]
-                  ? ` · ${catalog.rarities[picked.card.rarity]}`
-                  : ""}
-                {" · "}1 in {oneIn(picked.card.tier).toLocaleString()}
-              </p>
-              <p className="condition-name text-lg" style={{ color: condColor(picked.cond) }}>
-                {catalog.conditions[picked.cond]} · {money(valueOf(picked.card, picked.cond))}
-              </p>
-              {COND_DROPPED(picked.card.tier, picked.cond) ? (
-                <p className="rarity-name" style={{ color: tierColor(effectiveTier(picked.card.tier, picked.cond)) }}>
-                  This copy counts as {catalog.tiers[effectiveTier(picked.card.tier, picked.cond)]}.
+              <div className="panel-section flex flex-col gap-1 p-3">
+                <p className="rarity-name text-lg" style={{ color: tierColor(picked.card.tier) }}>
+                  {catalog.tiers[picked.card.tier]}
+                  {catalog.rarities[picked.card.rarity] && catalog.rarities[picked.card.rarity] !== catalog.tiers[picked.card.tier]
+                    ? ` · ${catalog.rarities[picked.card.rarity]}`
+                    : ""}
+                  {" · "}1 in {oneIn(picked.card.tier).toLocaleString()}
                 </p>
-              ) : null}
-              <p>
-                You have {copiesOf(profile.owned, picked.card.id)} {copiesOf(profile.owned, picked.card.id) === 1 ? "copy" : "copies"}.
-              </p>
-              <div className="mt-2 flex flex-col gap-1">
+                <p className="condition-name text-lg" style={{ color: condColor(picked.cond) }}>
+                  {catalog.conditions[picked.cond]} · {money(valueOf(picked.card, picked.cond))}
+                </p>
+                {COND_DROPPED(picked.card.tier, picked.cond) ? (
+                  <p className="rarity-name" style={{ color: tierColor(effectiveTier(picked.card.tier, picked.cond)) }}>
+                    This copy counts as {catalog.tiers[effectiveTier(picked.card.tier, picked.cond)]}.
+                  </p>
+                ) : null}
+                <p>
+                  You have {copiesOf(profile.owned, picked.card.id)} {copiesOf(profile.owned, picked.card.id) === 1 ? "copy" : "copies"}.
+                </p>
+              </div>
+              <div className="panel-section flex flex-col gap-1 p-3">
                 {catalog.conditions.map((name, index) => (
                   <span key={name} className="condition-name text-sm" style={{ color: condColor(index) }}>
                     {name} {(profile.owned[String(picked.card.id)] || [0, 0, 0, 0, 0])[index] || 0}
