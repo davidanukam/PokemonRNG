@@ -114,6 +114,37 @@ label:has(input[type="checkbox"], input[type="radio"]) {
     scale: 1;
     translate: 0 0;
   }
+
+  .collection-cards a.hover-3d:hover,
+  .collection-cards a.hover-3d:focus-visible,
+  .dex-cards a.hover-3d:hover,
+  .dex-cards a.hover-3d:focus-visible,
+  .reveal-cards a.hover-3d:hover,
+  .reveal-cards a.hover-3d:focus-visible {
+    scale: 1.03;
+  }
+
+  .collection-cards a.hover-3d:active,
+  .dex-cards a.hover-3d:active,
+  .reveal-cards a.hover-3d:active {
+    scale: 0.98;
+  }
+
+  .dex-set:hover,
+  .dex-set:focus-visible,
+  .dex-set:active {
+    scale: 1;
+    translate: 0 0;
+  }
+}
+
+.dex-set strong {
+  transition: color 160ms ease;
+}
+
+.dex-set:hover strong,
+.dex-set:focus-visible strong {
+  color: var(--dex-title);
 }
 
 .drawer-content {
@@ -169,6 +200,55 @@ label:has(input[type="checkbox"], input[type="radio"]) {
   }
   to {
     translate: 0 0;
+  }
+}
+
+.pack-scene {
+  perspective: 1200px;
+}
+
+.pack-spin {
+  transform-style: preserve-3d;
+}
+
+.pack-orbit-card {
+  backface-visibility: hidden;
+  user-select: none;
+}
+
+@keyframes pack-spin {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(-360deg);
+  }
+}
+
+@keyframes pack-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pack-spin {
+    animation: pack-spin 32s linear infinite;
+  }
+
+  .pack-marquee {
+    animation: pack-marquee 40s linear infinite;
+  }
+
+  .pack-orbit-card {
+    transition: translate 160ms ease;
+  }
+
+  .pack-orbit-card:hover {
+    translate: 0 -10px;
   }
 }
 

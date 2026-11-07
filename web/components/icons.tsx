@@ -10,9 +10,9 @@ const PATHS: Record<IconName, string> = {
   menu: "M5 7.5h14M5 12h14M5 16.5h14",
 };
 
-export function Icon({ name }: { name: IconName }) {
+export function Icon({ name, className = "size-6" }: { name: IconName; className?: string }) {
   return (
-    <svg className="size-6 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className={`${className} shrink-0`} viewBox="0 0 24 24" aria-hidden="true">
       <path
         d={PATHS[name]}
         className="fill-none stroke-current"

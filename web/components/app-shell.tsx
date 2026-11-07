@@ -5,6 +5,7 @@ import { Avatar } from "@/components/avatar";
 import { CardFace } from "@/components/card-face";
 import { Icon } from "@/components/icons";
 import { PackCard } from "@/components/pack-card";
+import { PackOrbit } from "@/components/pack-orbit";
 import { imageFileToAvatar } from "@/lib/avatar";
 import {
   artUrl,
@@ -214,18 +215,13 @@ export function AppShell() {
                 <span className="sr-only">{xpPct}</span>
               </div>
             </button>
-            <div className="min-w-0">
+            <div className="min-w-0 text-start">
               <div className="font-semibold">{profile.name}</div>
               <div className="text-sm whitespace-nowrap text-base-content/70">
                 Level {level.level}
                 <span className="ms-2">{level.into} / 80 xp</span>
               </div>
             </div>
-          </div>
-          <div className="pointer-events-none absolute left-1/2 -translate-x-1/2">
-            <button type="button" className="pointer-events-auto text-lg font-semibold" onClick={() => go("packs")}>
-              PokeRNG
-            </button>
           </div>
           <div className="navbar-end pe-6">
             <div className="stats hidden border border-base-300 bg-base-100 md:inline-grid">
@@ -319,20 +315,21 @@ export function AppShell() {
       </div>
       <div className="drawer-side is-drawer-close:overflow-visible">
         <label htmlFor={DRAWER_ID} aria-label="Close menu" className="drawer-overlay" />
-        <div className="flex min-h-full flex-col bg-base-200 is-drawer-close:w-16 is-drawer-open:w-64">
-          <div className="flex items-center gap-2 px-2 py-4 is-drawer-open:px-4">
+        <div className="flex min-h-full flex-col bg-base-200 is-drawer-close:w-20 is-drawer-open:w-72">
+          <div className="flex items-center gap-2 px-2 py-4 is-drawer-close:justify-center is-drawer-open:px-4">
             <img src="/pokeball.png" alt="" className="size-8 shrink-0 object-contain is-drawer-close:hidden" style={{ imageRendering: "pixelated" }} />
             <div className="min-w-0 grow is-drawer-close:hidden">
               <div className="font-semibold">PokeRNG</div>
               <div className="text-xs text-base-content/70">Pack rolls</div>
             </div>
-            <div className="ms-auto is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Sidebar">
-              <label htmlFor={DRAWER_ID} aria-label="Shrink sidebar" className="btn btn-ghost btn-square drawer-button is-drawer-open:rotate-y-180">
-                <Icon name="panel" />
+            <div className="is-drawer-open:ms-auto">
+              <label htmlFor={DRAWER_ID} aria-label="Toggle sidebar" className="btn btn-ghost btn-square drawer-button size-12 is-drawer-close:size-14">
+                <Icon name="panel" className="size-8 is-drawer-open:rotate-y-180 is-drawer-close:hidden" />
+                <img src="/pokeball.png" alt="" className="size-10 is-drawer-open:hidden" style={{ imageRendering: "pixelated" }} />
               </label>
             </div>
           </div>
-          <ul className="menu w-full grow">
+          <ul className="menu w-full grow text-lg">
             {NAV.map((item) => {
               const active = screen === item.id || (item.id === "packs" && (screen === "open" || screen === "reveal"));
               return (
@@ -344,8 +341,8 @@ export function AppShell() {
                     aria-current={active ? "page" : undefined}
                     onClick={() => go(item.id)}
                   >
-                    <Icon name={item.icon} />
-                    <span className="is-drawer-close:hidden">{item.label}</span>
+                    <Icon name={item.icon} className="size-8" />
+                    <span className="is-drawer-close:hidden text-lg">{item.label}</span>
                   </button>
                 </li>
               );
@@ -505,7 +502,7 @@ function Packs({
           Open that set
         </button>
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 overflow-anchor-none pb-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         <PackCard code="All" name="Every card" setIndex={null} art={coverArt(catalog.cards)} onClick={() => onOpen(null)} />
         {featured.map((index) => (
           <PackCard
@@ -539,13 +536,23 @@ function Opener({
   const code = setIndex == null ? "All" : catalog.sets[setIndex][0];
   const present = new Set(pool.map((card) => card.tier));
   return (
-    <>
-      <button type="button" className="btn btn-ghost" onClick={onBack}>
+    <div className="flex min-h-[calc(100dvh-9rem)] flex-col">
+      <button type="button" className="btn btn-ghost self-start" onClick={onBack}>
         All packs
       </button>
-      <div className="mt-4 grid grid-cols-1 items-start gap-6 sm:grid-cols-[11rem_minmax(0,1fr)]">
-        <PackCard code={code} name={name} setIndex={setIndex} art={coverArt(pool)} />
-        <div>
+      <div className="mt-4 grid min-h-0 flex-1 grid-cols-1 gap-6 sm:grid-cols-[18rem_minmax(0,1fr)]">
+        <div className="mx-auto flex w-full max-w-72 flex-col items-center gap-4 self-start sm:mx-0 sm:max-w-none">
+          <PackCard code={code} name={name} setIndex={setIndex} art={coverArt(pool)} />
+          <div className="flex flex-wrap justify-center gap-2">
+            <button type="button" className="btn btn-primary" onClick={() => onRoll(1)}>
+              Open 1 pack
+            </button>
+            <button type="button" className="btn btn-neutral" onClick={() => onRoll(10)}>
+              Open 10 packs
+            </button>
+          </div>
+        </div>
+        <div className="flex min-h-0 flex-col">
           <h1 className="text-3xl font-semibold">{name}</h1>
           <p className="mt-1 mb-4 max-w-prose text-base-content/70">{pool.length.toLocaleString()} cards. A roll picks a rarity, then a card, then a condition.</p>
           <div className="flex flex-wrap gap-2">
@@ -557,17 +564,10 @@ function Opener({
               ) : null,
             )}
           </div>
-          <div className="mt-4 flex flex-wrap gap-2">
-            <button type="button" className="btn btn-primary" onClick={() => onRoll(1)}>
-              Open 1 pack
-            </button>
-            <button type="button" className="btn btn-neutral" onClick={() => onRoll(10)}>
-              Open 10 packs
-            </button>
-          </div>
+          <PackOrbit pool={pool} />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -601,7 +601,7 @@ function Reveal({
           Collection
         </button>
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="reveal-cards grid grid-cols-2 gap-4 overflow-anchor-none pb-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {pulls.map((pull, index) => (
           <div key={`${pull.card.id}-${index}`} style={{ animationDelay: `${Math.min(index, 9) * 0.05}s` }}>
             <CardFace
@@ -693,7 +693,7 @@ function Collection({
         </select>
       </div>
       {entries.length === 0 ? <p className="text-base-content/70">Nothing saved yet. Open a pack and the cards land here.</p> : null}
-      <div className="grid grid-cols-2 gap-4 overflow-anchor-none sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="collection-cards grid grid-cols-2 gap-4 overflow-anchor-none pb-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {entries.map((entry) => (
           <CardFace
             key={entry.card.id}
@@ -709,6 +709,13 @@ function Collection({
   );
 }
 
+const BRIGHT = ["#ff5a36", "#ffd23f", "#3ecf8e", "#4cc9f0", "#ff4fa3", "#c084fc", "#7dff6b", "#ff9f1c"];
+
+function anotherBright(current: string) {
+  const choices = BRIGHT.filter((color) => color !== current);
+  return choices[Math.floor(Math.random() * choices.length)];
+}
+
 function Dex({
   catalog,
   profile,
@@ -721,6 +728,7 @@ function Dex({
   onCard: (card: Card) => void;
 }) {
   const [open, setOpen] = useState<number | null>(null);
+  const [titleHue, setTitleHue] = useState<Record<number, string>>({});
   const rows = catalog.sets.map((set, index) => {
     const cards = bySet.get(index) ?? [];
     let have = 0;
@@ -742,11 +750,18 @@ function Dex({
           const owned = row.cards.filter((card) => copiesOf(profile.owned, card.id) > 0);
           const expanded = open === row.index;
           return (
-            <div key={row.index} className="cv-auto overflow-hidden rounded-box border border-base-300 bg-base-100">
+            <div key={row.index} className="cv-auto rounded-box border border-base-300 bg-base-100">
               <button
                 type="button"
-                className="relative flex w-full items-center justify-between gap-4 px-4 py-4 text-start"
+                className="dex-set relative flex w-full items-center justify-between gap-4 rounded-box px-4 py-4 text-start"
+                style={{ "--dex-title": titleHue[row.index] ?? BRIGHT[row.index % BRIGHT.length] } as React.CSSProperties}
                 aria-expanded={expanded}
+                onMouseEnter={() =>
+                  setTitleHue((current) => {
+                    const now = current[row.index] ?? BRIGHT[row.index % BRIGHT.length];
+                    return { ...current, [row.index]: anotherBright(now) };
+                  })
+                }
                 onClick={() => setOpen(expanded ? null : row.index)}
               >
                 <strong className="font-medium">{row.name}</strong>
@@ -760,7 +775,7 @@ function Dex({
                   {owned.length === 0 ? (
                     <p className="text-sm text-base-content/70">None from this set yet.</p>
                   ) : (
-                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                    <div className="dex-cards grid grid-cols-2 gap-4 pb-3 sm:grid-cols-3 lg:grid-cols-4">
                       {owned.map((card) => (
                         <CardFace
                           key={card.id}
@@ -1009,24 +1024,24 @@ function ProfilePage({
       </div>
       {picking ? (
         <dialog className="modal modal-open card-sheet">
-          <div className="modal-box max-w-3xl">
+          <div className="modal-box w-[min(94vw,76rem)]! max-w-none!">
             <h2 className="text-xl font-semibold">Choose a picture</h2>
             {!book ? (
               <p className="mt-4 text-sm text-base-content/70">Getting the pictures.</p>
             ) : pictures.length === 0 ? (
               <p className="mt-4 text-sm text-base-content/70">Open a pack first, then pick one of those cards.</p>
             ) : (
-              <div className="mt-4 grid max-h-[60dvh] grid-cols-3 gap-3 overflow-y-auto sm:grid-cols-4 md:grid-cols-5">
+              <div className="mt-4 grid max-h-[70dvh] grid-cols-3 gap-3 overflow-y-auto p-1.5 sm:grid-cols-5 lg:grid-cols-7">
                 {pictures.map((picture) => (
                   <button
                     key={picture.url}
                     type="button"
                     aria-pressed={choice === picture.url}
-                    className={`rounded-box border border-base-300 bg-base-200 p-2 ${choice === picture.url ? "outline outline-2 outline-offset-2 outline-[#3aaa6a]" : ""}`}
+                    className={`flex aspect-square w-full flex-col items-center justify-between overflow-hidden rounded-box border border-base-300 bg-base-200 p-3 ${choice === picture.url ? "outline outline-2 outline-offset-2 outline-[#3aaa6a]" : ""}`}
                     onClick={() => setChoice(picture.url)}
                   >
-                    <img alt="" src={picture.url} className="mx-auto h-20 w-20 object-contain" style={{ imageRendering: "pixelated" }} />
-                    <span className="mt-2 block text-center text-xs">{picture.name}</span>
+                    <img alt="" src={picture.url} className="min-h-0 w-2/3 flex-1 object-contain" style={{ imageRendering: "pixelated" }} />
+                    <span className="line-clamp-2 w-full text-center text-xs leading-tight">{picture.name}</span>
                   </button>
                 ))}
               </div>

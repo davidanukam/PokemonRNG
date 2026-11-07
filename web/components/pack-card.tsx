@@ -1,6 +1,9 @@
 import { artUrl } from "@/lib/game";
 import type { Card } from "@/lib/types";
 
+// Transparent window in public/pack-wrap.png, measured from the cropped file.
+const WINDOW = { top: "31%", left: 0, width: "100%", height: "57.7%" };
+
 export function PackCard({
   code,
   name,
@@ -14,24 +17,24 @@ export function PackCard({
   onClick?: () => void;
 }) {
   const body = (
-    <>
-      <figure className="h-64 bg-base-200">
-        {art ? (
-          <img alt="" src={artUrl(art.id, false)} width={200} height={280} className="h-full w-full object-contain p-4" />
-        ) : (
-          <span className="block h-full w-full" />
-        )}
-      </figure>
-      <div className="absolute inset-x-0 bottom-0 translate-y-full bg-neutral px-4 py-2 text-neutral-content transition duration-200 group-hover:translate-y-0">
-        <div className="text-xs font-semibold">{code}</div>
-        <div className="text-sm">{name}</div>
-      </div>
-    </>
+    <span className="relative block aspect-[513/938] w-full">
+      {art ? (
+        <img alt="" src={artUrl(art.id, false)} className="absolute object-cover" style={WINDOW} />
+      ) : (
+        <span className="absolute bg-base-300" style={{ ...WINDOW, right: 0 }} />
+      )}
+      <img src="/pack-wrap.png" alt="" className="pointer-events-none absolute inset-0 h-full w-full" />
+      <span className="pointer-events-none absolute inset-x-2 flex justify-center" style={{ bottom: "13.5%" }}>
+        <span className="max-w-full rounded-box bg-black/75 px-2 py-1 text-center text-white">
+          <span className="block text-xs font-semibold tracking-wide">{code}</span>
+          <span className="line-clamp-2 text-sm leading-tight font-semibold">{name}</span>
+        </span>
+      </span>
+    </span>
   );
-  const className = "group card card-border relative overflow-hidden! bg-base-100 text-start";
-  if (!onClick) return <div className={className}>{body}</div>;
+  if (!onClick) return <div className="w-full">{body}</div>;
   return (
-    <button type="button" className={className} onClick={onClick}>
+    <button type="button" className="block w-full cursor-pointer text-start" onClick={onClick}>
       {body}
     </button>
   );
