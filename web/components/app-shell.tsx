@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Avatar } from "@/components/avatar";
 import { CardFace } from "@/components/card-face";
 import { CardFactsPanel } from "@/components/card-facts";
+import { EvolutionPanel } from "@/components/evolution-panel";
 import { Icon } from "@/components/icons";
 import { PackCard } from "@/components/pack-card";
 import { PackOrbit } from "@/components/pack-orbit";
@@ -20,6 +21,7 @@ import {
   rollOne,
   valueOf,
 } from "@/lib/game";
+import { indexEvolutions, readEvolutionBook, type EvolutionBook, type EvolutionStep } from "@/lib/evolutions";
 import { condColor, tierColor, xpColor } from "@/lib/look";
 import { matchSprite, readSpriteBook, type SpriteBook } from "@/lib/sprites";
 import { authClient } from "@/lib/auth/client";
@@ -74,6 +76,9 @@ export function AppShell() {
   const [setIndex, setSetIndex] = useState<number | null>(readSet);
   const [pulls, setPulls] = useState<Pull[]>([]);
   const [picked, setPicked] = useState<{ card: Card; cond: number } | null>(null);
+  const [glide, setGlide] = useState("");
+  const [evolutions, setEvolutions] = useState<EvolutionBook | null>(null);
+  const glideTimer = useRef<number | null>(null);
   const [sprites, setSprites] = useState<SpriteBook | null>(null);
   const [collectionSet, setCollectionSet] = useState(readCollectionSet);
   const [packPick, setPackPick] = useState(readPackPick);
@@ -121,6 +126,14 @@ export function AppShell() {
       .catch(() => {
         if (!cancel) setSprites(null);
       });
+    fetch("/data/evolutions.json")
+      .then((response) => (response.ok ? response.json() : null))
+      .then((raw) => {
+        if (!cancel) setEvolutions(readEvolutionBook(raw));
+      })
+      .catch(() => {
+        if (!cancel) setEvolutions(null);
+      });
     fetch("/data/catalog.json")
       .then((response) => {
         if (!response.ok) throw new Error(String(response.status));
@@ -156,12 +169,36 @@ export function AppShell() {
     () => (catalog ? indexCards(catalog.cards) : { byId: new Map<number, Card>(), bySet: new Map<number, Card[]>() }),
     [catalog],
   );
+  const evolutionIndex = useMemo(
+    () => (catalog && evolutions ? indexEvolutions(catalog.cards, evolutions) : new Map<string, Card[]>()),
+    [catalog, evolutions],
+  );
 
   function save(next: Profile) {
     saveGen.current += 1;
     setProfile(next);
     writeProfile(next);
     if (accountRef.current) pushProfile(next);
+  }
+
+  function showRelative(card: Card, step: EvolutionStep) {
+    if (glide.startsWith("card-glide-out")) return;
+    const next = { card, cond: bestCondOf(profile, card) };
+    if (glideTimer.current != null) window.clearTimeout(glideTimer.current);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setGlide("");
+      setPicked(next);
+      return;
+    }
+    setGlide(step === "next" ? "card-glide-out-left" : "card-glide-out-right");
+    glideTimer.current = window.setTimeout(() => {
+      setPicked(next);
+      setGlide(step === "next" ? "card-glide-in-right" : "card-glide-in-left");
+      glideTimer.current = window.setTimeout(() => {
+        setGlide("");
+        glideTimer.current = null;
+      }, 240);
+    }, 240);
   }
 
   function go(next: Screen) {
@@ -389,15 +426,24 @@ export function AppShell() {
         </div>
       </div>
 
-      <dialog ref={dialogRef} className="modal card-sheet" onClose={() => setPicked(null)}>
+      <dialog
+        ref={dialogRef}
+        className="modal card-sheet"
+        onClose={() => {
+          if (glideTimer.current != null) window.clearTimeout(glideTimer.current);
+          glideTimer.current = null;
+          setGlide("");
+          setPicked(null);
+        }}
+      >
         {picked && catalog ? (
-          <div className="modal-box w-auto! max-w-none! overflow-visible! bg-transparent! p-4! shadow-none!">
-            <CardFace card={picked.card} cond={picked.cond} conditions={catalog.conditions} large hideTag />
+          <div className={`modal-box w-auto! max-w-none! overflow-visible! bg-transparent! p-4! shadow-none! ${glide}`}>
+            <CardFace key={picked.card.id} card={picked.card} cond={picked.cond} conditions={catalog.conditions} large hideTag />
           </div>
         ) : (
           <div className="modal-box" />
         )}
-        {picked ? <CardFactsPanel key={picked.card.id} id={picked.card.id} /> : null}
+        {picked ? <CardFactsPanel id={picked.card.id} /> : null}
         {picked && catalog ? (
           <aside className="card-panel fixed top-0 right-0 z-20 col-start-1 row-start-1 flex h-dvh w-[min(100%,20rem)] flex-col gap-3 overflow-y-auto bg-base-100 p-6 shadow-xl">
             <form method="dialog" className="self-end">
@@ -434,6 +480,16 @@ export function AppShell() {
                   </span>
                 ))}
               </div>
+              {evolutions ? (
+                <EvolutionPanel
+                  card={picked.card}
+                  byKey={evolutionIndex}
+                  catalog={catalog}
+                  profile={profile}
+                  book={evolutions}
+                  onOpen={showRelative}
+                />
+              ) : null}
           </aside>
         ) : null}
         <form method="dialog" className="modal-backdrop">

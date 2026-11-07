@@ -1,0 +1,5595 @@
+{
+  "Abomasnow": {
+    "prev": [
+      "Snover"
+    ],
+    "next": []
+  },
+  "Abra": {
+    "prev": [],
+    "next": [
+      "Kadabra"
+    ]
+  },
+  "Accelgor": {
+    "prev": [
+      "Shelmet"
+    ],
+    "next": []
+  },
+  "Aegislash (Shield Forme)": {
+    "prev": [
+      "Doublade"
+    ],
+    "next": []
+  },
+  "Aggron": {
+    "prev": [
+      "Lairon"
+    ],
+    "next": []
+  },
+  "Aipom": {
+    "prev": [],
+    "next": [
+      "Ambipom"
+    ]
+  },
+  "Alakazam": {
+    "prev": [
+      "Kadabra"
+    ],
+    "next": []
+  },
+  "Alcremie": {
+    "prev": [
+      "Milcery"
+    ],
+    "next": []
+  },
+  "Alolan Diglett": {
+    "prev": [],
+    "next": [
+      "Alolan Dugtrio"
+    ]
+  },
+  "Alolan Dugtrio": {
+    "prev": [
+      "Alolan Diglett"
+    ],
+    "next": []
+  },
+  "Alolan Exeggutor": {
+    "prev": [
+      "Exeggcute"
+    ],
+    "next": []
+  },
+  "Alolan Geodude": {
+    "prev": [],
+    "next": [
+      "Alolan Graveler"
+    ]
+  },
+  "Alolan Golem": {
+    "prev": [
+      "Alolan Graveler"
+    ],
+    "next": []
+  },
+  "Alolan Graveler": {
+    "prev": [
+      "Alolan Geodude"
+    ],
+    "next": [
+      "Alolan Golem"
+    ]
+  },
+  "Alolan Grimer": {
+    "prev": [],
+    "next": [
+      "Alolan Muk"
+    ]
+  },
+  "Alolan Marowak": {
+    "prev": [
+      "Cubone"
+    ],
+    "next": []
+  },
+  "Alolan Meowth": {
+    "prev": [],
+    "next": [
+      "Alolan Persian"
+    ]
+  },
+  "Alolan Muk": {
+    "prev": [
+      "Alolan Grimer"
+    ],
+    "next": []
+  },
+  "Alolan Ninetales": {
+    "prev": [
+      "Alolan Vulpix"
+    ],
+    "next": []
+  },
+  "Alolan Persian": {
+    "prev": [
+      "Alolan Meowth"
+    ],
+    "next": []
+  },
+  "Alolan Raichu": {
+    "prev": [
+      "Pikachu"
+    ],
+    "next": []
+  },
+  "Alolan Raticate": {
+    "prev": [
+      "Alolan Rattata"
+    ],
+    "next": []
+  },
+  "Alolan Rattata": {
+    "prev": [],
+    "next": [
+      "Alolan Raticate"
+    ]
+  },
+  "Alolan Sandshrew": {
+    "prev": [],
+    "next": [
+      "Alolan Sandslash"
+    ]
+  },
+  "Alolan Sandslash": {
+    "prev": [
+      "Alolan Sandshrew"
+    ],
+    "next": []
+  },
+  "Alolan Vulpix": {
+    "prev": [],
+    "next": [
+      "Alolan Ninetales"
+    ]
+  },
+  "Altaria": {
+    "prev": [
+      "Swablu"
+    ],
+    "next": []
+  },
+  "Amaura": {
+    "prev": [],
+    "next": [
+      "Aurorus"
+    ]
+  },
+  "Ambipom": {
+    "prev": [
+      "Aipom"
+    ],
+    "next": []
+  },
+  "Amoonguss": {
+    "prev": [
+      "Foongus"
+    ],
+    "next": []
+  },
+  "Ampharos": {
+    "prev": [
+      "Flaaffy"
+    ],
+    "next": []
+  },
+  "Annihilape": {
+    "prev": [
+      "Primeape"
+    ],
+    "next": []
+  },
+  "Anorith": {
+    "prev": [],
+    "next": [
+      "Armaldo"
+    ]
+  },
+  "Appletun": {
+    "prev": [
+      "Applin"
+    ],
+    "next": []
+  },
+  "Applin": {
+    "prev": [],
+    "next": [
+      "Flapple",
+      "Appletun",
+      "Dipplin"
+    ]
+  },
+  "Araquanid": {
+    "prev": [
+      "Dewpider"
+    ],
+    "next": []
+  },
+  "Arbok": {
+    "prev": [
+      "Ekans"
+    ],
+    "next": []
+  },
+  "Arboliva": {
+    "prev": [
+      "Dolliv"
+    ],
+    "next": []
+  },
+  "Arcanine": {
+    "prev": [
+      "Growlithe"
+    ],
+    "next": []
+  },
+  "Archaludon": {
+    "prev": [
+      "Duraludon"
+    ],
+    "next": []
+  },
+  "Archen": {
+    "prev": [],
+    "next": [
+      "Archeops"
+    ]
+  },
+  "Archeops": {
+    "prev": [
+      "Archen"
+    ],
+    "next": []
+  },
+  "Arctibax": {
+    "prev": [
+      "Frigibax"
+    ],
+    "next": [
+      "Baxcalibur"
+    ]
+  },
+  "Ariados": {
+    "prev": [
+      "Spinarak"
+    ],
+    "next": []
+  },
+  "Armaldo": {
+    "prev": [
+      "Anorith"
+    ],
+    "next": []
+  },
+  "Armarouge": {
+    "prev": [
+      "Charcadet"
+    ],
+    "next": []
+  },
+  "Aromatisse": {
+    "prev": [
+      "Spritzee"
+    ],
+    "next": []
+  },
+  "Aron": {
+    "prev": [],
+    "next": [
+      "Lairon"
+    ]
+  },
+  "Arrokuda": {
+    "prev": [],
+    "next": [
+      "Barraskewda"
+    ]
+  },
+  "Aurorus": {
+    "prev": [
+      "Amaura"
+    ],
+    "next": []
+  },
+  "Avalugg": {
+    "prev": [
+      "Bergmite"
+    ],
+    "next": []
+  },
+  "Axew": {
+    "prev": [],
+    "next": [
+      "Fraxure"
+    ]
+  },
+  "Azumarill": {
+    "prev": [
+      "Marill"
+    ],
+    "next": []
+  },
+  "Azurill": {
+    "prev": [],
+    "next": [
+      "Marill"
+    ]
+  },
+  "Bagon": {
+    "prev": [],
+    "next": [
+      "Shelgon"
+    ]
+  },
+  "Baltoy": {
+    "prev": [],
+    "next": [
+      "Claydol"
+    ]
+  },
+  "Banette": {
+    "prev": [
+      "Shuppet"
+    ],
+    "next": []
+  },
+  "Barbaracle": {
+    "prev": [
+      "Binacle"
+    ],
+    "next": []
+  },
+  "Barboach": {
+    "prev": [],
+    "next": [
+      "Whiscash"
+    ]
+  },
+  "Barraskewda": {
+    "prev": [
+      "Arrokuda"
+    ],
+    "next": []
+  },
+  "Basculegion (Female)": {
+    "prev": [
+      "Basculin (White-Striped Form)"
+    ],
+    "next": []
+  },
+  "Basculegion (Male)": {
+    "prev": [
+      "Basculin (White-Striped Form)"
+    ],
+    "next": []
+  },
+  "Basculin (White-Striped Form)": {
+    "prev": [],
+    "next": [
+      "Basculegion (Male)",
+      "Basculegion (Female)"
+    ]
+  },
+  "Bastiodon": {
+    "prev": [
+      "Shieldon"
+    ],
+    "next": []
+  },
+  "Baxcalibur": {
+    "prev": [
+      "Arctibax"
+    ],
+    "next": []
+  },
+  "Bayleef": {
+    "prev": [
+      "Chikorita"
+    ],
+    "next": [
+      "Meganium"
+    ]
+  },
+  "Beartic": {
+    "prev": [
+      "Cubchoo"
+    ],
+    "next": []
+  },
+  "Beautifly": {
+    "prev": [
+      "Silcoon"
+    ],
+    "next": []
+  },
+  "Beedrill": {
+    "prev": [
+      "Kakuna"
+    ],
+    "next": []
+  },
+  "Beheeyem": {
+    "prev": [
+      "Elgyem"
+    ],
+    "next": []
+  },
+  "Beldum": {
+    "prev": [],
+    "next": [
+      "Metang"
+    ]
+  },
+  "Bellibolt": {
+    "prev": [
+      "Tadbulb"
+    ],
+    "next": []
+  },
+  "Bellossom": {
+    "prev": [
+      "Gloom"
+    ],
+    "next": []
+  },
+  "Bellsprout": {
+    "prev": [],
+    "next": [
+      "Weepinbell"
+    ]
+  },
+  "Bergmite": {
+    "prev": [],
+    "next": [
+      "Avalugg",
+      "Hisuian Avalugg"
+    ]
+  },
+  "Bewear": {
+    "prev": [
+      "Stufful"
+    ],
+    "next": []
+  },
+  "Bibarel": {
+    "prev": [
+      "Bidoof"
+    ],
+    "next": []
+  },
+  "Bidoof": {
+    "prev": [],
+    "next": [
+      "Bibarel"
+    ]
+  },
+  "Binacle": {
+    "prev": [],
+    "next": [
+      "Barbaracle"
+    ]
+  },
+  "Bisharp": {
+    "prev": [
+      "Pawniard"
+    ],
+    "next": [
+      "Kingambit"
+    ]
+  },
+  "Blastoise": {
+    "prev": [
+      "Wartortle"
+    ],
+    "next": []
+  },
+  "Blaziken": {
+    "prev": [
+      "Combusken"
+    ],
+    "next": []
+  },
+  "Blipbug": {
+    "prev": [],
+    "next": [
+      "Dottler"
+    ]
+  },
+  "Blissey": {
+    "prev": [
+      "Chansey"
+    ],
+    "next": []
+  },
+  "Blitzle": {
+    "prev": [],
+    "next": [
+      "Zebstrika"
+    ]
+  },
+  "Boldore": {
+    "prev": [
+      "Roggenrola"
+    ],
+    "next": [
+      "Gigalith"
+    ]
+  },
+  "Boltund": {
+    "prev": [
+      "Yamper"
+    ],
+    "next": []
+  },
+  "Bonsly": {
+    "prev": [],
+    "next": [
+      "Sudowoodo"
+    ]
+  },
+  "Bounsweet": {
+    "prev": [],
+    "next": [
+      "Steenee"
+    ]
+  },
+  "Braixen": {
+    "prev": [
+      "Fennekin"
+    ],
+    "next": [
+      "Delphox"
+    ]
+  },
+  "Brambleghast": {
+    "prev": [
+      "Bramblin"
+    ],
+    "next": []
+  },
+  "Bramblin": {
+    "prev": [],
+    "next": [
+      "Brambleghast"
+    ]
+  },
+  "Braviary": {
+    "prev": [
+      "Rufflet"
+    ],
+    "next": []
+  },
+  "Breloom": {
+    "prev": [
+      "Shroomish"
+    ],
+    "next": []
+  },
+  "Brionne": {
+    "prev": [
+      "Popplio"
+    ],
+    "next": [
+      "Primarina"
+    ]
+  },
+  "Bronzong": {
+    "prev": [
+      "Bronzor"
+    ],
+    "next": []
+  },
+  "Bronzor": {
+    "prev": [],
+    "next": [
+      "Bronzong"
+    ]
+  },
+  "Budew": {
+    "prev": [],
+    "next": [
+      "Roselia"
+    ]
+  },
+  "Buizel": {
+    "prev": [],
+    "next": [
+      "Floatzel"
+    ]
+  },
+  "Bulbasaur": {
+    "prev": [],
+    "next": [
+      "Ivysaur"
+    ]
+  },
+  "Buneary": {
+    "prev": [],
+    "next": [
+      "Lopunny"
+    ]
+  },
+  "Bunnelby": {
+    "prev": [],
+    "next": [
+      "Diggersby"
+    ]
+  },
+  "Burmy (Plant Cloak)": {
+    "prev": [],
+    "next": [
+      "Mothim",
+      "Wormadam (Plant Cloak)"
+    ]
+  },
+  "Burmy (Sandy Cloak)": {
+    "prev": [],
+    "next": [
+      "Wormadam (Sandy Cloak)"
+    ]
+  },
+  "Burmy (Trash Cloak)": {
+    "prev": [],
+    "next": [
+      "Wormadam (Trash Cloak)"
+    ]
+  },
+  "Butterfree": {
+    "prev": [
+      "Metapod"
+    ],
+    "next": []
+  },
+  "Cacnea": {
+    "prev": [],
+    "next": [
+      "Cacturne"
+    ]
+  },
+  "Cacturne": {
+    "prev": [
+      "Cacnea"
+    ],
+    "next": []
+  },
+  "Camerupt": {
+    "prev": [
+      "Numel"
+    ],
+    "next": []
+  },
+  "Capsakid": {
+    "prev": [],
+    "next": [
+      "Scovillain"
+    ]
+  },
+  "Carkol": {
+    "prev": [
+      "Rolycoly"
+    ],
+    "next": [
+      "Coalossal"
+    ]
+  },
+  "Carracosta": {
+    "prev": [
+      "Tirtouga"
+    ],
+    "next": []
+  },
+  "Carvanha": {
+    "prev": [],
+    "next": [
+      "Sharpedo"
+    ]
+  },
+  "Cascoon": {
+    "prev": [
+      "Wurmple"
+    ],
+    "next": [
+      "Dustox"
+    ]
+  },
+  "Caterpie": {
+    "prev": [],
+    "next": [
+      "Metapod"
+    ]
+  },
+  "Centiskorch": {
+    "prev": [
+      "Sizzlipede"
+    ],
+    "next": []
+  },
+  "Ceruledge": {
+    "prev": [
+      "Charcadet"
+    ],
+    "next": []
+  },
+  "Cetitan": {
+    "prev": [
+      "Cetoddle"
+    ],
+    "next": []
+  },
+  "Cetoddle": {
+    "prev": [],
+    "next": [
+      "Cetitan"
+    ]
+  },
+  "Chandelure": {
+    "prev": [
+      "Lampent"
+    ],
+    "next": []
+  },
+  "Chansey": {
+    "prev": [
+      "Happiny"
+    ],
+    "next": [
+      "Blissey"
+    ]
+  },
+  "Charcadet": {
+    "prev": [],
+    "next": [
+      "Armarouge",
+      "Ceruledge"
+    ]
+  },
+  "Charizard": {
+    "prev": [
+      "Charmeleon"
+    ],
+    "next": []
+  },
+  "Charjabug": {
+    "prev": [
+      "Grubbin"
+    ],
+    "next": [
+      "Vikavolt"
+    ]
+  },
+  "Charmander": {
+    "prev": [],
+    "next": [
+      "Charmeleon"
+    ]
+  },
+  "Charmeleon": {
+    "prev": [
+      "Charmander"
+    ],
+    "next": [
+      "Charizard"
+    ]
+  },
+  "Cherrim": {
+    "prev": [
+      "Cherubi"
+    ],
+    "next": []
+  },
+  "Cherubi": {
+    "prev": [],
+    "next": [
+      "Cherrim"
+    ]
+  },
+  "Chesnaught": {
+    "prev": [
+      "Quilladin"
+    ],
+    "next": []
+  },
+  "Chespin": {
+    "prev": [],
+    "next": [
+      "Quilladin"
+    ]
+  },
+  "Chewtle": {
+    "prev": [],
+    "next": [
+      "Drednaw"
+    ]
+  },
+  "Chikorita": {
+    "prev": [],
+    "next": [
+      "Bayleef"
+    ]
+  },
+  "Chimchar": {
+    "prev": [],
+    "next": [
+      "Monferno"
+    ]
+  },
+  "Chimecho": {
+    "prev": [
+      "Chingling"
+    ],
+    "next": []
+  },
+  "Chinchou": {
+    "prev": [],
+    "next": [
+      "Lanturn"
+    ]
+  },
+  "Chingling": {
+    "prev": [],
+    "next": [
+      "Chimecho"
+    ]
+  },
+  "Cinccino": {
+    "prev": [
+      "Minccino"
+    ],
+    "next": []
+  },
+  "Cinderace": {
+    "prev": [
+      "Raboot"
+    ],
+    "next": []
+  },
+  "Clamperl": {
+    "prev": [],
+    "next": [
+      "Huntail",
+      "Gorebyss"
+    ]
+  },
+  "Clauncher": {
+    "prev": [],
+    "next": [
+      "Clawitzer"
+    ]
+  },
+  "Clawitzer": {
+    "prev": [
+      "Clauncher"
+    ],
+    "next": []
+  },
+  "Claydol": {
+    "prev": [
+      "Baltoy"
+    ],
+    "next": []
+  },
+  "Clefable": {
+    "prev": [
+      "Clefairy"
+    ],
+    "next": []
+  },
+  "Clefairy": {
+    "prev": [
+      "Cleffa"
+    ],
+    "next": [
+      "Clefable"
+    ]
+  },
+  "Cleffa": {
+    "prev": [],
+    "next": [
+      "Clefairy"
+    ]
+  },
+  "Clobbopus": {
+    "prev": [],
+    "next": [
+      "Grapploct"
+    ]
+  },
+  "Clodsire": {
+    "prev": [
+      "Paldean Wooper"
+    ],
+    "next": []
+  },
+  "Cloyster": {
+    "prev": [
+      "Shellder"
+    ],
+    "next": []
+  },
+  "Coalossal": {
+    "prev": [
+      "Carkol"
+    ],
+    "next": []
+  },
+  "Cofagrigus": {
+    "prev": [
+      "Yamask"
+    ],
+    "next": []
+  },
+  "Combee": {
+    "prev": [],
+    "next": [
+      "Vespiquen"
+    ]
+  },
+  "Combusken": {
+    "prev": [
+      "Torchic"
+    ],
+    "next": [
+      "Blaziken"
+    ]
+  },
+  "Conkeldurr": {
+    "prev": [
+      "Gurdurr"
+    ],
+    "next": []
+  },
+  "Copperajah": {
+    "prev": [
+      "Cufant"
+    ],
+    "next": []
+  },
+  "Corphish": {
+    "prev": [],
+    "next": [
+      "Crawdaunt"
+    ]
+  },
+  "Corviknight": {
+    "prev": [
+      "Corvisquire"
+    ],
+    "next": []
+  },
+  "Corvisquire": {
+    "prev": [
+      "Rookidee"
+    ],
+    "next": [
+      "Corviknight"
+    ]
+  },
+  "Cosmoem": {
+    "prev": [
+      "Cosmog"
+    ],
+    "next": [
+      "Solgaleo",
+      "Lunala"
+    ]
+  },
+  "Cosmog": {
+    "prev": [],
+    "next": [
+      "Cosmoem"
+    ]
+  },
+  "Cottonee": {
+    "prev": [],
+    "next": [
+      "Whimsicott"
+    ]
+  },
+  "Crabominable": {
+    "prev": [
+      "Crabrawler"
+    ],
+    "next": []
+  },
+  "Crabrawler": {
+    "prev": [],
+    "next": [
+      "Crabominable"
+    ]
+  },
+  "Cradily": {
+    "prev": [
+      "Lileep"
+    ],
+    "next": []
+  },
+  "Cranidos": {
+    "prev": [],
+    "next": [
+      "Rampardos"
+    ]
+  },
+  "Crawdaunt": {
+    "prev": [
+      "Corphish"
+    ],
+    "next": []
+  },
+  "Croagunk": {
+    "prev": [],
+    "next": [
+      "Toxicroak"
+    ]
+  },
+  "Crobat": {
+    "prev": [
+      "Golbat"
+    ],
+    "next": []
+  },
+  "Crocalor": {
+    "prev": [
+      "Fuecoco"
+    ],
+    "next": [
+      "Skeledirge"
+    ]
+  },
+  "Croconaw": {
+    "prev": [
+      "Totodile"
+    ],
+    "next": [
+      "Feraligatr"
+    ]
+  },
+  "Crustle": {
+    "prev": [
+      "Dwebble"
+    ],
+    "next": []
+  },
+  "Cubchoo": {
+    "prev": [],
+    "next": [
+      "Beartic"
+    ]
+  },
+  "Cubone": {
+    "prev": [],
+    "next": [
+      "Marowak",
+      "Alolan Marowak"
+    ]
+  },
+  "Cufant": {
+    "prev": [],
+    "next": [
+      "Copperajah"
+    ]
+  },
+  "Cursola": {
+    "prev": [
+      "Galarian Corsola"
+    ],
+    "next": []
+  },
+  "Cutiefly": {
+    "prev": [],
+    "next": [
+      "Ribombee"
+    ]
+  },
+  "Cyndaquil": {
+    "prev": [],
+    "next": [
+      "Quilava"
+    ]
+  },
+  "Dachsbun": {
+    "prev": [
+      "Fidough"
+    ],
+    "next": []
+  },
+  "Darmanitan (Galarian Standard Mode)": {
+    "prev": [
+      "Galarian Darumaka"
+    ],
+    "next": []
+  },
+  "Darmanitan (Standard Mode)": {
+    "prev": [
+      "Darumaka"
+    ],
+    "next": []
+  },
+  "Dartrix": {
+    "prev": [
+      "Rowlet"
+    ],
+    "next": [
+      "Decidueye",
+      "Hisuian Decidueye"
+    ]
+  },
+  "Darumaka": {
+    "prev": [],
+    "next": [
+      "Darmanitan (Standard Mode)"
+    ]
+  },
+  "Decidueye": {
+    "prev": [
+      "Dartrix"
+    ],
+    "next": []
+  },
+  "Deerling": {
+    "prev": [],
+    "next": [
+      "Sawsbuck"
+    ]
+  },
+  "Deino": {
+    "prev": [],
+    "next": [
+      "Zweilous"
+    ]
+  },
+  "Delcatty": {
+    "prev": [
+      "Skitty"
+    ],
+    "next": []
+  },
+  "Delphox": {
+    "prev": [
+      "Braixen"
+    ],
+    "next": []
+  },
+  "Dewgong": {
+    "prev": [
+      "Seel"
+    ],
+    "next": []
+  },
+  "Dewott": {
+    "prev": [
+      "Oshawott"
+    ],
+    "next": [
+      "Samurott",
+      "Hisuian Samurott"
+    ]
+  },
+  "Dewpider": {
+    "prev": [],
+    "next": [
+      "Araquanid"
+    ]
+  },
+  "Diggersby": {
+    "prev": [
+      "Bunnelby"
+    ],
+    "next": []
+  },
+  "Diglett": {
+    "prev": [],
+    "next": [
+      "Dugtrio"
+    ]
+  },
+  "Dipplin": {
+    "prev": [
+      "Applin"
+    ],
+    "next": [
+      "Hydrapple"
+    ]
+  },
+  "Dodrio": {
+    "prev": [
+      "Doduo"
+    ],
+    "next": []
+  },
+  "Doduo": {
+    "prev": [],
+    "next": [
+      "Dodrio"
+    ]
+  },
+  "Dolliv": {
+    "prev": [
+      "Smoliv"
+    ],
+    "next": [
+      "Arboliva"
+    ]
+  },
+  "Donphan": {
+    "prev": [
+      "Phanpy"
+    ],
+    "next": []
+  },
+  "Dottler": {
+    "prev": [
+      "Blipbug"
+    ],
+    "next": [
+      "Orbeetle"
+    ]
+  },
+  "Doublade": {
+    "prev": [
+      "Honedge"
+    ],
+    "next": [
+      "Aegislash (Shield Forme)"
+    ]
+  },
+  "Dragalge": {
+    "prev": [
+      "Skrelp"
+    ],
+    "next": []
+  },
+  "Dragapult": {
+    "prev": [
+      "Drakloak"
+    ],
+    "next": []
+  },
+  "Dragonair": {
+    "prev": [
+      "Dratini"
+    ],
+    "next": [
+      "Dragonite"
+    ]
+  },
+  "Dragonite": {
+    "prev": [
+      "Dragonair"
+    ],
+    "next": []
+  },
+  "Drakloak": {
+    "prev": [
+      "Dreepy"
+    ],
+    "next": [
+      "Dragapult"
+    ]
+  },
+  "Drapion": {
+    "prev": [
+      "Skorupi"
+    ],
+    "next": []
+  },
+  "Dratini": {
+    "prev": [],
+    "next": [
+      "Dragonair"
+    ]
+  },
+  "Drednaw": {
+    "prev": [
+      "Chewtle"
+    ],
+    "next": []
+  },
+  "Dreepy": {
+    "prev": [],
+    "next": [
+      "Drakloak"
+    ]
+  },
+  "Drifblim": {
+    "prev": [
+      "Drifloon"
+    ],
+    "next": []
+  },
+  "Drifloon": {
+    "prev": [],
+    "next": [
+      "Drifblim"
+    ]
+  },
+  "Drilbur": {
+    "prev": [],
+    "next": [
+      "Excadrill"
+    ]
+  },
+  "Drizzile": {
+    "prev": [
+      "Sobble"
+    ],
+    "next": [
+      "Inteleon"
+    ]
+  },
+  "Drowzee": {
+    "prev": [],
+    "next": [
+      "Hypno"
+    ]
+  },
+  "Dubwool": {
+    "prev": [
+      "Wooloo"
+    ],
+    "next": []
+  },
+  "Ducklett": {
+    "prev": [],
+    "next": [
+      "Swanna"
+    ]
+  },
+  "Dudunsparce (Three-Segment Form)": {
+    "prev": [
+      "Dunsparce"
+    ],
+    "next": []
+  },
+  "Dudunsparce (Two-Segment Form)": {
+    "prev": [
+      "Dunsparce"
+    ],
+    "next": []
+  },
+  "Dugtrio": {
+    "prev": [
+      "Diglett"
+    ],
+    "next": []
+  },
+  "Dunsparce": {
+    "prev": [],
+    "next": [
+      "Dudunsparce (Two-Segment Form)",
+      "Dudunsparce (Three-Segment Form)"
+    ]
+  },
+  "Duosion": {
+    "prev": [
+      "Solosis"
+    ],
+    "next": [
+      "Reuniclus"
+    ]
+  },
+  "Duraludon": {
+    "prev": [],
+    "next": [
+      "Archaludon"
+    ]
+  },
+  "Dusclops": {
+    "prev": [
+      "Duskull"
+    ],
+    "next": [
+      "Dusknoir"
+    ]
+  },
+  "Dusknoir": {
+    "prev": [
+      "Dusclops"
+    ],
+    "next": []
+  },
+  "Duskull": {
+    "prev": [],
+    "next": [
+      "Dusclops"
+    ]
+  },
+  "Dustox": {
+    "prev": [
+      "Cascoon"
+    ],
+    "next": []
+  },
+  "Dwebble": {
+    "prev": [],
+    "next": [
+      "Crustle"
+    ]
+  },
+  "Eelektrik": {
+    "prev": [
+      "Tynamo"
+    ],
+    "next": [
+      "Eelektross"
+    ]
+  },
+  "Eelektross": {
+    "prev": [
+      "Eelektrik"
+    ],
+    "next": []
+  },
+  "Eevee": {
+    "prev": [],
+    "next": [
+      "Vaporeon",
+      "Jolteon",
+      "Flareon",
+      "Espeon",
+      "Umbreon",
+      "Leafeon",
+      "Glaceon",
+      "Sylveon"
+    ]
+  },
+  "Ekans": {
+    "prev": [],
+    "next": [
+      "Arbok"
+    ]
+  },
+  "Eldegoss": {
+    "prev": [
+      "Gossifleur"
+    ],
+    "next": []
+  },
+  "Electabuzz": {
+    "prev": [
+      "Elekid"
+    ],
+    "next": [
+      "Electivire"
+    ]
+  },
+  "Electivire": {
+    "prev": [
+      "Electabuzz"
+    ],
+    "next": []
+  },
+  "Electrike": {
+    "prev": [],
+    "next": [
+      "Manectric"
+    ]
+  },
+  "Electrode": {
+    "prev": [
+      "Voltorb"
+    ],
+    "next": []
+  },
+  "Elekid": {
+    "prev": [],
+    "next": [
+      "Electabuzz"
+    ]
+  },
+  "Elgyem": {
+    "prev": [],
+    "next": [
+      "Beheeyem"
+    ]
+  },
+  "Emboar": {
+    "prev": [
+      "Pignite"
+    ],
+    "next": []
+  },
+  "Empoleon": {
+    "prev": [
+      "Prinplup"
+    ],
+    "next": []
+  },
+  "Escavalier": {
+    "prev": [
+      "Karrablast"
+    ],
+    "next": []
+  },
+  "Espathra": {
+    "prev": [
+      "Flittle"
+    ],
+    "next": []
+  },
+  "Espeon": {
+    "prev": [
+      "Eevee"
+    ],
+    "next": []
+  },
+  "Espurr": {
+    "prev": [],
+    "next": [
+      "Meowstic (Male)",
+      "Meowstic (Female)"
+    ]
+  },
+  "Excadrill": {
+    "prev": [
+      "Drilbur"
+    ],
+    "next": []
+  },
+  "Exeggcute": {
+    "prev": [],
+    "next": [
+      "Exeggutor",
+      "Alolan Exeggutor"
+    ]
+  },
+  "Exeggutor": {
+    "prev": [
+      "Exeggcute"
+    ],
+    "next": []
+  },
+  "Exploud": {
+    "prev": [
+      "Loudred"
+    ],
+    "next": []
+  },
+  "Farigiraf": {
+    "prev": [
+      "Girafarig"
+    ],
+    "next": []
+  },
+  "Fearow": {
+    "prev": [
+      "Spearow"
+    ],
+    "next": []
+  },
+  "Feebas": {
+    "prev": [],
+    "next": [
+      "Milotic"
+    ]
+  },
+  "Fennekin": {
+    "prev": [],
+    "next": [
+      "Braixen"
+    ]
+  },
+  "Feraligatr": {
+    "prev": [
+      "Croconaw"
+    ],
+    "next": []
+  },
+  "Ferroseed": {
+    "prev": [],
+    "next": [
+      "Ferrothorn"
+    ]
+  },
+  "Ferrothorn": {
+    "prev": [
+      "Ferroseed"
+    ],
+    "next": []
+  },
+  "Fidough": {
+    "prev": [],
+    "next": [
+      "Dachsbun"
+    ]
+  },
+  "Finizen": {
+    "prev": [],
+    "next": [
+      "Palafin (Zero Form)"
+    ]
+  },
+  "Finneon": {
+    "prev": [],
+    "next": [
+      "Lumineon"
+    ]
+  },
+  "Flaaffy": {
+    "prev": [
+      "Mareep"
+    ],
+    "next": [
+      "Ampharos"
+    ]
+  },
+  "Flabébé": {
+    "prev": [],
+    "next": [
+      "Floette"
+    ]
+  },
+  "Flapple": {
+    "prev": [
+      "Applin"
+    ],
+    "next": []
+  },
+  "Flareon": {
+    "prev": [
+      "Eevee"
+    ],
+    "next": []
+  },
+  "Fletchinder": {
+    "prev": [
+      "Fletchling"
+    ],
+    "next": [
+      "Talonflame"
+    ]
+  },
+  "Fletchling": {
+    "prev": [],
+    "next": [
+      "Fletchinder"
+    ]
+  },
+  "Flittle": {
+    "prev": [],
+    "next": [
+      "Espathra"
+    ]
+  },
+  "Floatzel": {
+    "prev": [
+      "Buizel"
+    ],
+    "next": []
+  },
+  "Floette": {
+    "prev": [
+      "Flabébé"
+    ],
+    "next": [
+      "Florges"
+    ]
+  },
+  "Floragato": {
+    "prev": [
+      "Sprigatito"
+    ],
+    "next": [
+      "Meowscarada"
+    ]
+  },
+  "Florges": {
+    "prev": [
+      "Floette"
+    ],
+    "next": []
+  },
+  "Flygon": {
+    "prev": [
+      "Vibrava"
+    ],
+    "next": []
+  },
+  "Fomantis": {
+    "prev": [],
+    "next": [
+      "Lurantis"
+    ]
+  },
+  "Foongus": {
+    "prev": [],
+    "next": [
+      "Amoonguss"
+    ]
+  },
+  "Forretress": {
+    "prev": [
+      "Pineco"
+    ],
+    "next": []
+  },
+  "Fraxure": {
+    "prev": [
+      "Axew"
+    ],
+    "next": [
+      "Haxorus"
+    ]
+  },
+  "Frigibax": {
+    "prev": [],
+    "next": [
+      "Arctibax"
+    ]
+  },
+  "Frillish": {
+    "prev": [],
+    "next": [
+      "Jellicent"
+    ]
+  },
+  "Froakie": {
+    "prev": [],
+    "next": [
+      "Frogadier"
+    ]
+  },
+  "Frogadier": {
+    "prev": [
+      "Froakie"
+    ],
+    "next": [
+      "Greninja"
+    ]
+  },
+  "Froslass": {
+    "prev": [
+      "Snorunt"
+    ],
+    "next": []
+  },
+  "Frosmoth": {
+    "prev": [
+      "Snom"
+    ],
+    "next": []
+  },
+  "Fuecoco": {
+    "prev": [],
+    "next": [
+      "Crocalor"
+    ]
+  },
+  "Furret": {
+    "prev": [
+      "Sentret"
+    ],
+    "next": []
+  },
+  "Gabite": {
+    "prev": [
+      "Gible"
+    ],
+    "next": [
+      "Garchomp"
+    ]
+  },
+  "Galarian Corsola": {
+    "prev": [],
+    "next": [
+      "Cursola"
+    ]
+  },
+  "Galarian Darumaka": {
+    "prev": [],
+    "next": [
+      "Darmanitan (Galarian Standard Mode)"
+    ]
+  },
+  "Galarian Farfetch'd": {
+    "prev": [],
+    "next": [
+      "Sirfetch'd"
+    ]
+  },
+  "Galarian Linoone": {
+    "prev": [
+      "Galarian Zigzagoon"
+    ],
+    "next": [
+      "Obstagoon"
+    ]
+  },
+  "Galarian Meowth": {
+    "prev": [],
+    "next": [
+      "Perrserker"
+    ]
+  },
+  "Galarian Mr. Mime": {
+    "prev": [
+      "Mime Jr."
+    ],
+    "next": [
+      "Mr. Rime"
+    ]
+  },
+  "Galarian Ponyta": {
+    "prev": [],
+    "next": [
+      "Galarian Rapidash"
+    ]
+  },
+  "Galarian Rapidash": {
+    "prev": [
+      "Galarian Ponyta"
+    ],
+    "next": []
+  },
+  "Galarian Slowbro": {
+    "prev": [
+      "Galarian Slowpoke"
+    ],
+    "next": []
+  },
+  "Galarian Slowking": {
+    "prev": [
+      "Galarian Slowpoke"
+    ],
+    "next": []
+  },
+  "Galarian Slowpoke": {
+    "prev": [],
+    "next": [
+      "Galarian Slowbro",
+      "Galarian Slowking"
+    ]
+  },
+  "Galarian Weezing": {
+    "prev": [
+      "Koffing"
+    ],
+    "next": []
+  },
+  "Galarian Yamask": {
+    "prev": [],
+    "next": [
+      "Runerigus"
+    ]
+  },
+  "Galarian Zigzagoon": {
+    "prev": [],
+    "next": [
+      "Galarian Linoone"
+    ]
+  },
+  "Gallade": {
+    "prev": [
+      "Kirlia"
+    ],
+    "next": []
+  },
+  "Galvantula": {
+    "prev": [
+      "Joltik"
+    ],
+    "next": []
+  },
+  "Garbodor": {
+    "prev": [
+      "Trubbish"
+    ],
+    "next": []
+  },
+  "Garchomp": {
+    "prev": [
+      "Gabite"
+    ],
+    "next": []
+  },
+  "Gardevoir": {
+    "prev": [
+      "Kirlia"
+    ],
+    "next": []
+  },
+  "Garganacl": {
+    "prev": [
+      "Naclstack"
+    ],
+    "next": []
+  },
+  "Gastly": {
+    "prev": [],
+    "next": [
+      "Haunter"
+    ]
+  },
+  "Gastrodon": {
+    "prev": [
+      "Shellos"
+    ],
+    "next": []
+  },
+  "Gengar": {
+    "prev": [
+      "Haunter"
+    ],
+    "next": []
+  },
+  "Geodude": {
+    "prev": [],
+    "next": [
+      "Graveler"
+    ]
+  },
+  "Gholdengo": {
+    "prev": [
+      "Gimmighoul (Chest Form)"
+    ],
+    "next": []
+  },
+  "Gible": {
+    "prev": [],
+    "next": [
+      "Gabite"
+    ]
+  },
+  "Gigalith": {
+    "prev": [
+      "Boldore"
+    ],
+    "next": []
+  },
+  "Gimmighoul (Chest Form)": {
+    "prev": [],
+    "next": [
+      "Gholdengo"
+    ]
+  },
+  "Girafarig": {
+    "prev": [],
+    "next": [
+      "Farigiraf"
+    ]
+  },
+  "Glaceon": {
+    "prev": [
+      "Eevee"
+    ],
+    "next": []
+  },
+  "Glalie": {
+    "prev": [
+      "Snorunt"
+    ],
+    "next": []
+  },
+  "Glameow": {
+    "prev": [],
+    "next": [
+      "Purugly"
+    ]
+  },
+  "Gligar": {
+    "prev": [],
+    "next": [
+      "Gliscor"
+    ]
+  },
+  "Glimmet": {
+    "prev": [],
+    "next": [
+      "Glimmora"
+    ]
+  },
+  "Glimmora": {
+    "prev": [
+      "Glimmet"
+    ],
+    "next": []
+  },
+  "Gliscor": {
+    "prev": [
+      "Gligar"
+    ],
+    "next": []
+  },
+  "Gloom": {
+    "prev": [
+      "Oddish"
+    ],
+    "next": [
+      "Vileplume",
+      "Bellossom"
+    ]
+  },
+  "Gogoat": {
+    "prev": [
+      "Skiddo"
+    ],
+    "next": []
+  },
+  "Golbat": {
+    "prev": [
+      "Zubat"
+    ],
+    "next": [
+      "Crobat"
+    ]
+  },
+  "Goldeen": {
+    "prev": [],
+    "next": [
+      "Seaking"
+    ]
+  },
+  "Golduck": {
+    "prev": [
+      "Psyduck"
+    ],
+    "next": []
+  },
+  "Golem": {
+    "prev": [
+      "Graveler"
+    ],
+    "next": []
+  },
+  "Golett": {
+    "prev": [],
+    "next": [
+      "Golurk"
+    ]
+  },
+  "Golisopod": {
+    "prev": [
+      "Wimpod"
+    ],
+    "next": []
+  },
+  "Golurk": {
+    "prev": [
+      "Golett"
+    ],
+    "next": []
+  },
+  "Goodra": {
+    "prev": [
+      "Sliggoo"
+    ],
+    "next": []
+  },
+  "Goomy": {
+    "prev": [],
+    "next": [
+      "Sliggoo",
+      "Hisuian Sliggoo"
+    ]
+  },
+  "Gorebyss": {
+    "prev": [
+      "Clamperl"
+    ],
+    "next": []
+  },
+  "Gossifleur": {
+    "prev": [],
+    "next": [
+      "Eldegoss"
+    ]
+  },
+  "Gothita": {
+    "prev": [],
+    "next": [
+      "Gothorita"
+    ]
+  },
+  "Gothitelle": {
+    "prev": [
+      "Gothorita"
+    ],
+    "next": []
+  },
+  "Gothorita": {
+    "prev": [
+      "Gothita"
+    ],
+    "next": [
+      "Gothitelle"
+    ]
+  },
+  "Gourgeist (Average Size)": {
+    "prev": [
+      "Pumpkaboo (Average Size)"
+    ],
+    "next": []
+  },
+  "Grafaiai": {
+    "prev": [
+      "Shroodle"
+    ],
+    "next": []
+  },
+  "Granbull": {
+    "prev": [
+      "Snubbull"
+    ],
+    "next": []
+  },
+  "Grapploct": {
+    "prev": [
+      "Clobbopus"
+    ],
+    "next": []
+  },
+  "Graveler": {
+    "prev": [
+      "Geodude"
+    ],
+    "next": [
+      "Golem"
+    ]
+  },
+  "Greavard": {
+    "prev": [],
+    "next": [
+      "Houndstone"
+    ]
+  },
+  "Greedent": {
+    "prev": [
+      "Skwovet"
+    ],
+    "next": []
+  },
+  "Greninja": {
+    "prev": [
+      "Frogadier"
+    ],
+    "next": []
+  },
+  "Grimer": {
+    "prev": [],
+    "next": [
+      "Muk"
+    ]
+  },
+  "Grimmsnarl": {
+    "prev": [
+      "Morgrem"
+    ],
+    "next": []
+  },
+  "Grookey": {
+    "prev": [],
+    "next": [
+      "Thwackey"
+    ]
+  },
+  "Grotle": {
+    "prev": [
+      "Turtwig"
+    ],
+    "next": [
+      "Torterra"
+    ]
+  },
+  "Grovyle": {
+    "prev": [
+      "Treecko"
+    ],
+    "next": [
+      "Sceptile"
+    ]
+  },
+  "Growlithe": {
+    "prev": [],
+    "next": [
+      "Arcanine"
+    ]
+  },
+  "Grubbin": {
+    "prev": [],
+    "next": [
+      "Charjabug"
+    ]
+  },
+  "Grumpig": {
+    "prev": [
+      "Spoink"
+    ],
+    "next": []
+  },
+  "Gulpin": {
+    "prev": [],
+    "next": [
+      "Swalot"
+    ]
+  },
+  "Gumshoos": {
+    "prev": [
+      "Yungoos"
+    ],
+    "next": []
+  },
+  "Gurdurr": {
+    "prev": [
+      "Timburr"
+    ],
+    "next": [
+      "Conkeldurr"
+    ]
+  },
+  "Gyarados": {
+    "prev": [
+      "Magikarp"
+    ],
+    "next": []
+  },
+  "Hakamo-o": {
+    "prev": [
+      "Jangmo-o"
+    ],
+    "next": [
+      "Kommo-o"
+    ]
+  },
+  "Happiny": {
+    "prev": [],
+    "next": [
+      "Chansey"
+    ]
+  },
+  "Hariyama": {
+    "prev": [
+      "Makuhita"
+    ],
+    "next": []
+  },
+  "Hatenna": {
+    "prev": [],
+    "next": [
+      "Hattrem"
+    ]
+  },
+  "Hatterene": {
+    "prev": [
+      "Hattrem"
+    ],
+    "next": []
+  },
+  "Hattrem": {
+    "prev": [
+      "Hatenna"
+    ],
+    "next": [
+      "Hatterene"
+    ]
+  },
+  "Haunter": {
+    "prev": [
+      "Gastly"
+    ],
+    "next": [
+      "Gengar"
+    ]
+  },
+  "Haxorus": {
+    "prev": [
+      "Fraxure"
+    ],
+    "next": []
+  },
+  "Heliolisk": {
+    "prev": [
+      "Helioptile"
+    ],
+    "next": []
+  },
+  "Helioptile": {
+    "prev": [],
+    "next": [
+      "Heliolisk"
+    ]
+  },
+  "Herdier": {
+    "prev": [
+      "Lillipup"
+    ],
+    "next": [
+      "Stoutland"
+    ]
+  },
+  "Hippopotas": {
+    "prev": [],
+    "next": [
+      "Hippowdon"
+    ]
+  },
+  "Hippowdon": {
+    "prev": [
+      "Hippopotas"
+    ],
+    "next": []
+  },
+  "Hisuian Arcanine": {
+    "prev": [
+      "Hisuian Growlithe"
+    ],
+    "next": []
+  },
+  "Hisuian Avalugg": {
+    "prev": [
+      "Bergmite"
+    ],
+    "next": []
+  },
+  "Hisuian Braviary": {
+    "prev": [
+      "Rufflet"
+    ],
+    "next": []
+  },
+  "Hisuian Decidueye": {
+    "prev": [
+      "Dartrix"
+    ],
+    "next": []
+  },
+  "Hisuian Electrode": {
+    "prev": [
+      "Hisuian Voltorb"
+    ],
+    "next": []
+  },
+  "Hisuian Goodra": {
+    "prev": [
+      "Hisuian Sliggoo"
+    ],
+    "next": []
+  },
+  "Hisuian Growlithe": {
+    "prev": [],
+    "next": [
+      "Hisuian Arcanine"
+    ]
+  },
+  "Hisuian Lilligant": {
+    "prev": [
+      "Petilil"
+    ],
+    "next": []
+  },
+  "Hisuian Qwilfish": {
+    "prev": [],
+    "next": [
+      "Overqwil"
+    ]
+  },
+  "Hisuian Samurott": {
+    "prev": [
+      "Dewott"
+    ],
+    "next": []
+  },
+  "Hisuian Sliggoo": {
+    "prev": [
+      "Goomy"
+    ],
+    "next": [
+      "Hisuian Goodra"
+    ]
+  },
+  "Hisuian Sneasel": {
+    "prev": [],
+    "next": [
+      "Sneasler"
+    ]
+  },
+  "Hisuian Typhlosion": {
+    "prev": [
+      "Quilava"
+    ],
+    "next": []
+  },
+  "Hisuian Voltorb": {
+    "prev": [],
+    "next": [
+      "Hisuian Electrode"
+    ]
+  },
+  "Hisuian Zoroark": {
+    "prev": [
+      "Hisuian Zorua"
+    ],
+    "next": []
+  },
+  "Hisuian Zorua": {
+    "prev": [],
+    "next": [
+      "Hisuian Zoroark"
+    ]
+  },
+  "Hitmonchan": {
+    "prev": [
+      "Tyrogue"
+    ],
+    "next": []
+  },
+  "Hitmonlee": {
+    "prev": [
+      "Tyrogue"
+    ],
+    "next": []
+  },
+  "Hitmontop": {
+    "prev": [
+      "Tyrogue"
+    ],
+    "next": []
+  },
+  "Honchkrow": {
+    "prev": [
+      "Murkrow"
+    ],
+    "next": []
+  },
+  "Honedge": {
+    "prev": [],
+    "next": [
+      "Doublade"
+    ]
+  },
+  "Hoothoot": {
+    "prev": [],
+    "next": [
+      "Noctowl"
+    ]
+  },
+  "Hoppip": {
+    "prev": [],
+    "next": [
+      "Skiploom"
+    ]
+  },
+  "Horsea": {
+    "prev": [],
+    "next": [
+      "Seadra"
+    ]
+  },
+  "Houndoom": {
+    "prev": [
+      "Houndour"
+    ],
+    "next": []
+  },
+  "Houndour": {
+    "prev": [],
+    "next": [
+      "Houndoom"
+    ]
+  },
+  "Houndstone": {
+    "prev": [
+      "Greavard"
+    ],
+    "next": []
+  },
+  "Huntail": {
+    "prev": [
+      "Clamperl"
+    ],
+    "next": []
+  },
+  "Hydrapple": {
+    "prev": [
+      "Dipplin"
+    ],
+    "next": []
+  },
+  "Hydreigon": {
+    "prev": [
+      "Zweilous"
+    ],
+    "next": []
+  },
+  "Hypno": {
+    "prev": [
+      "Drowzee"
+    ],
+    "next": []
+  },
+  "Igglybuff": {
+    "prev": [],
+    "next": [
+      "Jigglypuff"
+    ]
+  },
+  "Impidimp": {
+    "prev": [],
+    "next": [
+      "Morgrem"
+    ]
+  },
+  "Incineroar": {
+    "prev": [
+      "Torracat"
+    ],
+    "next": []
+  },
+  "Infernape": {
+    "prev": [
+      "Monferno"
+    ],
+    "next": []
+  },
+  "Inkay": {
+    "prev": [],
+    "next": [
+      "Malamar"
+    ]
+  },
+  "Inteleon": {
+    "prev": [
+      "Drizzile"
+    ],
+    "next": []
+  },
+  "Ivysaur": {
+    "prev": [
+      "Bulbasaur"
+    ],
+    "next": [
+      "Venusaur"
+    ]
+  },
+  "Jangmo-o": {
+    "prev": [],
+    "next": [
+      "Hakamo-o"
+    ]
+  },
+  "Jellicent": {
+    "prev": [
+      "Frillish"
+    ],
+    "next": []
+  },
+  "Jigglypuff": {
+    "prev": [
+      "Igglybuff"
+    ],
+    "next": [
+      "Wigglytuff"
+    ]
+  },
+  "Jolteon": {
+    "prev": [
+      "Eevee"
+    ],
+    "next": []
+  },
+  "Joltik": {
+    "prev": [],
+    "next": [
+      "Galvantula"
+    ]
+  },
+  "Jumpluff": {
+    "prev": [
+      "Skiploom"
+    ],
+    "next": []
+  },
+  "Jynx": {
+    "prev": [
+      "Smoochum"
+    ],
+    "next": []
+  },
+  "Kabuto": {
+    "prev": [],
+    "next": [
+      "Kabutops"
+    ]
+  },
+  "Kabutops": {
+    "prev": [
+      "Kabuto"
+    ],
+    "next": []
+  },
+  "Kadabra": {
+    "prev": [
+      "Abra"
+    ],
+    "next": [
+      "Alakazam"
+    ]
+  },
+  "Kakuna": {
+    "prev": [
+      "Weedle"
+    ],
+    "next": [
+      "Beedrill"
+    ]
+  },
+  "Karrablast": {
+    "prev": [],
+    "next": [
+      "Escavalier"
+    ]
+  },
+  "Kilowattrel": {
+    "prev": [
+      "Wattrel"
+    ],
+    "next": []
+  },
+  "Kingambit": {
+    "prev": [
+      "Bisharp"
+    ],
+    "next": []
+  },
+  "Kingdra": {
+    "prev": [
+      "Seadra"
+    ],
+    "next": []
+  },
+  "Kingler": {
+    "prev": [
+      "Krabby"
+    ],
+    "next": []
+  },
+  "Kirlia": {
+    "prev": [
+      "Ralts"
+    ],
+    "next": [
+      "Gardevoir",
+      "Gallade"
+    ]
+  },
+  "Klang": {
+    "prev": [
+      "Klink"
+    ],
+    "next": [
+      "Klinklang"
+    ]
+  },
+  "Kleavor": {
+    "prev": [
+      "Scyther"
+    ],
+    "next": []
+  },
+  "Klink": {
+    "prev": [],
+    "next": [
+      "Klang"
+    ]
+  },
+  "Klinklang": {
+    "prev": [
+      "Klang"
+    ],
+    "next": []
+  },
+  "Koffing": {
+    "prev": [],
+    "next": [
+      "Weezing",
+      "Galarian Weezing"
+    ]
+  },
+  "Kommo-o": {
+    "prev": [
+      "Hakamo-o"
+    ],
+    "next": []
+  },
+  "Krabby": {
+    "prev": [],
+    "next": [
+      "Kingler"
+    ]
+  },
+  "Kricketot": {
+    "prev": [],
+    "next": [
+      "Kricketune"
+    ]
+  },
+  "Kricketune": {
+    "prev": [
+      "Kricketot"
+    ],
+    "next": []
+  },
+  "Krokorok": {
+    "prev": [
+      "Sandile"
+    ],
+    "next": [
+      "Krookodile"
+    ]
+  },
+  "Krookodile": {
+    "prev": [
+      "Krokorok"
+    ],
+    "next": []
+  },
+  "Kubfu": {
+    "prev": [],
+    "next": [
+      "Urshifu (Single Strike Style)",
+      "Urshifu (Rapid Strike Style)"
+    ]
+  },
+  "Lairon": {
+    "prev": [
+      "Aron"
+    ],
+    "next": [
+      "Aggron"
+    ]
+  },
+  "Lampent": {
+    "prev": [
+      "Litwick"
+    ],
+    "next": [
+      "Chandelure"
+    ]
+  },
+  "Lanturn": {
+    "prev": [
+      "Chinchou"
+    ],
+    "next": []
+  },
+  "Larvesta": {
+    "prev": [],
+    "next": [
+      "Volcarona"
+    ]
+  },
+  "Larvitar": {
+    "prev": [],
+    "next": [
+      "Pupitar"
+    ]
+  },
+  "Leafeon": {
+    "prev": [
+      "Eevee"
+    ],
+    "next": []
+  },
+  "Leavanny": {
+    "prev": [
+      "Swadloon"
+    ],
+    "next": []
+  },
+  "Lechonk": {
+    "prev": [],
+    "next": [
+      "Oinkologne (Male)",
+      "Oinkologne (Female)"
+    ]
+  },
+  "Ledian": {
+    "prev": [
+      "Ledyba"
+    ],
+    "next": []
+  },
+  "Ledyba": {
+    "prev": [],
+    "next": [
+      "Ledian"
+    ]
+  },
+  "Lickilicky": {
+    "prev": [
+      "Lickitung"
+    ],
+    "next": []
+  },
+  "Lickitung": {
+    "prev": [],
+    "next": [
+      "Lickilicky"
+    ]
+  },
+  "Liepard": {
+    "prev": [
+      "Purrloin"
+    ],
+    "next": []
+  },
+  "Lileep": {
+    "prev": [],
+    "next": [
+      "Cradily"
+    ]
+  },
+  "Lilligant": {
+    "prev": [
+      "Petilil"
+    ],
+    "next": []
+  },
+  "Lillipup": {
+    "prev": [],
+    "next": [
+      "Herdier"
+    ]
+  },
+  "Linoone": {
+    "prev": [
+      "Zigzagoon"
+    ],
+    "next": []
+  },
+  "Litleo": {
+    "prev": [],
+    "next": [
+      "Pyroar"
+    ]
+  },
+  "Litten": {
+    "prev": [],
+    "next": [
+      "Torracat"
+    ]
+  },
+  "Litwick": {
+    "prev": [],
+    "next": [
+      "Lampent"
+    ]
+  },
+  "Lokix": {
+    "prev": [
+      "Nymble"
+    ],
+    "next": []
+  },
+  "Lombre": {
+    "prev": [
+      "Lotad"
+    ],
+    "next": [
+      "Ludicolo"
+    ]
+  },
+  "Lopunny": {
+    "prev": [
+      "Buneary"
+    ],
+    "next": []
+  },
+  "Lotad": {
+    "prev": [],
+    "next": [
+      "Lombre"
+    ]
+  },
+  "Loudred": {
+    "prev": [
+      "Whismur"
+    ],
+    "next": [
+      "Exploud"
+    ]
+  },
+  "Lucario": {
+    "prev": [
+      "Riolu"
+    ],
+    "next": []
+  },
+  "Ludicolo": {
+    "prev": [
+      "Lombre"
+    ],
+    "next": []
+  },
+  "Lumineon": {
+    "prev": [
+      "Finneon"
+    ],
+    "next": []
+  },
+  "Lunala": {
+    "prev": [
+      "Cosmoem"
+    ],
+    "next": []
+  },
+  "Lurantis": {
+    "prev": [
+      "Fomantis"
+    ],
+    "next": []
+  },
+  "Luxio": {
+    "prev": [
+      "Shinx"
+    ],
+    "next": [
+      "Luxray"
+    ]
+  },
+  "Luxray": {
+    "prev": [
+      "Luxio"
+    ],
+    "next": []
+  },
+  "Lycanroc (Dusk Form)": {
+    "prev": [
+      "Rockruff (Own Tempo Rockruff)"
+    ],
+    "next": []
+  },
+  "Lycanroc (Midday Form)": {
+    "prev": [
+      "Rockruff"
+    ],
+    "next": []
+  },
+  "Lycanroc (Midnight Form)": {
+    "prev": [
+      "Rockruff"
+    ],
+    "next": []
+  },
+  "Mabosstiff": {
+    "prev": [
+      "Maschiff"
+    ],
+    "next": []
+  },
+  "Machamp": {
+    "prev": [
+      "Machoke"
+    ],
+    "next": []
+  },
+  "Machoke": {
+    "prev": [
+      "Machop"
+    ],
+    "next": [
+      "Machamp"
+    ]
+  },
+  "Machop": {
+    "prev": [],
+    "next": [
+      "Machoke"
+    ]
+  },
+  "Magby": {
+    "prev": [],
+    "next": [
+      "Magmar"
+    ]
+  },
+  "Magcargo": {
+    "prev": [
+      "Slugma"
+    ],
+    "next": []
+  },
+  "Magikarp": {
+    "prev": [],
+    "next": [
+      "Gyarados"
+    ]
+  },
+  "Magmar": {
+    "prev": [
+      "Magby"
+    ],
+    "next": [
+      "Magmortar"
+    ]
+  },
+  "Magmortar": {
+    "prev": [
+      "Magmar"
+    ],
+    "next": []
+  },
+  "Magnemite": {
+    "prev": [],
+    "next": [
+      "Magneton"
+    ]
+  },
+  "Magneton": {
+    "prev": [
+      "Magnemite"
+    ],
+    "next": [
+      "Magnezone"
+    ]
+  },
+  "Magnezone": {
+    "prev": [
+      "Magneton"
+    ],
+    "next": []
+  },
+  "Makuhita": {
+    "prev": [],
+    "next": [
+      "Hariyama"
+    ]
+  },
+  "Malamar": {
+    "prev": [
+      "Inkay"
+    ],
+    "next": []
+  },
+  "Mamoswine": {
+    "prev": [
+      "Piloswine"
+    ],
+    "next": []
+  },
+  "Mandibuzz": {
+    "prev": [
+      "Vullaby"
+    ],
+    "next": []
+  },
+  "Manectric": {
+    "prev": [
+      "Electrike"
+    ],
+    "next": []
+  },
+  "Mankey": {
+    "prev": [],
+    "next": [
+      "Primeape"
+    ]
+  },
+  "Mantine": {
+    "prev": [
+      "Mantyke"
+    ],
+    "next": []
+  },
+  "Mantyke": {
+    "prev": [],
+    "next": [
+      "Mantine"
+    ]
+  },
+  "Mareanie": {
+    "prev": [],
+    "next": [
+      "Toxapex"
+    ]
+  },
+  "Mareep": {
+    "prev": [],
+    "next": [
+      "Flaaffy"
+    ]
+  },
+  "Marill": {
+    "prev": [
+      "Azurill"
+    ],
+    "next": [
+      "Azumarill"
+    ]
+  },
+  "Marowak": {
+    "prev": [
+      "Cubone"
+    ],
+    "next": []
+  },
+  "Marshtomp": {
+    "prev": [
+      "Mudkip"
+    ],
+    "next": [
+      "Swampert"
+    ]
+  },
+  "Maschiff": {
+    "prev": [],
+    "next": [
+      "Mabosstiff"
+    ]
+  },
+  "Masquerain": {
+    "prev": [
+      "Surskit"
+    ],
+    "next": []
+  },
+  "Maushold (Family of Four)": {
+    "prev": [
+      "Tandemaus"
+    ],
+    "next": []
+  },
+  "Maushold (Family of Three)": {
+    "prev": [
+      "Tandemaus"
+    ],
+    "next": []
+  },
+  "Medicham": {
+    "prev": [
+      "Meditite"
+    ],
+    "next": []
+  },
+  "Meditite": {
+    "prev": [],
+    "next": [
+      "Medicham"
+    ]
+  },
+  "Meganium": {
+    "prev": [
+      "Bayleef"
+    ],
+    "next": []
+  },
+  "Melmetal": {
+    "prev": [
+      "Meltan"
+    ],
+    "next": []
+  },
+  "Meltan": {
+    "prev": [],
+    "next": [
+      "Melmetal"
+    ]
+  },
+  "Meowscarada": {
+    "prev": [
+      "Floragato"
+    ],
+    "next": []
+  },
+  "Meowstic (Female)": {
+    "prev": [
+      "Espurr"
+    ],
+    "next": []
+  },
+  "Meowstic (Male)": {
+    "prev": [
+      "Espurr"
+    ],
+    "next": []
+  },
+  "Meowth": {
+    "prev": [],
+    "next": [
+      "Persian"
+    ]
+  },
+  "Metagross": {
+    "prev": [
+      "Metang"
+    ],
+    "next": []
+  },
+  "Metang": {
+    "prev": [
+      "Beldum"
+    ],
+    "next": [
+      "Metagross"
+    ]
+  },
+  "Metapod": {
+    "prev": [
+      "Caterpie"
+    ],
+    "next": [
+      "Butterfree"
+    ]
+  },
+  "Mienfoo": {
+    "prev": [],
+    "next": [
+      "Mienshao"
+    ]
+  },
+  "Mienshao": {
+    "prev": [
+      "Mienfoo"
+    ],
+    "next": []
+  },
+  "Mightyena": {
+    "prev": [
+      "Poochyena"
+    ],
+    "next": []
+  },
+  "Milcery": {
+    "prev": [],
+    "next": [
+      "Alcremie"
+    ]
+  },
+  "Milotic": {
+    "prev": [
+      "Feebas"
+    ],
+    "next": []
+  },
+  "Mime Jr.": {
+    "prev": [],
+    "next": [
+      "Mr. Mime",
+      "Galarian Mr. Mime"
+    ]
+  },
+  "Minccino": {
+    "prev": [],
+    "next": [
+      "Cinccino"
+    ]
+  },
+  "Misdreavus": {
+    "prev": [],
+    "next": [
+      "Mismagius"
+    ]
+  },
+  "Mismagius": {
+    "prev": [
+      "Misdreavus"
+    ],
+    "next": []
+  },
+  "Monferno": {
+    "prev": [
+      "Chimchar"
+    ],
+    "next": [
+      "Infernape"
+    ]
+  },
+  "Morelull": {
+    "prev": [],
+    "next": [
+      "Shiinotic"
+    ]
+  },
+  "Morgrem": {
+    "prev": [
+      "Impidimp"
+    ],
+    "next": [
+      "Grimmsnarl"
+    ]
+  },
+  "Mothim": {
+    "prev": [
+      "Burmy (Plant Cloak)"
+    ],
+    "next": []
+  },
+  "Mr. Mime": {
+    "prev": [
+      "Mime Jr."
+    ],
+    "next": []
+  },
+  "Mr. Rime": {
+    "prev": [
+      "Galarian Mr. Mime"
+    ],
+    "next": []
+  },
+  "Mudbray": {
+    "prev": [],
+    "next": [
+      "Mudsdale"
+    ]
+  },
+  "Mudkip": {
+    "prev": [],
+    "next": [
+      "Marshtomp"
+    ]
+  },
+  "Mudsdale": {
+    "prev": [
+      "Mudbray"
+    ],
+    "next": []
+  },
+  "Muk": {
+    "prev": [
+      "Grimer"
+    ],
+    "next": []
+  },
+  "Munchlax": {
+    "prev": [],
+    "next": [
+      "Snorlax"
+    ]
+  },
+  "Munna": {
+    "prev": [],
+    "next": [
+      "Musharna"
+    ]
+  },
+  "Murkrow": {
+    "prev": [],
+    "next": [
+      "Honchkrow"
+    ]
+  },
+  "Musharna": {
+    "prev": [
+      "Munna"
+    ],
+    "next": []
+  },
+  "Nacli": {
+    "prev": [],
+    "next": [
+      "Naclstack"
+    ]
+  },
+  "Naclstack": {
+    "prev": [
+      "Nacli"
+    ],
+    "next": [
+      "Garganacl"
+    ]
+  },
+  "Naganadel": {
+    "prev": [
+      "Poipole"
+    ],
+    "next": []
+  },
+  "Natu": {
+    "prev": [],
+    "next": [
+      "Xatu"
+    ]
+  },
+  "Nickit": {
+    "prev": [],
+    "next": [
+      "Thievul"
+    ]
+  },
+  "Nidoking": {
+    "prev": [
+      "Nidorino"
+    ],
+    "next": []
+  },
+  "Nidoqueen": {
+    "prev": [
+      "Nidorina"
+    ],
+    "next": []
+  },
+  "Nidoran♀": {
+    "prev": [],
+    "next": [
+      "Nidorina"
+    ]
+  },
+  "Nidoran♂": {
+    "prev": [],
+    "next": [
+      "Nidorino"
+    ]
+  },
+  "Nidorina": {
+    "prev": [
+      "Nidoran♀"
+    ],
+    "next": [
+      "Nidoqueen"
+    ]
+  },
+  "Nidorino": {
+    "prev": [
+      "Nidoran♂"
+    ],
+    "next": [
+      "Nidoking"
+    ]
+  },
+  "Nincada": {
+    "prev": [],
+    "next": [
+      "Ninjask"
+    ]
+  },
+  "Ninetales": {
+    "prev": [
+      "Vulpix"
+    ],
+    "next": []
+  },
+  "Ninjask": {
+    "prev": [
+      "Nincada"
+    ],
+    "next": [
+      "Shedinja"
+    ]
+  },
+  "Noctowl": {
+    "prev": [
+      "Hoothoot"
+    ],
+    "next": []
+  },
+  "Noibat": {
+    "prev": [],
+    "next": [
+      "Noivern"
+    ]
+  },
+  "Noivern": {
+    "prev": [
+      "Noibat"
+    ],
+    "next": []
+  },
+  "Nosepass": {
+    "prev": [],
+    "next": [
+      "Probopass"
+    ]
+  },
+  "Numel": {
+    "prev": [],
+    "next": [
+      "Camerupt"
+    ]
+  },
+  "Nuzleaf": {
+    "prev": [
+      "Seedot"
+    ],
+    "next": [
+      "Shiftry"
+    ]
+  },
+  "Nymble": {
+    "prev": [],
+    "next": [
+      "Lokix"
+    ]
+  },
+  "Obstagoon": {
+    "prev": [
+      "Galarian Linoone"
+    ],
+    "next": []
+  },
+  "Octillery": {
+    "prev": [
+      "Remoraid"
+    ],
+    "next": []
+  },
+  "Oddish": {
+    "prev": [],
+    "next": [
+      "Gloom"
+    ]
+  },
+  "Oinkologne (Female)": {
+    "prev": [
+      "Lechonk"
+    ],
+    "next": []
+  },
+  "Oinkologne (Male)": {
+    "prev": [
+      "Lechonk"
+    ],
+    "next": []
+  },
+  "Omanyte": {
+    "prev": [],
+    "next": [
+      "Omastar"
+    ]
+  },
+  "Omastar": {
+    "prev": [
+      "Omanyte"
+    ],
+    "next": []
+  },
+  "Onix": {
+    "prev": [],
+    "next": [
+      "Steelix"
+    ]
+  },
+  "Orbeetle": {
+    "prev": [
+      "Dottler"
+    ],
+    "next": []
+  },
+  "Oshawott": {
+    "prev": [],
+    "next": [
+      "Dewott"
+    ]
+  },
+  "Overqwil": {
+    "prev": [
+      "Hisuian Qwilfish"
+    ],
+    "next": []
+  },
+  "Palafin (Zero Form)": {
+    "prev": [
+      "Finizen"
+    ],
+    "next": []
+  },
+  "Paldean Wooper": {
+    "prev": [],
+    "next": [
+      "Clodsire"
+    ]
+  },
+  "Palossand": {
+    "prev": [
+      "Sandygast"
+    ],
+    "next": []
+  },
+  "Palpitoad": {
+    "prev": [
+      "Tympole"
+    ],
+    "next": [
+      "Seismitoad"
+    ]
+  },
+  "Pancham": {
+    "prev": [],
+    "next": [
+      "Pangoro"
+    ]
+  },
+  "Pangoro": {
+    "prev": [
+      "Pancham"
+    ],
+    "next": []
+  },
+  "Panpour": {
+    "prev": [],
+    "next": [
+      "Simipour"
+    ]
+  },
+  "Pansage": {
+    "prev": [],
+    "next": [
+      "Simisage"
+    ]
+  },
+  "Pansear": {
+    "prev": [],
+    "next": [
+      "Simisear"
+    ]
+  },
+  "Paras": {
+    "prev": [],
+    "next": [
+      "Parasect"
+    ]
+  },
+  "Parasect": {
+    "prev": [
+      "Paras"
+    ],
+    "next": []
+  },
+  "Patrat": {
+    "prev": [],
+    "next": [
+      "Watchog"
+    ]
+  },
+  "Pawmi": {
+    "prev": [],
+    "next": [
+      "Pawmo"
+    ]
+  },
+  "Pawmo": {
+    "prev": [
+      "Pawmi"
+    ],
+    "next": [
+      "Pawmot"
+    ]
+  },
+  "Pawmot": {
+    "prev": [
+      "Pawmo"
+    ],
+    "next": []
+  },
+  "Pawniard": {
+    "prev": [],
+    "next": [
+      "Bisharp"
+    ]
+  },
+  "Pelipper": {
+    "prev": [
+      "Wingull"
+    ],
+    "next": []
+  },
+  "Perrserker": {
+    "prev": [
+      "Galarian Meowth"
+    ],
+    "next": []
+  },
+  "Persian": {
+    "prev": [
+      "Meowth"
+    ],
+    "next": []
+  },
+  "Petilil": {
+    "prev": [],
+    "next": [
+      "Lilligant",
+      "Hisuian Lilligant"
+    ]
+  },
+  "Phanpy": {
+    "prev": [],
+    "next": [
+      "Donphan"
+    ]
+  },
+  "Phantump": {
+    "prev": [],
+    "next": [
+      "Trevenant"
+    ]
+  },
+  "Pichu": {
+    "prev": [],
+    "next": [
+      "Pikachu"
+    ]
+  },
+  "Pidgeot": {
+    "prev": [
+      "Pidgeotto"
+    ],
+    "next": []
+  },
+  "Pidgeotto": {
+    "prev": [
+      "Pidgey"
+    ],
+    "next": [
+      "Pidgeot"
+    ]
+  },
+  "Pidgey": {
+    "prev": [],
+    "next": [
+      "Pidgeotto"
+    ]
+  },
+  "Pidove": {
+    "prev": [],
+    "next": [
+      "Tranquill"
+    ]
+  },
+  "Pignite": {
+    "prev": [
+      "Tepig"
+    ],
+    "next": [
+      "Emboar"
+    ]
+  },
+  "Pikachu": {
+    "prev": [
+      "Pichu"
+    ],
+    "next": [
+      "Raichu",
+      "Alolan Raichu"
+    ]
+  },
+  "Pikipek": {
+    "prev": [],
+    "next": [
+      "Trumbeak"
+    ]
+  },
+  "Piloswine": {
+    "prev": [
+      "Swinub"
+    ],
+    "next": [
+      "Mamoswine"
+    ]
+  },
+  "Pineco": {
+    "prev": [],
+    "next": [
+      "Forretress"
+    ]
+  },
+  "Piplup": {
+    "prev": [],
+    "next": [
+      "Prinplup"
+    ]
+  },
+  "Poipole": {
+    "prev": [],
+    "next": [
+      "Naganadel"
+    ]
+  },
+  "Politoed": {
+    "prev": [
+      "Poliwhirl"
+    ],
+    "next": []
+  },
+  "Poliwag": {
+    "prev": [],
+    "next": [
+      "Poliwhirl"
+    ]
+  },
+  "Poliwhirl": {
+    "prev": [
+      "Poliwag"
+    ],
+    "next": [
+      "Poliwrath",
+      "Politoed"
+    ]
+  },
+  "Poliwrath": {
+    "prev": [
+      "Poliwhirl"
+    ],
+    "next": []
+  },
+  "Poltchageist": {
+    "prev": [],
+    "next": [
+      "Sinistcha"
+    ]
+  },
+  "Polteageist": {
+    "prev": [
+      "Sinistea"
+    ],
+    "next": []
+  },
+  "Ponyta": {
+    "prev": [],
+    "next": [
+      "Rapidash"
+    ]
+  },
+  "Poochyena": {
+    "prev": [],
+    "next": [
+      "Mightyena"
+    ]
+  },
+  "Popplio": {
+    "prev": [],
+    "next": [
+      "Brionne"
+    ]
+  },
+  "Porygon": {
+    "prev": [],
+    "next": [
+      "Porygon2"
+    ]
+  },
+  "Porygon-Z": {
+    "prev": [
+      "Porygon2"
+    ],
+    "next": []
+  },
+  "Porygon2": {
+    "prev": [
+      "Porygon"
+    ],
+    "next": [
+      "Porygon-Z"
+    ]
+  },
+  "Primarina": {
+    "prev": [
+      "Brionne"
+    ],
+    "next": []
+  },
+  "Primeape": {
+    "prev": [
+      "Mankey"
+    ],
+    "next": [
+      "Annihilape"
+    ]
+  },
+  "Prinplup": {
+    "prev": [
+      "Piplup"
+    ],
+    "next": [
+      "Empoleon"
+    ]
+  },
+  "Probopass": {
+    "prev": [
+      "Nosepass"
+    ],
+    "next": []
+  },
+  "Psyduck": {
+    "prev": [],
+    "next": [
+      "Golduck"
+    ]
+  },
+  "Pumpkaboo (Average Size)": {
+    "prev": [],
+    "next": [
+      "Gourgeist (Average Size)"
+    ]
+  },
+  "Pupitar": {
+    "prev": [
+      "Larvitar"
+    ],
+    "next": [
+      "Tyranitar"
+    ]
+  },
+  "Purrloin": {
+    "prev": [],
+    "next": [
+      "Liepard"
+    ]
+  },
+  "Purugly": {
+    "prev": [
+      "Glameow"
+    ],
+    "next": []
+  },
+  "Pyroar": {
+    "prev": [
+      "Litleo"
+    ],
+    "next": []
+  },
+  "Quagsire": {
+    "prev": [
+      "Wooper"
+    ],
+    "next": []
+  },
+  "Quaquaval": {
+    "prev": [
+      "Quaxwell"
+    ],
+    "next": []
+  },
+  "Quaxly": {
+    "prev": [],
+    "next": [
+      "Quaxwell"
+    ]
+  },
+  "Quaxwell": {
+    "prev": [
+      "Quaxly"
+    ],
+    "next": [
+      "Quaquaval"
+    ]
+  },
+  "Quilava": {
+    "prev": [
+      "Cyndaquil"
+    ],
+    "next": [
+      "Typhlosion",
+      "Hisuian Typhlosion"
+    ]
+  },
+  "Quilladin": {
+    "prev": [
+      "Chespin"
+    ],
+    "next": [
+      "Chesnaught"
+    ]
+  },
+  "Raboot": {
+    "prev": [
+      "Scorbunny"
+    ],
+    "next": [
+      "Cinderace"
+    ]
+  },
+  "Rabsca": {
+    "prev": [
+      "Rellor"
+    ],
+    "next": []
+  },
+  "Raichu": {
+    "prev": [
+      "Pikachu"
+    ],
+    "next": []
+  },
+  "Ralts": {
+    "prev": [],
+    "next": [
+      "Kirlia"
+    ]
+  },
+  "Rampardos": {
+    "prev": [
+      "Cranidos"
+    ],
+    "next": []
+  },
+  "Rapidash": {
+    "prev": [
+      "Ponyta"
+    ],
+    "next": []
+  },
+  "Raticate": {
+    "prev": [
+      "Rattata"
+    ],
+    "next": []
+  },
+  "Rattata": {
+    "prev": [],
+    "next": [
+      "Raticate"
+    ]
+  },
+  "Rellor": {
+    "prev": [],
+    "next": [
+      "Rabsca"
+    ]
+  },
+  "Remoraid": {
+    "prev": [],
+    "next": [
+      "Octillery"
+    ]
+  },
+  "Reuniclus": {
+    "prev": [
+      "Duosion"
+    ],
+    "next": []
+  },
+  "Revavroom": {
+    "prev": [
+      "Varoom"
+    ],
+    "next": []
+  },
+  "Rhydon": {
+    "prev": [
+      "Rhyhorn"
+    ],
+    "next": [
+      "Rhyperior"
+    ]
+  },
+  "Rhyhorn": {
+    "prev": [],
+    "next": [
+      "Rhydon"
+    ]
+  },
+  "Rhyperior": {
+    "prev": [
+      "Rhydon"
+    ],
+    "next": []
+  },
+  "Ribombee": {
+    "prev": [
+      "Cutiefly"
+    ],
+    "next": []
+  },
+  "Rillaboom": {
+    "prev": [
+      "Thwackey"
+    ],
+    "next": []
+  },
+  "Riolu": {
+    "prev": [],
+    "next": [
+      "Lucario"
+    ]
+  },
+  "Rockruff": {
+    "prev": [],
+    "next": [
+      "Lycanroc (Midday Form)",
+      "Lycanroc (Midnight Form)"
+    ]
+  },
+  "Rockruff (Own Tempo Rockruff)": {
+    "prev": [],
+    "next": [
+      "Lycanroc (Dusk Form)"
+    ]
+  },
+  "Roggenrola": {
+    "prev": [],
+    "next": [
+      "Boldore"
+    ]
+  },
+  "Rolycoly": {
+    "prev": [],
+    "next": [
+      "Carkol"
+    ]
+  },
+  "Rookidee": {
+    "prev": [],
+    "next": [
+      "Corvisquire"
+    ]
+  },
+  "Roselia": {
+    "prev": [
+      "Budew"
+    ],
+    "next": [
+      "Roserade"
+    ]
+  },
+  "Roserade": {
+    "prev": [
+      "Roselia"
+    ],
+    "next": []
+  },
+  "Rowlet": {
+    "prev": [],
+    "next": [
+      "Dartrix"
+    ]
+  },
+  "Rufflet": {
+    "prev": [],
+    "next": [
+      "Braviary",
+      "Hisuian Braviary"
+    ]
+  },
+  "Runerigus": {
+    "prev": [
+      "Galarian Yamask"
+    ],
+    "next": []
+  },
+  "Salamence": {
+    "prev": [
+      "Shelgon"
+    ],
+    "next": []
+  },
+  "Salandit": {
+    "prev": [],
+    "next": [
+      "Salazzle"
+    ]
+  },
+  "Salazzle": {
+    "prev": [
+      "Salandit"
+    ],
+    "next": []
+  },
+  "Samurott": {
+    "prev": [
+      "Dewott"
+    ],
+    "next": []
+  },
+  "Sandaconda": {
+    "prev": [
+      "Silicobra"
+    ],
+    "next": []
+  },
+  "Sandile": {
+    "prev": [],
+    "next": [
+      "Krokorok"
+    ]
+  },
+  "Sandshrew": {
+    "prev": [],
+    "next": [
+      "Sandslash"
+    ]
+  },
+  "Sandslash": {
+    "prev": [
+      "Sandshrew"
+    ],
+    "next": []
+  },
+  "Sandygast": {
+    "prev": [],
+    "next": [
+      "Palossand"
+    ]
+  },
+  "Sawsbuck": {
+    "prev": [
+      "Deerling"
+    ],
+    "next": []
+  },
+  "Scatterbug": {
+    "prev": [],
+    "next": [
+      "Spewpa"
+    ]
+  },
+  "Sceptile": {
+    "prev": [
+      "Grovyle"
+    ],
+    "next": []
+  },
+  "Scizor": {
+    "prev": [
+      "Scyther"
+    ],
+    "next": []
+  },
+  "Scolipede": {
+    "prev": [
+      "Whirlipede"
+    ],
+    "next": []
+  },
+  "Scorbunny": {
+    "prev": [],
+    "next": [
+      "Raboot"
+    ]
+  },
+  "Scovillain": {
+    "prev": [
+      "Capsakid"
+    ],
+    "next": []
+  },
+  "Scrafty": {
+    "prev": [
+      "Scraggy"
+    ],
+    "next": []
+  },
+  "Scraggy": {
+    "prev": [],
+    "next": [
+      "Scrafty"
+    ]
+  },
+  "Scyther": {
+    "prev": [],
+    "next": [
+      "Scizor",
+      "Kleavor"
+    ]
+  },
+  "Seadra": {
+    "prev": [
+      "Horsea"
+    ],
+    "next": [
+      "Kingdra"
+    ]
+  },
+  "Seaking": {
+    "prev": [
+      "Goldeen"
+    ],
+    "next": []
+  },
+  "Sealeo": {
+    "prev": [
+      "Spheal"
+    ],
+    "next": [
+      "Walrein"
+    ]
+  },
+  "Seedot": {
+    "prev": [],
+    "next": [
+      "Nuzleaf"
+    ]
+  },
+  "Seel": {
+    "prev": [],
+    "next": [
+      "Dewgong"
+    ]
+  },
+  "Seismitoad": {
+    "prev": [
+      "Palpitoad"
+    ],
+    "next": []
+  },
+  "Sentret": {
+    "prev": [],
+    "next": [
+      "Furret"
+    ]
+  },
+  "Serperior": {
+    "prev": [
+      "Servine"
+    ],
+    "next": []
+  },
+  "Servine": {
+    "prev": [
+      "Snivy"
+    ],
+    "next": [
+      "Serperior"
+    ]
+  },
+  "Sewaddle": {
+    "prev": [],
+    "next": [
+      "Swadloon"
+    ]
+  },
+  "Sharpedo": {
+    "prev": [
+      "Carvanha"
+    ],
+    "next": []
+  },
+  "Shedinja": {
+    "prev": [
+      "Ninjask"
+    ],
+    "next": []
+  },
+  "Shelgon": {
+    "prev": [
+      "Bagon"
+    ],
+    "next": [
+      "Salamence"
+    ]
+  },
+  "Shellder": {
+    "prev": [],
+    "next": [
+      "Cloyster"
+    ]
+  },
+  "Shellos": {
+    "prev": [],
+    "next": [
+      "Gastrodon"
+    ]
+  },
+  "Shelmet": {
+    "prev": [],
+    "next": [
+      "Accelgor"
+    ]
+  },
+  "Shieldon": {
+    "prev": [],
+    "next": [
+      "Bastiodon"
+    ]
+  },
+  "Shiftry": {
+    "prev": [
+      "Nuzleaf"
+    ],
+    "next": []
+  },
+  "Shiinotic": {
+    "prev": [
+      "Morelull"
+    ],
+    "next": []
+  },
+  "Shinx": {
+    "prev": [],
+    "next": [
+      "Luxio"
+    ]
+  },
+  "Shroodle": {
+    "prev": [],
+    "next": [
+      "Grafaiai"
+    ]
+  },
+  "Shroomish": {
+    "prev": [],
+    "next": [
+      "Breloom"
+    ]
+  },
+  "Shuppet": {
+    "prev": [],
+    "next": [
+      "Banette"
+    ]
+  },
+  "Silcoon": {
+    "prev": [
+      "Wurmple"
+    ],
+    "next": [
+      "Beautifly"
+    ]
+  },
+  "Silicobra": {
+    "prev": [],
+    "next": [
+      "Sandaconda"
+    ]
+  },
+  "Silvally": {
+    "prev": [
+      "Type: Null"
+    ],
+    "next": []
+  },
+  "Simipour": {
+    "prev": [
+      "Panpour"
+    ],
+    "next": []
+  },
+  "Simisage": {
+    "prev": [
+      "Pansage"
+    ],
+    "next": []
+  },
+  "Simisear": {
+    "prev": [
+      "Pansear"
+    ],
+    "next": []
+  },
+  "Sinistcha": {
+    "prev": [
+      "Poltchageist"
+    ],
+    "next": []
+  },
+  "Sinistea": {
+    "prev": [],
+    "next": [
+      "Polteageist"
+    ]
+  },
+  "Sirfetch'd": {
+    "prev": [
+      "Galarian Farfetch'd"
+    ],
+    "next": []
+  },
+  "Sizzlipede": {
+    "prev": [],
+    "next": [
+      "Centiskorch"
+    ]
+  },
+  "Skeledirge": {
+    "prev": [
+      "Crocalor"
+    ],
+    "next": []
+  },
+  "Skiddo": {
+    "prev": [],
+    "next": [
+      "Gogoat"
+    ]
+  },
+  "Skiploom": {
+    "prev": [
+      "Hoppip"
+    ],
+    "next": [
+      "Jumpluff"
+    ]
+  },
+  "Skitty": {
+    "prev": [],
+    "next": [
+      "Delcatty"
+    ]
+  },
+  "Skorupi": {
+    "prev": [],
+    "next": [
+      "Drapion"
+    ]
+  },
+  "Skrelp": {
+    "prev": [],
+    "next": [
+      "Dragalge"
+    ]
+  },
+  "Skuntank": {
+    "prev": [
+      "Stunky"
+    ],
+    "next": []
+  },
+  "Skwovet": {
+    "prev": [],
+    "next": [
+      "Greedent"
+    ]
+  },
+  "Slaking": {
+    "prev": [
+      "Vigoroth"
+    ],
+    "next": []
+  },
+  "Slakoth": {
+    "prev": [],
+    "next": [
+      "Vigoroth"
+    ]
+  },
+  "Sliggoo": {
+    "prev": [
+      "Goomy"
+    ],
+    "next": [
+      "Goodra"
+    ]
+  },
+  "Slowbro": {
+    "prev": [
+      "Slowpoke"
+    ],
+    "next": []
+  },
+  "Slowking": {
+    "prev": [
+      "Slowpoke"
+    ],
+    "next": []
+  },
+  "Slowpoke": {
+    "prev": [],
+    "next": [
+      "Slowbro",
+      "Slowking"
+    ]
+  },
+  "Slugma": {
+    "prev": [],
+    "next": [
+      "Magcargo"
+    ]
+  },
+  "Slurpuff": {
+    "prev": [
+      "Swirlix"
+    ],
+    "next": []
+  },
+  "Smoliv": {
+    "prev": [],
+    "next": [
+      "Dolliv"
+    ]
+  },
+  "Smoochum": {
+    "prev": [],
+    "next": [
+      "Jynx"
+    ]
+  },
+  "Sneasel": {
+    "prev": [],
+    "next": [
+      "Weavile"
+    ]
+  },
+  "Sneasler": {
+    "prev": [
+      "Hisuian Sneasel"
+    ],
+    "next": []
+  },
+  "Snivy": {
+    "prev": [],
+    "next": [
+      "Servine"
+    ]
+  },
+  "Snom": {
+    "prev": [],
+    "next": [
+      "Frosmoth"
+    ]
+  },
+  "Snorlax": {
+    "prev": [
+      "Munchlax"
+    ],
+    "next": []
+  },
+  "Snorunt": {
+    "prev": [],
+    "next": [
+      "Glalie",
+      "Froslass"
+    ]
+  },
+  "Snover": {
+    "prev": [],
+    "next": [
+      "Abomasnow"
+    ]
+  },
+  "Snubbull": {
+    "prev": [],
+    "next": [
+      "Granbull"
+    ]
+  },
+  "Sobble": {
+    "prev": [],
+    "next": [
+      "Drizzile"
+    ]
+  },
+  "Solgaleo": {
+    "prev": [
+      "Cosmoem"
+    ],
+    "next": []
+  },
+  "Solosis": {
+    "prev": [],
+    "next": [
+      "Duosion"
+    ]
+  },
+  "Spearow": {
+    "prev": [],
+    "next": [
+      "Fearow"
+    ]
+  },
+  "Spewpa": {
+    "prev": [
+      "Scatterbug"
+    ],
+    "next": [
+      "Vivillon"
+    ]
+  },
+  "Spheal": {
+    "prev": [],
+    "next": [
+      "Sealeo"
+    ]
+  },
+  "Spidops": {
+    "prev": [
+      "Tarountula"
+    ],
+    "next": []
+  },
+  "Spinarak": {
+    "prev": [],
+    "next": [
+      "Ariados"
+    ]
+  },
+  "Spoink": {
+    "prev": [],
+    "next": [
+      "Grumpig"
+    ]
+  },
+  "Sprigatito": {
+    "prev": [],
+    "next": [
+      "Floragato"
+    ]
+  },
+  "Spritzee": {
+    "prev": [],
+    "next": [
+      "Aromatisse"
+    ]
+  },
+  "Squirtle": {
+    "prev": [],
+    "next": [
+      "Wartortle"
+    ]
+  },
+  "Stantler": {
+    "prev": [],
+    "next": [
+      "Wyrdeer"
+    ]
+  },
+  "Staraptor": {
+    "prev": [
+      "Staravia"
+    ],
+    "next": []
+  },
+  "Staravia": {
+    "prev": [
+      "Starly"
+    ],
+    "next": [
+      "Staraptor"
+    ]
+  },
+  "Starly": {
+    "prev": [],
+    "next": [
+      "Staravia"
+    ]
+  },
+  "Starmie": {
+    "prev": [
+      "Staryu"
+    ],
+    "next": []
+  },
+  "Staryu": {
+    "prev": [],
+    "next": [
+      "Starmie"
+    ]
+  },
+  "Steelix": {
+    "prev": [
+      "Onix"
+    ],
+    "next": []
+  },
+  "Steenee": {
+    "prev": [
+      "Bounsweet"
+    ],
+    "next": [
+      "Tsareena"
+    ]
+  },
+  "Stoutland": {
+    "prev": [
+      "Herdier"
+    ],
+    "next": []
+  },
+  "Stufful": {
+    "prev": [],
+    "next": [
+      "Bewear"
+    ]
+  },
+  "Stunky": {
+    "prev": [],
+    "next": [
+      "Skuntank"
+    ]
+  },
+  "Sudowoodo": {
+    "prev": [
+      "Bonsly"
+    ],
+    "next": []
+  },
+  "Sunflora": {
+    "prev": [
+      "Sunkern"
+    ],
+    "next": []
+  },
+  "Sunkern": {
+    "prev": [],
+    "next": [
+      "Sunflora"
+    ]
+  },
+  "Surskit": {
+    "prev": [],
+    "next": [
+      "Masquerain"
+    ]
+  },
+  "Swablu": {
+    "prev": [],
+    "next": [
+      "Altaria"
+    ]
+  },
+  "Swadloon": {
+    "prev": [
+      "Sewaddle"
+    ],
+    "next": [
+      "Leavanny"
+    ]
+  },
+  "Swalot": {
+    "prev": [
+      "Gulpin"
+    ],
+    "next": []
+  },
+  "Swampert": {
+    "prev": [
+      "Marshtomp"
+    ],
+    "next": []
+  },
+  "Swanna": {
+    "prev": [
+      "Ducklett"
+    ],
+    "next": []
+  },
+  "Swellow": {
+    "prev": [
+      "Taillow"
+    ],
+    "next": []
+  },
+  "Swinub": {
+    "prev": [],
+    "next": [
+      "Piloswine"
+    ]
+  },
+  "Swirlix": {
+    "prev": [],
+    "next": [
+      "Slurpuff"
+    ]
+  },
+  "Swoobat": {
+    "prev": [
+      "Woobat"
+    ],
+    "next": []
+  },
+  "Sylveon": {
+    "prev": [
+      "Eevee"
+    ],
+    "next": []
+  },
+  "Tadbulb": {
+    "prev": [],
+    "next": [
+      "Bellibolt"
+    ]
+  },
+  "Taillow": {
+    "prev": [],
+    "next": [
+      "Swellow"
+    ]
+  },
+  "Talonflame": {
+    "prev": [
+      "Fletchinder"
+    ],
+    "next": []
+  },
+  "Tandemaus": {
+    "prev": [],
+    "next": [
+      "Maushold (Family of Three)",
+      "Maushold (Family of Four)"
+    ]
+  },
+  "Tangela": {
+    "prev": [],
+    "next": [
+      "Tangrowth"
+    ]
+  },
+  "Tangrowth": {
+    "prev": [
+      "Tangela"
+    ],
+    "next": []
+  },
+  "Tarountula": {
+    "prev": [],
+    "next": [
+      "Spidops"
+    ]
+  },
+  "Teddiursa": {
+    "prev": [],
+    "next": [
+      "Ursaring"
+    ]
+  },
+  "Tentacool": {
+    "prev": [],
+    "next": [
+      "Tentacruel"
+    ]
+  },
+  "Tentacruel": {
+    "prev": [
+      "Tentacool"
+    ],
+    "next": []
+  },
+  "Tepig": {
+    "prev": [],
+    "next": [
+      "Pignite"
+    ]
+  },
+  "Thievul": {
+    "prev": [
+      "Nickit"
+    ],
+    "next": []
+  },
+  "Thwackey": {
+    "prev": [
+      "Grookey"
+    ],
+    "next": [
+      "Rillaboom"
+    ]
+  },
+  "Timburr": {
+    "prev": [],
+    "next": [
+      "Gurdurr"
+    ]
+  },
+  "Tinkatink": {
+    "prev": [],
+    "next": [
+      "Tinkatuff"
+    ]
+  },
+  "Tinkaton": {
+    "prev": [
+      "Tinkatuff"
+    ],
+    "next": []
+  },
+  "Tinkatuff": {
+    "prev": [
+      "Tinkatink"
+    ],
+    "next": [
+      "Tinkaton"
+    ]
+  },
+  "Tirtouga": {
+    "prev": [],
+    "next": [
+      "Carracosta"
+    ]
+  },
+  "Toedscool": {
+    "prev": [],
+    "next": [
+      "Toedscruel"
+    ]
+  },
+  "Toedscruel": {
+    "prev": [
+      "Toedscool"
+    ],
+    "next": []
+  },
+  "Togekiss": {
+    "prev": [
+      "Togetic"
+    ],
+    "next": []
+  },
+  "Togepi": {
+    "prev": [],
+    "next": [
+      "Togetic"
+    ]
+  },
+  "Togetic": {
+    "prev": [
+      "Togepi"
+    ],
+    "next": [
+      "Togekiss"
+    ]
+  },
+  "Torchic": {
+    "prev": [],
+    "next": [
+      "Combusken"
+    ]
+  },
+  "Torracat": {
+    "prev": [
+      "Litten"
+    ],
+    "next": [
+      "Incineroar"
+    ]
+  },
+  "Torterra": {
+    "prev": [
+      "Grotle"
+    ],
+    "next": []
+  },
+  "Totodile": {
+    "prev": [],
+    "next": [
+      "Croconaw"
+    ]
+  },
+  "Toucannon": {
+    "prev": [
+      "Trumbeak"
+    ],
+    "next": []
+  },
+  "Toxapex": {
+    "prev": [
+      "Mareanie"
+    ],
+    "next": []
+  },
+  "Toxel": {
+    "prev": [],
+    "next": [
+      "Toxtricity (Amped Form)",
+      "Toxtricity (Low Key Form)"
+    ]
+  },
+  "Toxicroak": {
+    "prev": [
+      "Croagunk"
+    ],
+    "next": []
+  },
+  "Toxtricity (Amped Form)": {
+    "prev": [
+      "Toxel"
+    ],
+    "next": []
+  },
+  "Toxtricity (Low Key Form)": {
+    "prev": [
+      "Toxel"
+    ],
+    "next": []
+  },
+  "Tranquill": {
+    "prev": [
+      "Pidove"
+    ],
+    "next": [
+      "Unfezant"
+    ]
+  },
+  "Trapinch": {
+    "prev": [],
+    "next": [
+      "Vibrava"
+    ]
+  },
+  "Treecko": {
+    "prev": [],
+    "next": [
+      "Grovyle"
+    ]
+  },
+  "Trevenant": {
+    "prev": [
+      "Phantump"
+    ],
+    "next": []
+  },
+  "Trubbish": {
+    "prev": [],
+    "next": [
+      "Garbodor"
+    ]
+  },
+  "Trumbeak": {
+    "prev": [
+      "Pikipek"
+    ],
+    "next": [
+      "Toucannon"
+    ]
+  },
+  "Tsareena": {
+    "prev": [
+      "Steenee"
+    ],
+    "next": []
+  },
+  "Turtwig": {
+    "prev": [],
+    "next": [
+      "Grotle"
+    ]
+  },
+  "Tympole": {
+    "prev": [],
+    "next": [
+      "Palpitoad"
+    ]
+  },
+  "Tynamo": {
+    "prev": [],
+    "next": [
+      "Eelektrik"
+    ]
+  },
+  "Type: Null": {
+    "prev": [],
+    "next": [
+      "Silvally"
+    ]
+  },
+  "Typhlosion": {
+    "prev": [
+      "Quilava"
+    ],
+    "next": []
+  },
+  "Tyranitar": {
+    "prev": [
+      "Pupitar"
+    ],
+    "next": []
+  },
+  "Tyrantrum": {
+    "prev": [
+      "Tyrunt"
+    ],
+    "next": []
+  },
+  "Tyrogue": {
+    "prev": [],
+    "next": [
+      "Hitmonlee",
+      "Hitmonchan",
+      "Hitmontop"
+    ]
+  },
+  "Tyrunt": {
+    "prev": [],
+    "next": [
+      "Tyrantrum"
+    ]
+  },
+  "Umbreon": {
+    "prev": [
+      "Eevee"
+    ],
+    "next": []
+  },
+  "Unfezant": {
+    "prev": [
+      "Tranquill"
+    ],
+    "next": []
+  },
+  "Ursaluna": {
+    "prev": [
+      "Ursaring"
+    ],
+    "next": []
+  },
+  "Ursaring": {
+    "prev": [
+      "Teddiursa"
+    ],
+    "next": [
+      "Ursaluna"
+    ]
+  },
+  "Urshifu (Rapid Strike Style)": {
+    "prev": [
+      "Kubfu"
+    ],
+    "next": []
+  },
+  "Urshifu (Single Strike Style)": {
+    "prev": [
+      "Kubfu"
+    ],
+    "next": []
+  },
+  "Vanillish": {
+    "prev": [
+      "Vanillite"
+    ],
+    "next": [
+      "Vanilluxe"
+    ]
+  },
+  "Vanillite": {
+    "prev": [],
+    "next": [
+      "Vanillish"
+    ]
+  },
+  "Vanilluxe": {
+    "prev": [
+      "Vanillish"
+    ],
+    "next": []
+  },
+  "Vaporeon": {
+    "prev": [
+      "Eevee"
+    ],
+    "next": []
+  },
+  "Varoom": {
+    "prev": [],
+    "next": [
+      "Revavroom"
+    ]
+  },
+  "Venipede": {
+    "prev": [],
+    "next": [
+      "Whirlipede"
+    ]
+  },
+  "Venomoth": {
+    "prev": [
+      "Venonat"
+    ],
+    "next": []
+  },
+  "Venonat": {
+    "prev": [],
+    "next": [
+      "Venomoth"
+    ]
+  },
+  "Venusaur": {
+    "prev": [
+      "Ivysaur"
+    ],
+    "next": []
+  },
+  "Vespiquen": {
+    "prev": [
+      "Combee"
+    ],
+    "next": []
+  },
+  "Vibrava": {
+    "prev": [
+      "Trapinch"
+    ],
+    "next": [
+      "Flygon"
+    ]
+  },
+  "Victreebel": {
+    "prev": [
+      "Weepinbell"
+    ],
+    "next": []
+  },
+  "Vigoroth": {
+    "prev": [
+      "Slakoth"
+    ],
+    "next": [
+      "Slaking"
+    ]
+  },
+  "Vikavolt": {
+    "prev": [
+      "Charjabug"
+    ],
+    "next": []
+  },
+  "Vileplume": {
+    "prev": [
+      "Gloom"
+    ],
+    "next": []
+  },
+  "Vivillon": {
+    "prev": [
+      "Spewpa"
+    ],
+    "next": []
+  },
+  "Volcarona": {
+    "prev": [
+      "Larvesta"
+    ],
+    "next": []
+  },
+  "Voltorb": {
+    "prev": [],
+    "next": [
+      "Electrode"
+    ]
+  },
+  "Vullaby": {
+    "prev": [],
+    "next": [
+      "Mandibuzz"
+    ]
+  },
+  "Vulpix": {
+    "prev": [],
+    "next": [
+      "Ninetales"
+    ]
+  },
+  "Wailmer": {
+    "prev": [],
+    "next": [
+      "Wailord"
+    ]
+  },
+  "Wailord": {
+    "prev": [
+      "Wailmer"
+    ],
+    "next": []
+  },
+  "Walrein": {
+    "prev": [
+      "Sealeo"
+    ],
+    "next": []
+  },
+  "Wartortle": {
+    "prev": [
+      "Squirtle"
+    ],
+    "next": [
+      "Blastoise"
+    ]
+  },
+  "Watchog": {
+    "prev": [
+      "Patrat"
+    ],
+    "next": []
+  },
+  "Wattrel": {
+    "prev": [],
+    "next": [
+      "Kilowattrel"
+    ]
+  },
+  "Weavile": {
+    "prev": [
+      "Sneasel"
+    ],
+    "next": []
+  },
+  "Weedle": {
+    "prev": [],
+    "next": [
+      "Kakuna"
+    ]
+  },
+  "Weepinbell": {
+    "prev": [
+      "Bellsprout"
+    ],
+    "next": [
+      "Victreebel"
+    ]
+  },
+  "Weezing": {
+    "prev": [
+      "Koffing"
+    ],
+    "next": []
+  },
+  "Whimsicott": {
+    "prev": [
+      "Cottonee"
+    ],
+    "next": []
+  },
+  "Whirlipede": {
+    "prev": [
+      "Venipede"
+    ],
+    "next": [
+      "Scolipede"
+    ]
+  },
+  "Whiscash": {
+    "prev": [
+      "Barboach"
+    ],
+    "next": []
+  },
+  "Whismur": {
+    "prev": [],
+    "next": [
+      "Loudred"
+    ]
+  },
+  "Wigglytuff": {
+    "prev": [
+      "Jigglypuff"
+    ],
+    "next": []
+  },
+  "Wiglett": {
+    "prev": [],
+    "next": [
+      "Wugtrio"
+    ]
+  },
+  "Wimpod": {
+    "prev": [],
+    "next": [
+      "Golisopod"
+    ]
+  },
+  "Wingull": {
+    "prev": [],
+    "next": [
+      "Pelipper"
+    ]
+  },
+  "Wobbuffet": {
+    "prev": [
+      "Wynaut"
+    ],
+    "next": []
+  },
+  "Woobat": {
+    "prev": [],
+    "next": [
+      "Swoobat"
+    ]
+  },
+  "Wooloo": {
+    "prev": [],
+    "next": [
+      "Dubwool"
+    ]
+  },
+  "Wooper": {
+    "prev": [],
+    "next": [
+      "Quagsire"
+    ]
+  },
+  "Wormadam (Plant Cloak)": {
+    "prev": [
+      "Burmy (Plant Cloak)"
+    ],
+    "next": []
+  },
+  "Wormadam (Sandy Cloak)": {
+    "prev": [
+      "Burmy (Sandy Cloak)"
+    ],
+    "next": []
+  },
+  "Wormadam (Trash Cloak)": {
+    "prev": [
+      "Burmy (Trash Cloak)"
+    ],
+    "next": []
+  },
+  "Wugtrio": {
+    "prev": [
+      "Wiglett"
+    ],
+    "next": []
+  },
+  "Wurmple": {
+    "prev": [],
+    "next": [
+      "Silcoon",
+      "Cascoon"
+    ]
+  },
+  "Wynaut": {
+    "prev": [],
+    "next": [
+      "Wobbuffet"
+    ]
+  },
+  "Wyrdeer": {
+    "prev": [
+      "Stantler"
+    ],
+    "next": []
+  },
+  "Xatu": {
+    "prev": [
+      "Natu"
+    ],
+    "next": []
+  },
+  "Yamask": {
+    "prev": [],
+    "next": [
+      "Cofagrigus"
+    ]
+  },
+  "Yamper": {
+    "prev": [],
+    "next": [
+      "Boltund"
+    ]
+  },
+  "Yanma": {
+    "prev": [],
+    "next": [
+      "Yanmega"
+    ]
+  },
+  "Yanmega": {
+    "prev": [
+      "Yanma"
+    ],
+    "next": []
+  },
+  "Yungoos": {
+    "prev": [],
+    "next": [
+      "Gumshoos"
+    ]
+  },
+  "Zebstrika": {
+    "prev": [
+      "Blitzle"
+    ],
+    "next": []
+  },
+  "Zigzagoon": {
+    "prev": [],
+    "next": [
+      "Linoone"
+    ]
+  },
+  "Zoroark": {
+    "prev": [
+      "Zorua"
+    ],
+    "next": []
+  },
+  "Zorua": {
+    "prev": [],
+    "next": [
+      "Zoroark"
+    ]
+  },
+  "Zubat": {
+    "prev": [],
+    "next": [
+      "Golbat"
+    ]
+  },
+  "Zweilous": {
+    "prev": [
+      "Deino"
+    ],
+    "next": [
+      "Hydreigon"
+    ]
+  }
+}

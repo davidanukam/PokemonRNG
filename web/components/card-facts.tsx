@@ -82,6 +82,12 @@ export function CardFactsPanel({ id }: { id: number }) {
   const loaded = useRef(false);
 
   useEffect(() => {
+    setLines(null);
+    setHistory(null);
+    loaded.current = false;
+  }, [id]);
+
+  useEffect(() => {
     const controller = new AbortController();
     setPending(true);
     setError("");

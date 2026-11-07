@@ -120,13 +120,16 @@ label:has(input[type="checkbox"], input[type="radio"]) {
   .dex-cards a.hover-3d:hover,
   .dex-cards a.hover-3d:focus-visible,
   .reveal-cards a.hover-3d:hover,
-  .reveal-cards a.hover-3d:focus-visible {
+  .reveal-cards a.hover-3d:focus-visible,
+  .evo-cards a.hover-3d:hover,
+  .evo-cards a.hover-3d:focus-visible {
     scale: 1.03;
   }
 
   .collection-cards a.hover-3d:active,
   .dex-cards a.hover-3d:active,
-  .reveal-cards a.hover-3d:active {
+  .reveal-cards a.hover-3d:active,
+  .evo-cards a.hover-3d:active {
     scale: 0.98;
   }
 
@@ -221,6 +224,52 @@ label:has(input[type="checkbox"], input[type="radio"]) {
   }
 }
 
+.card-glide-out-left {
+  animation: pokerng-out-left 240ms ease-in forwards;
+}
+
+.card-glide-out-right {
+  animation: pokerng-out-right 240ms ease-in forwards;
+}
+
+.card-glide-in-left {
+  animation: pokerng-in-left 240ms ease-out;
+}
+
+.card-glide-in-right {
+  animation: pokerng-in-right 240ms ease-out;
+}
+
+@keyframes pokerng-out-left {
+  to {
+    translate: -120% 0;
+  }
+}
+
+@keyframes pokerng-out-right {
+  to {
+    translate: 120% 0;
+  }
+}
+
+@keyframes pokerng-in-left {
+  from {
+    translate: -120% 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes pokerng-in-right {
+  from {
+    translate: 120% 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
 .pack-scene {
   perspective: 1200px;
 }
@@ -276,7 +325,11 @@ label:has(input[type="checkbox"], input[type="radio"]) {
   }
 
   .card-panel,
-  .card-facts {
+  .card-facts,
+  .card-glide-out-left,
+  .card-glide-out-right,
+  .card-glide-in-left,
+  .card-glide-in-right {
     animation: none;
   }
 }

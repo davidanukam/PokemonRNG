@@ -9,3 +9,4 @@ pokedex/sets/
 !web/tsconfig.json
 !web/public/data/catalog.json
 !web/public/data/sprites.json
+!web/public/data/evolutions.json
