@@ -1098,7 +1098,7 @@ function ProfilePage({
                   setDark(event.target.checked);
                 }}
               />
-              {dark ? "Light theme" : "Dark theme"}
+              {dark ? "Dark theme" : "Light theme"}
             </label>
             <label className="label justify-start gap-4 self-start">
               <input

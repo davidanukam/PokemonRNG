@@ -1,6 +1,7 @@
 "use client";
 
 import { AuthCard } from "@/components/auth-card";
+import { GoogleSignIn } from "@/components/google-sign-in";
 import { useActionState } from "react";
 import { signUpWithEmail } from "./actions";
 
@@ -34,6 +35,7 @@ export default function SignUpPage() {
           {pending ? "Creating account..." : "Create account"}
         </button>
       </form>
+      <GoogleSignIn />
     </AuthCard>
   );
 }
