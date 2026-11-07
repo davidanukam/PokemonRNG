@@ -21,7 +21,7 @@ import {
   rollOne,
   valueOf,
 } from "@/lib/game";
-import { indexEvolutions, readEvolutionBook, type EvolutionBook, type EvolutionStep } from "@/lib/evolutions";
+import { indexEvolutions, readEvolutionBook, type EvolutionBook } from "@/lib/evolutions";
 import { condColor, tierColor, xpColor } from "@/lib/look";
 import { matchSprite, readSpriteBook, type SpriteBook } from "@/lib/sprites";
 import { authClient } from "@/lib/auth/client";
@@ -78,9 +78,7 @@ export function AppShell() {
   const [picked, setPicked] = useState<{ card: Card; cond: number } | null>(null);
   const [sheet, setSheet] = useState<"" | "info" | "data" | "evo">("");
   const narrow = useNarrow();
-  const [glide, setGlide] = useState("");
   const [evolutions, setEvolutions] = useState<EvolutionBook | null>(null);
-  const glideTimer = useRef<number | null>(null);
   const [sprites, setSprites] = useState<SpriteBook | null>(null);
   const [collectionSet, setCollectionSet] = useState(readCollectionSet);
   const [packPick, setPackPick] = useState(readPackPick);
@@ -183,24 +181,8 @@ export function AppShell() {
     if (accountRef.current) pushProfile(next);
   }
 
-  function showRelative(card: Card, step: EvolutionStep) {
-    if (glide.startsWith("card-glide-out")) return;
-    const next = { card, cond: bestCondOf(profile, card) };
-    if (glideTimer.current != null) window.clearTimeout(glideTimer.current);
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setGlide("");
-      setPicked(next);
-      return;
-    }
-    setGlide(step === "next" ? "card-glide-out-left" : "card-glide-out-right");
-    glideTimer.current = window.setTimeout(() => {
-      setPicked(next);
-      setGlide(step === "next" ? "card-glide-in-right" : "card-glide-in-left");
-      glideTimer.current = window.setTimeout(() => {
-        setGlide("");
-        glideTimer.current = null;
-      }, 240);
-    }, 240);
+  function showRelative(card: Card) {
+    setPicked({ card, cond: bestCondOf(profile, card) });
   }
 
   function go(next: Screen) {
@@ -433,15 +415,12 @@ export function AppShell() {
         ref={dialogRef}
         className={`modal card-sheet${narrow && sheet ? " card-sheet-split" : ""}`}
         onClose={() => {
-          if (glideTimer.current != null) window.clearTimeout(glideTimer.current);
-          glideTimer.current = null;
-          setGlide("");
           setSheet("");
           setPicked(null);
         }}
       >
         {picked && catalog ? (
-          <div className={`modal-box w-auto! max-w-none! overflow-visible! bg-transparent! p-4! shadow-none! ${glide}`}>
+          <div className="modal-box w-auto! max-w-none! overflow-visible! bg-transparent! p-4! shadow-none!">
             <CardFace
               key={picked.card.id}
               card={picked.card}

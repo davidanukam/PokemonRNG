@@ -247,52 +247,6 @@ label:has(input[type="checkbox"], input[type="radio"]) {
   }
 }
 
-.card-glide-out-left {
-  animation: pokerng-out-left 240ms ease-in forwards;
-}
-
-.card-glide-out-right {
-  animation: pokerng-out-right 240ms ease-in forwards;
-}
-
-.card-glide-in-left {
-  animation: pokerng-in-left 240ms ease-out;
-}
-
-.card-glide-in-right {
-  animation: pokerng-in-right 240ms ease-out;
-}
-
-@keyframes pokerng-out-left {
-  to {
-    translate: -120% 0;
-  }
-}
-
-@keyframes pokerng-out-right {
-  to {
-    translate: 120% 0;
-  }
-}
-
-@keyframes pokerng-in-left {
-  from {
-    translate: -120% 0;
-  }
-  to {
-    translate: 0 0;
-  }
-}
-
-@keyframes pokerng-in-right {
-  from {
-    translate: 120% 0;
-  }
-  to {
-    translate: 0 0;
-  }
-}
-
 .evo-stack {
   display: flex;
   flex-direction: column;
@@ -381,11 +335,7 @@ label:has(input[type="checkbox"], input[type="radio"]) {
   .evo-stack > *,
   .hover-3d > :first-child,
   .card-panel,
-  .card-facts,
-  .card-glide-out-left,
-  .card-glide-out-right,
-  .card-glide-in-left,
-  .card-glide-in-right {
+  .card-facts {
     animation: none;
   }
 

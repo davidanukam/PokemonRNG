@@ -26,18 +26,21 @@ export function EvolutionPanel({
   const move = evolutionMove(card, byKey, profile, book);
   if (!move) return placeholder ? <p className="text-sm text-base-content/70">{placeholder}</p> : null;
   const both = Boolean(move.previous && move.next);
+  const showSlot = both || Boolean(move.previous) || Boolean(move.shown);
   return (
     <div className={`${pin ? "mt-auto " : ""}flex flex-col gap-3`}>
-      <div className={`evo-cards mx-auto w-full max-w-64 ${both ? "evo-stack" : ""}`}>
-        {both ? (
-          <>
-            <EvoCard card={move.previous} step="prev" catalog={catalog} profile={profile} onOpen={onOpen} />
-            <EvoCard card={move.next} step="next" catalog={catalog} profile={profile} onOpen={onOpen} />
-          </>
-        ) : (
-          <EvoCard card={move.shown} step={move.shownStep} catalog={catalog} profile={profile} onOpen={onOpen} />
-        )}
-      </div>
+      {showSlot ? (
+        <div className={`evo-cards mx-auto w-full max-w-64 ${both ? "evo-stack" : ""}`}>
+          {both ? (
+            <>
+              <EvoCard card={move.previous} step="prev" catalog={catalog} profile={profile} onOpen={onOpen} />
+              <EvoCard card={move.next} step="next" catalog={catalog} profile={profile} onOpen={onOpen} />
+            </>
+          ) : (
+            <EvoCard card={move.shown} step={move.shownStep} catalog={catalog} profile={profile} onOpen={onOpen} />
+          )}
+        </div>
+      ) : null}
       {move.previous || move.next ? (
         <div className="flex items-center justify-center gap-2">
           {move.previous ? (
