@@ -22,6 +22,7 @@ import {
 } from "@/lib/game";
 import { condColor, tierColor, xpColor } from "@/lib/look";
 import { matchSprite, readSpriteBook, type SpriteBook } from "@/lib/sprites";
+import { authClient } from "@/lib/auth/client";
 import { pushProfile, syncProfile } from "@/lib/cloud";
 import { blankProfile, readProfile, writeProfile } from "@/lib/storage";
 import type { Card, Catalog, Profile, Pull, Screen } from "@/lib/types";
@@ -78,10 +79,18 @@ export function AppShell() {
   const [packPick, setPackPick] = useState(readPackPick);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const saveGen = useRef(0);
+  const accountRef = useRef("");
+  const { data: session, isPending: sessionPending } = authClient.useSession();
+  const accountId = session?.user?.id ?? "";
+  accountRef.current = accountId;
 
   useEffect(() => {
+    setProfile(readProfile());
+  }, []);
+
+  useEffect(() => {
+    if (sessionPending || !accountId) return;
     const local = readProfile();
-    setProfile(local);
     const generation = saveGen.current;
     let cancel = false;
     void syncProfile(local, () => !cancel && saveGen.current === generation).then((next) => {
@@ -89,6 +98,13 @@ export function AppShell() {
       setProfile(next);
       writeProfile(next);
     });
+    return () => {
+      cancel = true;
+    };
+  }, [sessionPending, accountId]);
+
+  useEffect(() => {
+    let cancel = false;
     const box = document.getElementById(DRAWER_ID) as HTMLInputElement | null;
     const desktop = window.matchMedia("(min-width: 1024px)");
     function applySidebar() {
@@ -145,7 +161,7 @@ export function AppShell() {
     saveGen.current += 1;
     setProfile(next);
     writeProfile(next);
-    pushProfile(next);
+    if (accountRef.current) pushProfile(next);
   }
 
   function go(next: Screen) {

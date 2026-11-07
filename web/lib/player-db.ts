@@ -18,6 +18,11 @@ export function tokenHash(token: string): string | null {
   return createHash("sha256").update(token).digest("hex");
 }
 
+export function accountHash(userId: string): string | null {
+  if (userId.length < 8 || userId.length > 200 || /[\u0000-\u001f]/.test(userId)) return null;
+  return createHash("sha256").update(`pokerng-user:${userId}`).digest("hex");
+}
+
 export function cleanProfile(body: unknown): Profile | null {
   if (!body || typeof body !== "object") return null;
   const raw = body as Record<string, unknown>;
