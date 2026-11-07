@@ -266,6 +266,12 @@ export function AppShell() {
             setIndex={setIndex}
             pool={pool()}
             onBack={() => setScreen("packs")}
+            onStep={(delta) => {
+              const count = catalog.sets.length;
+              if (count === 0) return;
+              const index = setIndex == null ? (delta > 0 ? -1 : 0) : setIndex;
+              setSetIndex(((index + delta) % count + count) % count);
+            }}
             onRoll={openPacks}
           />
         ) : null}
@@ -524,12 +530,14 @@ function Opener({
   setIndex,
   pool,
   onBack,
+  onStep,
   onRoll,
 }: {
   catalog: Catalog;
   setIndex: number | null;
   pool: Card[];
   onBack: () => void;
+  onStep: (delta: number) => void;
   onRoll: (count: number) => void;
 }) {
   const name = setIndex == null ? "Every card" : catalog.sets[setIndex][1];
@@ -537,9 +545,17 @@ function Opener({
   const present = new Set(pool.map((card) => card.tier));
   return (
     <div className="flex min-h-[calc(100dvh-9rem)] flex-col">
-      <button type="button" className="btn btn-ghost self-start" onClick={onBack}>
-        All packs
-      </button>
+      <div className="flex flex-wrap items-center gap-2">
+        <button type="button" className="btn btn-neutral" onClick={onBack}>
+          All packs
+        </button>
+        <button type="button" className="btn btn-neutral" onClick={() => onStep(-1)}>
+          Prev
+        </button>
+        <button type="button" className="btn btn-neutral" onClick={() => onStep(1)}>
+          Next
+        </button>
+      </div>
       <div className="mt-4 grid min-h-0 flex-1 grid-cols-1 gap-6 sm:grid-cols-[18rem_minmax(0,1fr)]">
         <div className="mx-auto flex w-full max-w-72 flex-col items-center gap-4 self-start sm:mx-0 sm:max-w-none">
           <PackCard code={code} name={name} setIndex={setIndex} art={coverArt(pool)} />
@@ -571,6 +587,12 @@ function Opener({
   );
 }
 
+function readSkipOpen(): boolean {
+  if (typeof window === "undefined") return false;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
+  return localStorage.getItem("pokerng-skip-open") === "1";
+}
+
 function Reveal({
   catalog,
   pulls,
@@ -586,34 +608,114 @@ function Reveal({
   onCollection: () => void;
   onCard: (card: Card, cond: number) => void;
 }) {
+  const animate = pulls.length > 1 && !readSkipOpen();
+  const [placed, setPlaced] = useState(animate ? 0 : pulls.length);
+  const flyingRef = useRef(false);
+  const flyerRef = useRef<HTMLDivElement>(null);
+  const slotRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const done = placed >= pulls.length;
+  const current = pulls[placed];
+
+  function placeCurrent() {
+    if (flyingRef.current || placed >= pulls.length) return;
+    const flyer = flyerRef.current;
+    const slot = slotRefs.current[placed];
+    if (!flyer || !slot) {
+      setPlaced((count) => count + 1);
+      return;
+    }
+    flyingRef.current = true;
+    const first = flyer.getBoundingClientRect();
+    const to = slot.getBoundingClientRect();
+    flyer.style.left = `${to.left}px`;
+    flyer.style.top = `${to.top}px`;
+    flyer.style.width = `${to.width}px`;
+    flyer.style.translate = "none";
+    flyer.style.transformOrigin = "top left";
+    flyer.style.transform = "none";
+    const last = flyer.getBoundingClientRect();
+    const dx = first.left - last.left;
+    const dy = first.top - last.top;
+    const sx = last.width > 0 ? first.width / last.width : 1;
+    const sy = last.height > 0 ? first.height / last.height : 1;
+    flyer.style.transition = "none";
+    flyer.style.transform = `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`;
+    void flyer.offsetWidth;
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      flyer.removeEventListener("transitionend", onEnd);
+      window.clearTimeout(timer);
+      flyingRef.current = false;
+      setPlaced((count) => (count >= pulls.length ? count : count + 1));
+    };
+    const onEnd = (event: TransitionEvent) => {
+      if (event.propertyName !== "transform") return;
+      finish();
+    };
+    const timer = window.setTimeout(finish, 520);
+    flyer.addEventListener("transitionend", onEnd);
+    requestAnimationFrame(() => {
+      flyer.style.transition = "transform 420ms ease";
+      flyer.style.transform = "translate(0px, 0px) scale(1, 1)";
+    });
+  }
+
   return (
     <>
-      {best >= 5 ? (
+      {done && best >= 5 ? (
         <div role="alert" className="alert mb-4">
           {best >= 6 ? "Mythic pull." : "Secret pull."}
         </div>
       ) : null}
-      <div className="mb-4 flex flex-wrap gap-2">
-        <button type="button" className="btn btn-primary" onClick={onAgain}>
-          Open another
-        </button>
-        <button type="button" className="btn" onClick={onCollection}>
-          Collection
-        </button>
-      </div>
+      {done ? (
+        <div className="mb-4 flex flex-wrap gap-2">
+          <button type="button" className="btn btn-primary" onClick={onAgain}>
+            Open another
+          </button>
+          <button type="button" className="btn" onClick={onCollection}>
+            Collection
+          </button>
+        </div>
+      ) : null}
       <div className="reveal-cards grid grid-cols-2 gap-4 overflow-anchor-none pb-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {pulls.map((pull, index) => (
-          <div key={`${pull.card.id}-${index}`} style={{ animationDelay: `${Math.min(index, 9) * 0.05}s` }}>
+          <div
+            key={`${pull.card.id}-${index}`}
+            ref={(node) => {
+              slotRefs.current[index] = node;
+            }}
+            className={index < placed ? undefined : "invisible"}
+          >
             <CardFace
               card={pull.card}
               cond={pull.cond}
               conditions={catalog.conditions}
               fresh={pull.fresh}
-              onClick={() => onCard(pull.card, pull.cond)}
+              onClick={index < placed ? () => onCard(pull.card, pull.cond) : undefined}
             />
           </div>
         ))}
       </div>
+      {current ? (
+        <>
+          <div className="reveal-catch fixed inset-0 z-30 cursor-pointer" onClick={placeCurrent} />
+          <div key={placed} ref={flyerRef} className="pointer-events-none fixed top-1/2 left-1/2 z-40 w-72 -translate-x-1/2 -translate-y-1/2">
+            <CardFace card={current.card} cond={current.cond} conditions={catalog.conditions} fresh={current.fresh} />
+          </div>
+          <button
+            type="button"
+            className="btn btn-neutral fixed right-6 bottom-6 z-50"
+            onClick={() => {
+              flyingRef.current = false;
+              setPlaced(pulls.length);
+            }}
+          >
+            Skip
+          </button>
+        </>
+      ) : null}
     </>
   );
 }
@@ -834,6 +936,7 @@ function ProfilePage({
 }) {
   const [name, setName] = useState(profile.name);
   const [dark, setDark] = useState(false);
+  const [skipOpen, setSkipOpen] = useState(false);
   const [picking, setPicking] = useState(false);
   const [choice, setChoice] = useState("");
   const [note, setNote] = useState("");
@@ -841,6 +944,7 @@ function ProfilePage({
   const fileRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     setDark(document.documentElement.dataset.theme === "dark");
+    setSkipOpen(localStorage.getItem("pokerng-skip-open") === "1");
   }, []);
   const owned = useMemo(() => {
     const list: Card[] = [];
@@ -979,6 +1083,18 @@ function ProfilePage({
                 }}
               />
               {dark ? "Light theme" : "Dark theme"}
+            </label>
+            <label className="label justify-start gap-4 self-start">
+              <input
+                type="checkbox"
+                className="toggle"
+                checked={skipOpen}
+                onChange={(event) => {
+                  localStorage.setItem("pokerng-skip-open", event.target.checked ? "1" : "0");
+                  setSkipOpen(event.target.checked);
+                }}
+              />
+              Skip pack opening animations
             </label>
             <div className="card-actions mt-2 w-full">
               <button type="button" className="btn" onClick={() => onSave({ ...profile, name: name.trim() || "Trainer" })}>

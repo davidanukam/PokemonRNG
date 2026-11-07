@@ -18,6 +18,9 @@ const rarity = Fraunces({
 export const metadata: Metadata = {
   title: "PokeRNG",
   description: "Open unofficial Pokémon card packs and keep a local collection.",
+  icons: {
+    icon: [{ url: "/pokeball.png", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

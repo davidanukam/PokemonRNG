@@ -30,13 +30,39 @@ export function PackOrbit({ pool }: { pool: Card[] }) {
   if (cards.length === 0) return null;
   return (
     <div className="mt-4 flex min-h-0 flex-1 flex-col">
-      <div className="mb-2 flex justify-end">
-        <button type="button" className="btn btn-sm" onClick={() => setFlat((value) => !value)}>
-          {flat ? "3D" : "2D"}
-        </button>
-      </div>
+      <button type="button" className="btn btn-sm fixed right-6 bottom-6 z-30" onClick={() => setFlat((value) => !value)}>
+        {flat ? "3D" : "2D"}
+      </button>
       {flat ? <FlatReel cards={cards} /> : <Orbit cards={cards} />}
     </div>
+  );
+}
+
+function OrbitArt({ card, className, style }: { card: Card; className: string; style?: React.CSSProperties }) {
+  const [broken, setBroken] = useState(false);
+  if (broken) {
+    return (
+      <div
+        role="img"
+        aria-label="Image coming soon"
+        className={`${className} grid place-items-center overflow-hidden`}
+        style={{ ...style, background: "repeating-linear-gradient(-45deg, #161616 0 12px, #e2b340 12px 24px)" }}
+      >
+        <span className="-rotate-45 bg-black/75 px-3 py-1 text-center text-xs font-semibold tracking-wide text-white">
+          Image Coming Soon
+        </span>
+      </div>
+    );
+  }
+  return (
+    <img
+      alt=""
+      src={artUrl(card.id, false)}
+      draggable={false}
+      className={className}
+      style={style}
+      onError={() => setBroken(true)}
+    />
   );
 }
 
@@ -47,15 +73,13 @@ function Orbit({ cards }: { cards: Card[] }) {
   return (
     <div className="pack-scene relative min-h-56 flex-1">
       <div
-        className="pack-spin absolute top-1/2 left-1/2"
+        className="pack-spin absolute top-[calc(50%-4rem)] left-1/2"
         style={{ width: CARD_W, height, marginLeft: -CARD_W / 2, marginTop: -height / 2 }}
       >
         {cards.map((card, index) => (
-          <img
+          <OrbitArt
             key={`${card.id}-${index}`}
-            alt=""
-            src={artUrl(card.id, false)}
-            draggable={false}
+            card={card}
             className="pack-orbit-card absolute inset-0 h-full w-full rounded-box object-cover shadow-lg"
             style={{ transform: `rotateY(${index * step}deg) translateZ(${radius}px)` }}
           />
@@ -69,14 +93,12 @@ function FlatReel({ cards }: { cards: Card[] }) {
   const loop = cards.length > 1 ? [...cards, ...cards] : cards;
   return (
     <div className="relative min-h-56 flex-1 overflow-hidden">
-      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2">
+        <div className="absolute inset-x-0 top-[calc(50%-4rem)] -translate-y-1/2">
         <div className={`flex w-max gap-4 ${cards.length > 1 ? "pack-marquee" : ""}`}>
           {loop.map((card, index) => (
-            <img
+            <OrbitArt
               key={`${card.id}-${index}`}
-              alt=""
-              src={artUrl(card.id, false)}
-              draggable={false}
+              card={card}
               className="pack-orbit-card h-auto w-[132px] shrink-0 rounded-box object-cover shadow-lg"
               style={{ aspectRatio: "5 / 7" }}
             />
