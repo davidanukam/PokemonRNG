@@ -14,6 +14,7 @@ type FaceProps = {
   count?: number;
   hideTag?: boolean;
   fit?: "phone" | "sheet";
+  room?: boolean;
   onClick?: () => void;
 };
 
@@ -30,26 +31,26 @@ const ZONES = (
   </>
 );
 
-export function CardFace({ card, cond, conditions, large, fresh, count, hideTag, fit, onClick }: FaceProps) {
-  const [broken, setBroken] = useState(false);
+export function CardFace({ card, cond, conditions, large, fresh, count, hideTag, fit, room, onClick }: FaceProps) {
+  const [art, setArt] = useState<"large" | "small" | "none">(large ? "large" : "small");
   useEffect(() => {
-    setBroken(false);
+    setArt(large ? "large" : "small");
   }, [card.id, large, fit]);
   const layers = count && count > 2 ? 3 : count === 2 ? 2 : 1;
   const peek = (layers - 1) * 16;
   const figure = (
     <figure className="relative">
       <div className="relative overflow-hidden rounded-box bg-base-200">
-        {broken ? (
-          <MissingArt large={large} fit={fit} />
+        {art === "none" ? (
+          <MissingArt large={large} fit={fit} room={room} />
         ) : (
         <img
           alt={card.name}
-          src={artUrl(card.id, Boolean(large))}
+          src={artUrl(card.id, art === "large")}
           width={large ? 420 : 160}
           height={large ? 588 : 224}
-          onError={() => setBroken(true)}
-          className={faceClass(large, fit)}
+          onError={() => setArt((current) => (current === "large" ? "small" : "none"))}
+          className={faceClass(large, fit, room)}
         />
         )}
         {fresh ? <span className="badge badge-sm absolute top-2 left-2">New</span> : null}
@@ -103,10 +104,11 @@ export function CardFace({ card, cond, conditions, large, fresh, count, hideTag,
   );
 }
 
-function faceClass(large?: boolean, fit?: "phone" | "sheet") {
-  if (fit === "sheet") return "h-[min(26dvh,280px)] w-auto max-w-[calc(100vw-2rem)] rounded-box object-contain";
-  if (fit === "phone") return "h-[min(46dvh,480px)] w-auto max-w-[calc(100vw-2rem)] rounded-box object-contain";
-  if (large) return "h-[min(42dvh,480px)] w-auto max-w-[calc(100vw-2rem)] rounded-box object-contain md:h-[min(70dvh,680px)] md:max-w-[min(50dvh,486px)]";
+function faceClass(large?: boolean, fit?: "phone" | "sheet", room?: boolean) {
+  const cap = room ? "max-w-[calc(100vw-11rem)]" : "max-w-[calc(100vw-2rem)]";
+  if (fit === "sheet") return `h-[min(26dvh,280px)] w-auto ${cap} rounded-box object-contain`;
+  if (fit === "phone") return `h-[min(46dvh,480px)] w-auto ${cap} rounded-box object-contain`;
+  if (large) return `h-[min(42dvh,480px)] w-auto ${cap} rounded-box object-contain md:h-[min(70dvh,680px)] md:max-w-[min(50dvh,486px)]`;
   return "aspect-[5/7] w-full rounded-box object-cover";
 }
 
@@ -128,16 +130,18 @@ function resetTilt(event: PointerEvent<HTMLElement>) {
   if (face) face.style.transform = "";
 }
 
-function MissingArt({ large, fit }: { large?: boolean; fit?: "phone" | "sheet" }) {
+function MissingArt({ large, fit, room }: { large?: boolean; fit?: "phone" | "sheet"; room?: boolean }) {
+  const phoneWidth = room ? "w-[min(33dvh,calc(100vw-11rem))]" : "w-[min(33dvh,343px)]";
+  const sheetWidth = room ? "w-[min(18dvh,calc(100vw-11rem))]" : "w-[min(18dvh,200px)]";
   return (
     <div
       role="img"
       aria-label="Image coming soon"
       className={
         fit === "sheet"
-          ? "grid h-[min(26dvh,280px)] w-[min(18dvh,200px)] place-items-center overflow-hidden rounded-box"
+          ? `grid h-[min(26dvh,280px)] ${sheetWidth} place-items-center overflow-hidden rounded-box`
           : fit === "phone"
-            ? "grid h-[min(46dvh,480px)] w-[min(33dvh,343px)] place-items-center overflow-hidden rounded-box"
+            ? `grid h-[min(46dvh,480px)] ${phoneWidth} place-items-center overflow-hidden rounded-box`
             : large
               ? "grid h-[min(42dvh,480px)] w-[min(30dvh,343px)] place-items-center overflow-hidden rounded-box md:h-[min(70dvh,680px)] md:w-[min(50dvh,486px)]"
               : "grid aspect-[5/7] w-full place-items-center overflow-hidden rounded-box"

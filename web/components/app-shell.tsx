@@ -4,10 +4,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Avatar } from "@/components/avatar";
 import { CardFace } from "@/components/card-face";
 import { CardFactsPanel } from "@/components/card-facts";
-import { EvolutionPanel } from "@/components/evolution-panel";
+import { EvolutionPanel, EvolutionSteps } from "@/components/evolution-panel";
 import { Icon } from "@/components/icons";
 import { PackCard } from "@/components/pack-card";
 import { PackOrbit } from "@/components/pack-orbit";
+import { MiniRoll } from "@/components/mini-roll";
+import { reelOf, reelShift, RollFly } from "@/components/roll-fly";
 import { ProfileAuth } from "@/components/profile-auth";
 import { imageFileToAvatar } from "@/lib/avatar";
 import {
@@ -16,9 +18,11 @@ import {
   effectiveTier,
   hydrateCatalog,
   indexCards,
+  isRollable,
   money,
   oneIn,
   rollOne,
+  speciesIndex,
   valueOf,
 } from "@/lib/game";
 import { indexEvolutions, readEvolutionBook, type EvolutionBook } from "@/lib/evolutions";
@@ -30,14 +34,18 @@ import { blankProfile, readProfile, writeProfile } from "@/lib/storage";
 import type { Card, Catalog, Profile, Pull, Screen } from "@/lib/types";
 
 const DRAWER_ID = "pokerng-drawer";
-const SCREENS: Screen[] = ["packs", "open", "reveal", "collection", "dex", "trade", "profile"];
+const SCREENS: Screen[] = ["roll", "packs", "open", "reveal", "collection", "dex", "trade", "profile"];
+const GUEST_ROLL_KEY = "pokerng-guest-roll";
+const ROLL_SET_KEY = "pokerng-roll-set";
+const ROLL_SETS_KEY = "pokerng-roll-sets";
+const MINI_ROLL_KEY = "pokerng-minimize-rolls";
 
 function readScreen(): Screen {
-  if (typeof window === "undefined") return "packs";
+  if (typeof window === "undefined") return "roll";
   const value = sessionStorage.getItem("pokerng-screen");
-  if (value === "reveal") return "open";
+  if (value === "packs" || value === "open" || value === "reveal") return "roll";
   if (SCREENS.includes(value as Screen)) return value as Screen;
-  return "packs";
+  return "roll";
 }
 
 function readSet(): number | null {
@@ -60,8 +68,8 @@ function readCollectionSet(): string {
   return value == null ? "" : value;
 }
 
-const NAV: { id: Screen; label: string; icon: "packs" | "collection" | "dex" | "trade" | "profile" }[] = [
-  { id: "packs", label: "Packs", icon: "packs" },
+const NAV: { id: Screen; label: string; icon: "roll" | "collection" | "dex" | "trade" | "profile" }[] = [
+  { id: "roll", label: "Roll", icon: "roll" },
   { id: "collection", label: "Collection", icon: "collection" },
   { id: "dex", label: "Dex", icon: "dex" },
   { id: "trade", label: "Trade", icon: "trade" },
@@ -82,7 +90,14 @@ export function AppShell() {
   const [sprites, setSprites] = useState<SpriteBook | null>(null);
   const [collectionSet, setCollectionSet] = useState(readCollectionSet);
   const [packPick, setPackPick] = useState(readPackPick);
+  const [rollSets, setRollSets] = useState<number[]>([]);
+  const [artOk, setArtOk] = useState<Set<number> | null>(null);
+  const [fly, setFly] = useState<{ cards: Card[]; vertical: boolean; shift: string; pull: Pull } | null>(null);
+  const [mini, setMini] = useState<Pull | null>(null);
+  const [guestWarn, setGuestWarn] = useState(false);
+  const landedFly = useRef<typeof fly>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const wantedSet = useRef<number | null>(null);
   const saveGen = useRef(0);
   const accountRef = useRef("");
   const { data: session, isPending: sessionPending } = authClient.useSession();
@@ -165,6 +180,13 @@ export function AppShell() {
     if (!picked && dialog.open) dialog.close();
   }, [picked]);
 
+  useEffect(() => {
+    if (!fly) return;
+    const flight = fly;
+    const timer = window.setTimeout(() => finishFly(flight), 3400);
+    return () => window.clearTimeout(timer);
+  }, [fly]);
+
   const indexes = useMemo(
     () => (catalog ? indexCards(catalog.cards) : { byId: new Map<number, Card>(), bySet: new Map<number, Card[]>() }),
     [catalog],
@@ -173,6 +195,16 @@ export function AppShell() {
     () => (catalog && evolutions ? indexEvolutions(catalog.cards, evolutions) : new Map<string, Card[]>()),
     [catalog, evolutions],
   );
+  const rollable = useMemo(() => {
+    const names = [...(sprites ? Object.keys(sprites.byName) : []), ...(evolutions ? Object.keys(evolutions) : [])];
+    if (!catalog || names.length === 0) return null;
+    const species = speciesIndex(names);
+    const ids = new Set<number>();
+    for (const card of catalog.cards) {
+      if (isRollable(card.name, species)) ids.add(card.id);
+    }
+    return ids;
+  }, [catalog, sprites, evolutions]);
 
   function save(next: Profile) {
     saveGen.current += 1;
@@ -185,9 +217,27 @@ export function AppShell() {
     setPicked({ card, cond: bestCondOf(profile, card) });
   }
 
+  function revealRoll(pull: Pull) {
+    if (localStorage.getItem(MINI_ROLL_KEY) === "1") {
+      setPicked(null);
+      setMini(pull);
+      return;
+    }
+    setMini(null);
+    setPicked({ card: pull.card, cond: pull.cond });
+  }
+
+  function finishFly(flight: NonNullable<typeof fly>) {
+    if (landedFly.current === flight) return;
+    landedFly.current = flight;
+    setFly(null);
+    revealRoll(flight.pull);
+  }
+
   function go(next: Screen) {
     setScreen(next);
     setPicked(null);
+    setMini(null);
     if (window.matchMedia("(max-width: 1023px)").matches) {
       const box = document.getElementById(DRAWER_ID) as HTMLInputElement | null;
       if (box) box.checked = false;
@@ -195,10 +245,52 @@ export function AppShell() {
   }
 
   function pool(): Card[] {
-    if (!catalog) return [];
-    if (setIndex == null) return catalog.cards;
-    return indexes.bySet.get(setIndex) ?? [];
+    if (!catalog || !rollable) return [];
+    const source = setIndex == null ? catalog.cards : indexes.bySet.get(setIndex) ?? [];
+    return source.filter((card) => rollable.has(card.id));
   }
+
+  useEffect(() => {
+    if (!catalog || catalog.sets.length === 0 || !rollable) return;
+    const playable = (index: number) => (indexes.bySet.get(index) ?? []).some((card) => rollable.has(card.id));
+    const saved = readRollSets().filter((index) => index >= 0 && index < catalog.sets.length && playable(index));
+    const old = Number(localStorage.getItem(ROLL_SET_KEY));
+    const prefer = Number.isInteger(old) && playable(old) ? old : null;
+    const next = saved.length === 3 && new Set(saved).size === 3 ? saved : pickRollSets(catalog.sets.length, playable, [...saved, prefer]);
+    if (next.length === 0) return;
+    localStorage.setItem(ROLL_SETS_KEY, JSON.stringify(next));
+    setRollSets((current) => (current.length === next.length && current.every((index, place) => index === next[place]) ? current : next));
+  }, [catalog, indexes, rollable]);
+
+  useEffect(() => {
+    if (!catalog || !rollable || rollSets.length === 0) return;
+    const cards = rollSets.flatMap((index) => indexes.bySet.get(index) ?? []).filter((card) => rollable.has(card.id));
+    let cancel = false;
+    const good = new Set<number>();
+    let pending = cards.length;
+    if (pending === 0) {
+      setArtOk(new Set());
+      return;
+    }
+    for (const card of cards) {
+      const image = new Image();
+      let timer = 0;
+      const finish = (ok: boolean) => {
+        window.clearTimeout(timer);
+        if (cancel) return;
+        if (ok && image.naturalWidth > 0) good.add(card.id);
+        pending -= 1;
+        if (pending === 0) setArtOk(new Set(good));
+      };
+      timer = window.setTimeout(() => finish(false), 8000);
+      image.onload = () => finish(true);
+      image.onerror = () => finish(false);
+      image.src = artUrl(card.id, false);
+    }
+    return () => {
+      cancel = true;
+    };
+  }, [catalog, indexes, rollSets, rollable]);
 
   function openPacks(count: number) {
     const source = pool();
@@ -221,6 +313,53 @@ export function AppShell() {
     save({ ...profile, owned, xp, opened, recent });
     setPulls(nextPulls);
     setScreen("reveal");
+  }
+
+  function rollCurrent(index: number) {
+    if (!catalog || fly || !artOk) return;
+    const source = (indexes.bySet.get(index) ?? []).filter((card) => rollable?.has(card.id) && artOk.has(card.id));
+    if (!source.length) return;
+    const pull = rollOne(source, profile.owned);
+    const owned = { ...profile.owned };
+    const key = String(pull.card.id);
+    const row = owned[key] ? owned[key].slice() : [0, 0, 0, 0, 0];
+    row[pull.cond] += 1;
+    owned[key] = row;
+    const recent = [pull.card.id, ...(profile.recent ?? [])].slice(0, 8);
+    save({ ...profile, owned, xp: profile.xp + (pull.fresh ? 12 : 1), opened: profile.opened + 1, recent });
+    swapRolledSet(index);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      revealRoll(pull);
+      return;
+    }
+    const vertical = window.matchMedia("(max-width: 767px)").matches;
+    setFly({ cards: reelOf(source, pull.card), vertical, shift: reelShift(vertical), pull });
+  }
+
+  function swapRolledSet(index: number) {
+    if (!catalog || !rollable) return;
+    const playable = (candidate: number) => (indexes.bySet.get(candidate) ?? []).some((card) => rollable.has(card.id));
+    const blocked = new Set(rollSets);
+    const choices: number[] = [];
+    for (let candidate = 0; candidate < catalog.sets.length; candidate += 1) {
+      if (blocked.has(candidate) || !playable(candidate)) continue;
+      choices.push(candidate);
+    }
+    if (choices.length === 0) return;
+    const replacement = choices[Math.floor(Math.random() * choices.length)];
+    const next = rollSets.map((setIndex) => (setIndex === index ? replacement : setIndex));
+    localStorage.setItem(ROLL_SETS_KEY, JSON.stringify(next));
+    setRollSets(next);
+  }
+
+  function askToRoll(index: number) {
+    if (sessionPending || fly || !artOk) return;
+    if (!accountId && sessionStorage.getItem(GUEST_ROLL_KEY) !== "1") {
+      wantedSet.current = index;
+      setGuestWarn(true);
+      return;
+    }
+    rollCurrent(index);
   }
 
   function rememberSidebar(checked: boolean) {
@@ -285,12 +424,9 @@ export function AppShell() {
                 <div className="stat-value text-lg">{money(collectionWorth(profile, indexes.byId))}</div>
               </div>
             </div>
-            <label htmlFor={DRAWER_ID} aria-label="Open menu" className="btn btn-ghost btn-square drawer-button lg:hidden">
-              <Icon name="menu" />
-            </label>
           </div>
         </div>
-        <main className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6">
+        <main className="mx-auto w-full max-w-6xl px-4 py-6 max-lg:pb-24 sm:px-6">
         {error ? (
           <div role="alert" className="alert mb-4">
             {error}
@@ -298,6 +434,19 @@ export function AppShell() {
         ) : null}
         {!catalog && !error ? <p className="text-base-content/70">Getting the cards.</p> : null}
 
+        {catalog && screen === "roll" && rollSets.length > 0 ? (
+          <RollPage
+            catalog={catalog}
+            packs={rollSets.map((index) => {
+              const typed = (indexes.bySet.get(index) ?? []).filter((card) => rollable?.has(card.id));
+              const shown = artOk ? typed.filter((card) => artOk.has(card.id)) : typed;
+              return { setIndex: index, art: coverArt(shown), ready: Boolean(artOk) && shown.length > 0 };
+            })}
+            rolling={Boolean(fly)}
+            pending={sessionPending || !rollable || !artOk}
+            onRoll={askToRoll}
+          />
+        ) : null}
         {catalog && screen === "packs" ? (
           <Packs
             catalog={catalog}
@@ -364,13 +513,14 @@ export function AppShell() {
             level={level}
             xpPct={xpPct}
             onSave={save}
-            onPacks={() => go("packs")}
+            onPacks={() => go("roll")}
             onCard={(card) => setPicked({ card, cond: bestCondOf(profile, card) })}
           />
         ) : null}
         </main>
+        <BottomNav screen={screen} onGo={go} />
       </div>
-      <div className="drawer-side is-drawer-close:overflow-visible">
+      <div className="drawer-side is-drawer-close:overflow-visible max-lg:hidden">
         <label htmlFor={DRAWER_ID} aria-label="Close menu" className="drawer-overlay" />
         <div className="flex min-h-full flex-col bg-base-200 is-drawer-close:w-20 is-drawer-open:w-72">
           <div className="flex items-center gap-2 px-2 py-4 is-drawer-close:justify-center is-drawer-open:px-4">
@@ -421,35 +571,53 @@ export function AppShell() {
       >
         {picked && catalog ? (
           <div className="modal-box w-auto! max-w-none! overflow-visible! bg-transparent! p-4! shadow-none!">
-            <CardFace
-              key={picked.card.id}
-              card={picked.card}
-              cond={picked.cond}
-              conditions={catalog.conditions}
-              large
-              hideTag
-              fit={narrow ? (sheet ? "sheet" : "phone") : undefined}
-            />
+            <div className="relative mx-auto w-fit">
+              {evolutions ? (
+                <EvolutionSteps
+                  card={picked.card}
+                  byKey={evolutionIndex}
+                  profile={profile}
+                  book={evolutions}
+                  onOpen={showRelative}
+                />
+              ) : null}
+              <CardFace
+                key={picked.card.id}
+                card={picked.card}
+                cond={picked.cond}
+                conditions={catalog.conditions}
+                large
+                hideTag
+                fit={narrow ? (sheet ? "sheet" : "phone") : undefined}
+                room={narrow}
+              />
+            </div>
           </div>
         ) : (
           <div className="modal-box" />
         )}
         {picked && !narrow ? <CardFactsPanel id={picked.card.id} /> : null}
         {picked && catalog && !narrow ? (
-          <aside className="card-panel fixed top-0 right-0 z-20 col-start-1 row-start-1 flex h-dvh w-[min(100%,20rem)] flex-col gap-3 overflow-y-auto bg-base-100 p-6 shadow-xl">
-            <form method="dialog" className="self-end">
-              <button className="btn btn-sm btn-error">Close</button>
-            </form>
-            <CardDetails card={picked.card} cond={picked.cond} catalog={catalog} profile={profile} />
+          <aside className="card-panel fixed top-0 right-0 z-20 col-start-1 row-start-1 flex h-dvh w-[min(100%,20rem)] flex-col overflow-visible bg-base-100 shadow-xl">
+            <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-6">
+              <form method="dialog" className="self-end">
+                <button className="btn btn-sm btn-error">Close</button>
+              </form>
+              <CardDetails card={picked.card} cond={picked.cond} catalog={catalog} profile={profile} />
+            </div>
             {evolutions ? (
-              <EvolutionPanel
-                card={picked.card}
-                byKey={evolutionIndex}
-                catalog={catalog}
-                profile={profile}
-                book={evolutions}
-                onOpen={showRelative}
-              />
+              <div className="relative z-30 shrink-0 overflow-visible px-6 pt-3 pb-6">
+                <EvolutionPanel
+                  card={picked.card}
+                  byKey={evolutionIndex}
+                  catalog={catalog}
+                  profile={profile}
+                  book={evolutions}
+                  onOpen={showRelative}
+                  pin={false}
+                  fan
+                />
+              </div>
             ) : null}
           </aside>
         ) : null}
@@ -459,7 +627,7 @@ export function AppShell() {
           </form>
         ) : null}
         {picked && catalog && narrow ? (
-          <div className="fixed inset-x-0 bottom-0 z-30 flex flex-col">
+          <div className="fixed inset-x-0 bottom-16 z-30 flex flex-col">
             {sheet ? (
               <div className="h-[50dvh] overflow-y-auto border-t border-base-300 bg-base-100 p-4 shadow-xl">
                 <div className="flex min-h-full flex-col gap-3">
@@ -474,14 +642,13 @@ export function AppShell() {
                       book={evolutions}
                       onOpen={showRelative}
                       pin={false}
-                      placeholder="This card does not evolve."
                     />
                   ) : null}
                   {sheet === "evo" && !evolutions ? <p className="text-sm text-base-content/70">Loading evolutions.</p> : null}
                 </div>
               </div>
             ) : null}
-            <div role="tablist" aria-label="Card sections" className="tabs tabs-box w-full rounded-none bg-base-100">
+            <div role="tablist" aria-label="Card sections" className="grid h-14 w-full grid-cols-3 border-t-2 border-base-300 bg-base-100">
               {(
                 [
                   ["info", "Info"],
@@ -494,7 +661,7 @@ export function AppShell() {
                   type="button"
                   role="tab"
                   aria-selected={sheet === id}
-                  className={`tab flex-1 ${sheet === id ? "tab-active" : ""}`}
+                  className={`h-full border-r-2 border-base-300 text-base last:border-r-0 ${sheet === id ? "bg-base-200 font-semibold" : "bg-base-100"}`}
                   onClick={() => setSheet((current) => (current === id ? "" : id))}
                 >
                   {label}
@@ -506,7 +673,42 @@ export function AppShell() {
         <form method="dialog" className="modal-backdrop">
           <button>close</button>
         </form>
+        {narrow ? <BottomNav screen={screen} onGo={go} /> : null}
       </dialog>
+      {fly ? (
+        <RollFly
+          cards={fly.cards}
+          vertical={fly.vertical}
+          shift={fly.shift}
+          onDone={() => finishFly(fly)}
+        />
+      ) : null}
+      {mini ? <MiniRoll pull={mini} onClose={() => setMini(null)} /> : null}
+      {guestWarn ? (
+        <div className="modal modal-open z-50">
+          <div className="modal-box">
+            <h2 className="text-xl font-semibold">Your cards will not be saved</h2>
+            <p className="mt-2">Create an account or log in to keep this collection. On this device, the cards stay in the browser only.</p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <a className="btn btn-info" href="/auth/sign-up">Create an account</a>
+              <a className="btn btn-success" href="/auth/sign-in">Log in</a>
+              <button type="button" className="btn btn-ghost" onClick={() => setGuestWarn(false)}>Close</button>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => {
+                  sessionStorage.setItem(GUEST_ROLL_KEY, "1");
+                  setGuestWarn(false);
+                  const index = wantedSet.current;
+                  if (index != null) rollCurrent(index);
+                }}
+              >
+                Roll anyway
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -627,6 +829,98 @@ function coverArt(pool: Card[]): Card | undefined {
     if (!best || card.tier > best.tier) best = card;
   }
   return best;
+}
+
+function readRollSets(): number[] {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(ROLL_SETS_KEY) || "");
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item) => Number.isInteger(item));
+  } catch {
+    return [];
+  }
+}
+
+function pickRollSets(total: number, playable: (index: number) => boolean, prefer: Array<number | null>): number[] {
+  const picked: number[] = [];
+  const seen = new Set<number>();
+  for (const index of prefer) {
+    if (index == null || seen.has(index) || index < 0 || index >= total || !playable(index)) continue;
+    seen.add(index);
+    picked.push(index);
+  }
+  const choices: number[] = [];
+  for (let index = 0; index < total; index += 1) {
+    if (!seen.has(index) && playable(index)) choices.push(index);
+  }
+  while (picked.length < 3 && choices.length > 0) {
+    const index = Math.floor(Math.random() * choices.length);
+    picked.push(choices.splice(index, 1)[0]);
+  }
+  return picked;
+}
+
+function BottomNav({ screen, onGo }: { screen: Screen; onGo: (next: Screen) => void }) {
+  return (
+    <nav aria-label="Pages" className="fixed inset-x-0 bottom-0 z-40 grid h-16 grid-cols-5 border-t-2 border-base-300 bg-base-100 lg:hidden">
+      {NAV.map((item) => {
+        const active = screen === item.id;
+        return (
+          <button
+            key={item.id}
+            type="button"
+            className={`flex h-full flex-col items-center justify-center gap-1 border-r-2 border-base-300 text-xs last:border-r-0 ${active ? "bg-base-200 font-semibold" : ""}`}
+            aria-current={active ? "page" : undefined}
+            onClick={() => onGo(item.id)}
+          >
+            <Icon name={item.icon} className="size-5" />
+            {item.label}
+          </button>
+        );
+      })}
+    </nav>
+  );
+}
+
+function RollPage({
+  catalog,
+  packs,
+  rolling,
+  pending,
+  onRoll,
+}: {
+  catalog: Catalog;
+  packs: { setIndex: number; art: Card | undefined; ready: boolean }[];
+  rolling: boolean;
+  pending: boolean;
+  onRoll: (index: number) => void;
+}) {
+  return (
+    <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-8 pt-4">
+      <h1 className="text-3xl font-semibold">Roll</h1>
+      <div className="grid w-full grid-cols-3 items-end gap-3 sm:gap-8">
+        {packs.map((pack) => {
+          const set = catalog.sets[pack.setIndex];
+          return (
+            <div key={pack.setIndex} className="flex flex-col items-center gap-3">
+              <div className="min-h-12 text-center">
+                <p className="text-xs font-semibold tracking-wide text-base-content/70">{set ? set[0] : ""}</p>
+                <p className="line-clamp-2 text-sm font-semibold sm:text-base">{set ? set[1] : "A random pack"}</p>
+              </div>
+              <div className="pack-stage w-full max-w-48">
+                <div className="pack-turn">
+                  <PackCard code={set ? set[0] : ""} name={set ? set[1] : ""} setIndex={pack.setIndex} art={pack.art} showName={false} />
+                </div>
+              </div>
+              <button type="button" className="btn btn-primary w-full" disabled={rolling || pending || !pack.ready} onClick={() => onRoll(pack.setIndex)}>
+                Roll
+              </button>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 function Packs({
@@ -901,7 +1195,7 @@ function BackToTop() {
   return (
     <button
       type="button"
-      className="btn fixed right-4 bottom-4 z-30 lg:right-6 lg:bottom-6"
+      className="btn fixed right-4 bottom-20 z-30 lg:right-6 lg:bottom-6"
       onClick={() => {
         const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
         window.scrollTo({ top: 0, behavior });
@@ -988,7 +1282,7 @@ function Collection({
           <option value="name">Name</option>
         </select>
       </div>
-      {entries.length === 0 ? <p className="text-base-content/70">Nothing saved yet. Open a pack and the cards land here.</p> : null}
+      {entries.length === 0 ? <p className="text-base-content/70">Nothing saved yet. Roll a card and it lands here.</p> : null}
       <div className="collection-cards grid grid-cols-2 gap-4 overflow-anchor-none pb-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {entries.map((entry) => (
           <CardFace
@@ -1131,6 +1425,7 @@ function ProfilePage({
   const [name, setName] = useState(profile.name);
   const [dark, setDark] = useState(false);
   const [skipOpen, setSkipOpen] = useState(false);
+  const [minimizeRolls, setMinimizeRolls] = useState(false);
   const [picking, setPicking] = useState(false);
   const [choice, setChoice] = useState("");
   const [note, setNote] = useState("");
@@ -1139,6 +1434,7 @@ function ProfilePage({
   useEffect(() => {
     setDark(document.documentElement.dataset.theme === "dark");
     setSkipOpen(localStorage.getItem("pokerng-skip-open") === "1");
+    setMinimizeRolls(localStorage.getItem(MINI_ROLL_KEY) === "1");
   }, []);
   const owned = useMemo(() => {
     const list: Card[] = [];
@@ -1281,7 +1577,7 @@ function ProfilePage({
               />
               {dark ? "Dark theme" : "Light theme"}
             </label>
-            <label className="label justify-start gap-4 self-start">
+            <label className="label hidden justify-start gap-4 self-start">
               <input
                 type="checkbox"
                 className="toggle"
@@ -1292,6 +1588,18 @@ function ProfilePage({
                 }}
               />
               Skip pack opening animations
+            </label>
+            <label className="label justify-start gap-4 self-start">
+              <input
+                type="checkbox"
+                className="toggle"
+                checked={minimizeRolls}
+                onChange={(event) => {
+                  localStorage.setItem(MINI_ROLL_KEY, event.target.checked ? "1" : "0");
+                  setMinimizeRolls(event.target.checked);
+                }}
+              />
+              Minimize rolls
             </label>
             <div className="card-actions mt-2 w-full">
               <button type="button" className="btn" onClick={() => onSave({ ...profile, name: name.trim() || "Trainer" })}>
@@ -1329,7 +1637,7 @@ function ProfilePage({
             <button type="button" className="card card-border min-h-40" onClick={onPacks}>
               <div className="card-body items-center justify-center text-center">
                 <span className="grid size-12 place-items-center rounded-full bg-neutral text-2xl text-neutral-content">+</span>
-                <span className="font-semibold">Open a pack</span>
+                <span className="font-semibold">Roll</span>
               </div>
             </button>
           </div>
@@ -1342,7 +1650,7 @@ function ProfilePage({
             {!book ? (
               <p className="mt-4 text-sm text-base-content/70">Getting the pictures.</p>
             ) : pictures.length === 0 ? (
-              <p className="mt-4 text-sm text-base-content/70">Open a pack first, then pick one of those cards.</p>
+              <p className="mt-4 text-sm text-base-content/70">Roll a card first, then pick one of those cards.</p>
             ) : (
               <div className="mt-4 grid max-h-[70dvh] grid-cols-3 gap-3 overflow-y-auto p-1.5 sm:grid-cols-5 lg:grid-cols-7">
                 {pictures.map((picture) => (

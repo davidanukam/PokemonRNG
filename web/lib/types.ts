@@ -32,4 +32,4 @@ export type Profile = {
   recent: number[];
 };
 
-export type Screen = "packs" | "open" | "reveal" | "collection" | "dex" | "trade" | "profile";
+export type Screen = "roll" | "packs" | "open" | "reveal" | "collection" | "dex" | "trade" | "profile";

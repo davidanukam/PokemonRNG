@@ -116,3 +116,78 @@ export function packColor(setIndex: number | null): string {
   if (setIndex == null) return "#1d3a46";
   return PACK_COLORS[setIndex % PACK_COLORS.length];
 }
+
+export type SpeciesIndex = {
+  exact: Set<string>;
+  ordered: string[];
+};
+
+const TAIL_RE = /(?:\s+(?:vmax|vstar|v-union|gx|ex|break|lv\.?\s*x|prime|legend|fb|gl|star|delta|δ))+$/i;
+const LETTER_RE = /\s+[a-z0-9]$/i;
+const ENERGY_RE = /\b[Ee]nergy(?:\s+[Pp]rism\s+[Ss]tar|\s+[A-Z]{2,4})?$/;
+const ENERGY_TRAINER_RE = /\b(retrieval|search|removal|switch|recycler|pickup|transfer|return|capsule|restore)\b/;
+
+export function speciesIndex(names: Iterable<string>): SpeciesIndex {
+  const exact = new Set<string>();
+  for (const name of names) {
+    const folded = foldName(name);
+    if (folded) exact.add(folded);
+  }
+  exact.add("nidoran f");
+  exact.add("nidoran m");
+  return { exact, ordered: [...exact].sort((a, b) => b.length - a.length) };
+}
+
+export function isRollable(name: string, species: SpeciesIndex): boolean {
+  const raw = headOf(name);
+  const text = coreName(raw);
+  if (text.includes("fossil") || text.endsWith(" doll") || text.endsWith(" spirit link")) return false;
+  const parts = text.split(" & ").map((part) => part.trim());
+  if (parts.some((part) => isSpecies(part, species)) || isSpecies(text, species)) return true;
+  const head = foldName(raw);
+  return ENERGY_RE.test(raw) && !ENERGY_TRAINER_RE.test(head);
+}
+
+function stripParens(text: string): string {
+  return text.replace(/\s*[(\[][^)\]]*[)\]]/g, "");
+}
+
+function foldName(name: string): string {
+  return name
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/♀/g, " f")
+    .replace(/♂/g, " m")
+    .trim();
+}
+
+function headOf(name: string): string {
+  const stripped = stripParens(name).trim();
+  const titled = stripped.split(/\s+-/)[0]?.trim() ?? stripped;
+  return titled.replace(/\s+\d+\s*\/\s*\d+.*$/, "").trim();
+}
+
+function coreName(name: string): string {
+  let text = stripParens(foldName(name)).trim();
+  let previous = "";
+  while (text !== previous) {
+    previous = text;
+    text = text.replace(TAIL_RE, "").trim();
+  }
+  return text;
+}
+
+function isSpecies(text: string, species: SpeciesIndex): boolean {
+  if (matchesSpecies(text, species)) return true;
+  const shorter = text.replace(LETTER_RE, "").trim();
+  return shorter !== text && matchesSpecies(shorter, species);
+}
+
+function matchesSpecies(text: string, species: SpeciesIndex): boolean {
+  if (species.exact.has(text)) return true;
+  for (const name of species.ordered) {
+    if (text.endsWith(` ${name}`) || text.startsWith(`${name} `)) return true;
+  }
+  return false;
+}

@@ -205,14 +205,14 @@ label:has(input[type="checkbox"], input[type="radio"]) {
 @media (max-width: 1023px) {
   .card-sheet[open],
   .card-sheet.modal-open {
-    padding-bottom: 4.5rem;
+    padding-bottom: 7.5rem;
   }
 
   .card-sheet-split[open],
   .card-sheet-split.modal-open {
     place-items: start center;
     padding-top: 4.5rem;
-    padding-bottom: calc(50dvh + 4.5rem);
+    padding-bottom: calc(50dvh + 7.5rem);
   }
 }
 
@@ -256,7 +256,7 @@ label:has(input[type="checkbox"], input[type="radio"]) {
 
 .evo-stack > * {
   position: relative;
-  transition: margin-bottom 280ms ease;
+  transition: margin-bottom 280ms ease, translate 280ms ease, margin-top 280ms ease;
 }
 
 .evo-stack > :last-child {
@@ -264,17 +264,119 @@ label:has(input[type="checkbox"], input[type="radio"]) {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .evo-stack {
+  .evo-fan.evo-stack {
+    display: grid;
     gap: 0;
+    position: relative;
   }
 
-  .evo-stack > :first-child {
-    margin-bottom: -125%;
+  .evo-fan.evo-stack > * {
+    grid-area: 1 / 1;
+    margin: 0;
+    z-index: 1;
   }
 
-  .evo-stack:hover > :first-child,
-  .evo-stack:focus-within > :first-child {
-    margin-bottom: 0.75rem;
+  .evo-fan.evo-stack > :first-child {
+    margin-top: -0.75rem;
+  }
+
+  .evo-fan.evo-stack > :last-child {
+    z-index: 2;
+  }
+
+  .evo-fan.evo-stack:hover > :first-child,
+  .evo-fan.evo-stack:focus-within > :first-child {
+    margin-top: 0;
+    translate: calc(-200% - 1.5rem) 0;
+    z-index: 3;
+    filter: drop-shadow(0 16px 28px oklch(0% 0 0 / 0.45));
+  }
+
+  .evo-fan.evo-stack:hover > :last-child,
+  .evo-fan.evo-stack:focus-within > :last-child {
+    translate: calc(-100% - 0.75rem) 0;
+    filter: drop-shadow(0 16px 28px oklch(0% 0 0 / 0.45));
+  }
+
+  .evo-fan.evo-stack:hover::before,
+  .evo-fan.evo-stack:focus-within::before {
+    content: "";
+    position: absolute;
+    top: -0.75rem;
+    right: 0;
+    bottom: 0;
+    width: calc(200% + 2.5rem);
+    z-index: 0;
+  }
+
+  .card-panel:has(.evo-fan:hover),
+  .card-panel:has(.evo-fan:focus-within) {
+    z-index: 40;
+  }
+}
+
+.pack-stage {
+  perspective: 900px;
+}
+
+.pack-turn {
+  transform-style: preserve-3d;
+}
+
+.roll-fly-x,
+.roll-fly-y {
+  position: absolute;
+  gap: 16px;
+}
+
+.roll-fly-x {
+  top: 50%;
+  left: 0;
+  display: flex;
+}
+
+.roll-fly-y {
+  top: 0;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pack-turn {
+    animation: pack-turn 6s linear infinite;
+  }
+
+  .roll-fly-x {
+    animation: roll-fly-x 3.2s cubic-bezier(0.12, 0.72, 0.16, 1) forwards;
+  }
+
+  .roll-fly-y {
+    animation: roll-fly-y 3.2s cubic-bezier(0.12, 0.72, 0.16, 1) forwards;
+  }
+}
+
+@keyframes pack-turn {
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes roll-fly-x {
+  from {
+    transform: translate(100vw, -50%);
+  }
+  to {
+    transform: translate(var(--roll-end), -50%);
+  }
+}
+
+@keyframes roll-fly-y {
+  from {
+    transform: translate(-50%, -100%);
+  }
+  to {
+    transform: translate(-50%, var(--roll-end));
   }
 }
 
@@ -339,8 +441,7 @@ label:has(input[type="checkbox"], input[type="radio"]) {
     animation: none;
   }
 
-  .evo-stack > :first-child {
-    margin-bottom: 0.75rem;
+  .evo-fan.evo-stack > * {
     transition: none;
   }
 }

@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { artUrl } from "@/lib/game";
 import type { Card } from "@/lib/types";
 
@@ -9,27 +12,35 @@ export function PackCard({
   name,
   art,
   onClick,
+  showName = true,
 }: {
   code: string;
   name: string;
   setIndex: number | null;
   art: Card | undefined;
   onClick?: () => void;
+  showName?: boolean;
 }) {
+  const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    setFailed(false);
+  }, [art?.id]);
   const body = (
     <span className="relative block aspect-[513/938] w-full">
-      {art ? (
-        <img alt="" src={artUrl(art.id, false)} className="absolute object-cover" style={WINDOW} />
+      {art && !failed ? (
+        <img alt="" src={artUrl(art.id, false)} className="absolute object-cover" style={WINDOW} onError={() => setFailed(true)} />
       ) : (
         <span className="absolute bg-base-300" style={{ ...WINDOW, right: 0 }} />
       )}
       <img src="/pack-wrap.png" alt="" className="pointer-events-none absolute inset-0 h-full w-full" />
-      <span className="pointer-events-none absolute inset-x-2 flex justify-center" style={{ bottom: "13.5%" }}>
-        <span className="max-w-full rounded-box bg-black/75 px-2 py-1 text-center text-white">
-          <span className="block text-xs font-semibold tracking-wide">{code}</span>
-          <span className="line-clamp-2 text-sm leading-tight font-semibold">{name}</span>
+      {showName ? (
+        <span className="pointer-events-none absolute inset-x-2 flex justify-center" style={{ bottom: "13.5%" }}>
+          <span className="max-w-full rounded-box bg-black/75 px-2 py-1 text-center text-white">
+            <span className="block text-xs font-semibold tracking-wide">{code}</span>
+            <span className="line-clamp-2 text-sm leading-tight font-semibold">{name}</span>
+          </span>
         </span>
-      </span>
+      ) : null}
     </span>
   );
   if (!onClick) return <div className="w-full">{body}</div>;
