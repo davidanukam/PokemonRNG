@@ -1,6 +1,6 @@
 <div id="top" align="center">
 
-![PokeRNG](./web/public/demoImage1.png)
+![PokeRNG](./web/public/demoImage2.png)
 
 <h1>PokemonRNG</h1>
 
