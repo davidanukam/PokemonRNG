@@ -1,8 +1,31 @@
 <div id="top" align="center">
 
-![PokeRNG](./web/public/demoImage2.png)
+<img src="./web/public/pokeball.png" alt="logo" width="200" height="auto" />
 
-<h1>PokemonRNG</h1>
+<h1><a href="https://poke-rng.vercel.app/" target="_blank">PokemonRNG</a></h1>
+
+<p>
+    <a href="https://github.com/davidanukam/PokemonRNG/graphs/contributors">
+        <img src="https://img.shields.io/github/contributors/davidanukam/PokemonRNG" alt="contributors" />
+    </a>
+    <a href="">
+        <img src="https://img.shields.io/github/last-commit/davidanukam/PokemonRNG" alt="last update" />
+    </a>
+    <a href="https://github.com/davidanukam/PokemonRNG/network/members">
+        <img src="https://img.shields.io/github/forks/davidanukam/PokemonRNG" alt="forks" />
+    </a>
+    <a href="https://github.com/davidanukam/PokemonRNG/stargazers">
+        <img src="https://img.shields.io/github/stars/davidanukam/PokemonRNG" alt="stars" />
+    </a>
+    <a href="https://github.com/davidanukam/PokemonRNG/issues/">
+        <img src="https://img.shields.io/github/issues/davidanukam/PokemonRNG" alt="open issues" />
+    </a>
+    <a href="https://github.com/davidanukam/PokemonRNG/blob/main/LICENSE">
+        <img src="https://img.shields.io/github/license/davidanukam/PokemonRNG" alt="license" />
+    </a>
+</p>
+
+![PokeRNG](./web/public/demoImage2.png)
 
 </div>
 

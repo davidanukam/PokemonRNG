@@ -2,6 +2,7 @@
 __pycache__/
 node_modules/
 pokedex/sets/
+.agents/
 *.sqlite
 *.json
 !package-lock.json
